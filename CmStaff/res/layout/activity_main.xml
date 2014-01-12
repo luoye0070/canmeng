@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 内容部分 -->
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" 
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="none"
+	    android:fadingEdge="none">
+	<LinearLayout
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:padding="5dp" 
+	   android:orientation="vertical"
+	   >
+	    <!-- 创建订单 -->
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dp" 
+	        android:orientation="vertical"
+	        android:background="@drawable/corners_bg"
+	        android:layout_marginBottom="10dp"
+	        >
+	        <!-- 饭店ID -->
+	        <EditText
+	            android:id="@+id/mainAy_shopIdEt" 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:hint="@string/mainAy_shopIdEditHint"
+	            android:background="@drawable/normal_edit_bk"
+	            android:inputType="none"
+	            android:enabled="false"
+	            android:editable="false"/>
+	        <!-- 桌位ID -->
+	        <EditText
+	            android:id="@+id/mainAy_tableIdEt" 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:hint="@string/mainAy_tableIdEditHint"
+	            android:background="@drawable/normal_edit_bk"
+	            android:inputType="number"/>
+	        <!-- 扫描按钮-->
+	        <Button 
+	            android:id="@+id/mainAy_scanBt"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/normal_button_selector"
+	            android:text="@string/mainAy_scanBtTxt"/>	
+	        <!-- 创建订单按钮 -->
+	        <Button 
+	            android:id="@+id/mainAy_createOrderBt"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp"
+	            android:padding="5dp"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/normal_button_selector"
+	            android:text="@string/mainAy_createOrderBtTxt"/>	        	        
+		</LinearLayout>
+		<!-- 创建预定订单 -->
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dp" 
+	        android:orientation="vertical"
+	        android:background="@drawable/corners_bg"
+	        >
+	        <!-- 参与点菜按钮 -->
+	        <Button 
+	            android:id="@+id/mainAy_reserveBt"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/normal_button_selector"
+	            android:text="@string/mainAy_reserveBtTxt"/>	        
+		</LinearLayout>
+		
+	    <!-- 结账 -->
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dp" 
+	        android:orientation="vertical"
+	        android:background="@drawable/corners_bg"
+	        >
+	        <!-- 订单ID -->
+	        <EditText
+	            android:id="@+id/mainAy_orderIdEt" 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:hint="@string/mainAy_orderIdEditHint"
+	            android:background="@drawable/normal_edit_bk"
+	            android:inputType="number"/>
+	        <!-- 结账按钮 -->
+	        <Button 
+	            android:id="@+id/mainAy_accountBt"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dp"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/normal_button_selector"
+	            android:text="@string/mainAy_accountBtTxt"/>	        
+		</LinearLayout>
+	</LinearLayout>
+	</ScrollView>
+
+     <!-- 菜单部分 -->
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       >
+       <include layout="@layout/include_main_navbar_menu"/>
+   </LinearLayout> 
+</LinearLayout>
