@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+	
+    <!-- 评价类型 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评价类型"/>
+    <RadioGroup
+        android:id="@+id/aoDg_pjlxRg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <RadioButton
+            android:id="@+id/aoDg_hpRb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="好评" />
+        <RadioButton
+            android:id="@+id/aoDg_zpRb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中评" />
+        <RadioButton
+            android:id="@+id/aoDg_cpRb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="差评" />
+    </RadioGroup>
+	</LinearLayout>
+	
+    <!-- 卫生质量评分 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="卫生质量评分"/>
+    <RatingBar
+        android:id="@+id/aoDg_wszlRb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:max="10"
+         />
+	</LinearLayout>
+	
+    <!-- 服务态度评分-->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服务态度评分"/>
+    <RatingBar
+        android:id="@+id/aoDg_fwtdRb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:numStars="5"
+        android:max="10"/>
+</LinearLayout>
+	
+    <!-- 味道评分 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="味道评分"/>
+    <RatingBar
+        android:id="@+id/aoDg_wdRb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:max="10" />
+</LinearLayout>
+	
+    <!-- 总体评分 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="总体评分"/>
+    <RatingBar
+        android:id="@+id/aoDg_ztRb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:max="10" />
+</LinearLayout>
+	
+    <!-- 评价内容 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="评价内容"/>
+    <EditText
+        android:id="@+id/aoDg_pjnrEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLines="5"
+        android:maxHeight="50dp" >
+    </EditText>
+</LinearLayout>
+<!-- 评价方式 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评价方式"/>
+    <CheckBox
+        android:id="@+id/aoDg_isnmCb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="匿名评价"/>
+</LinearLayout>
+
+</LinearLayout>    
+</ScrollView>

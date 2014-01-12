@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/lj.cmc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 标题 -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#d6e7f5"
+        android:ellipsize="end"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:singleLine="true"
+        android:text="@string/odAy_titleTvTxt"
+        android:textColor="#F84000"
+        android:textSize="18sp" />
+    <!-- 订单概要 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="0dp" >
+
+        <TextView
+            android:id="@+id/odAy_orderIdTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="订单ID：23434" />
+
+        <TextView
+            android:id="@+id/odAy_partakeCodeTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="点菜参与码：2453" />
+    </LinearLayout>
+    <!-- 操作按钮列表 -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+        <LinearLayout
+            android:id="@+id/odAy_odCzListLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp" 
+            android:layout_gravity="center">
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" 
+        android:background="#d6e7f5">
+
+        <!-- 点菜列表 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="30dp" >
+
+            <!-- 无记录提示 -->
+
+            <TextView
+                android:id="@+id/odAy_noNotifyTv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/not_found"
+                android:gravity="top|center"
+                android:text="@string/odAy_noDishNotify"
+                android:textSize="14sp"
+                android:visibility="gone" />
+            <!-- 点菜列表 -->
+
+            <ListView
+                android:id="@+id/odAy_dishListLv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="visible" >
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 订单详情 -->
+
+            <lj.cmc.custom_view.MultiDirectionSlidingDrawer
+                android:id="@+id/odAy_orderDetailSd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:content="@+id/odAy_sdContent"
+                custom:direction="topToBottom"
+                custom:handle="@+id/odAy_sdHandle"
+                 >
+
+                <ImageView
+                    android:id="@+id/odAy_sdHandle"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/sliding_down_bt_bk_selector"
+                    android:background="#C8CCC8" />
+			    
+                <ScrollView
+                    android:id="@+id/odAy_sdContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="ifContentScrolls" 
+                    android:fadingEdge="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="#ffffff" >
+
+                        <TextView
+                            android:id="@+id/odAy_restaurantIdTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="饭店ID:23"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_tableIdTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="桌位ID:23"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_dateTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="用餐日期:2300-23-33"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_timeTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="用餐时间:2300-23-33"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_statusTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="状态:得得得"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_validTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="有效性:得得得"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_cancelReasonTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="饭店取消原因:得得得"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_personCountTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="用餐人数:32"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/odAy_remarkTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingTop="10dp"
+                            android:singleLine="true"
+                            android:text="备注:的两份接德律风"
+                            android:textColor="#F84000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </ScrollView>
+            </lj.cmc.custom_view.MultiDirectionSlidingDrawer>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

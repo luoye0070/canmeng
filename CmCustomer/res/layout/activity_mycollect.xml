@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <!-- 标题 -->
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:textColor="#F84000"
+        android:textSize="18dp"
+        android:background="#d6e7f5"
+        android:text="@string/mcAy_titleTvTxt"/>
+    
+    <!-- 标签选择按钮列表 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button 
+            android:id="@+id/mcAy_shopCBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/normal_button_selector"
+            android:text="@string/mcAy_shopCBtTxt"/>
+        <!-- android:background="@drawable/myxjmei_tab_bt_selected_bk_bmp" -->
+        <!-- 竖线线 -->
+	    <LinearLayout android:layout_width="3dp"
+	       	android:layout_height="match_parent"
+	       	></LinearLayout>
+	    <!-- android:background="@drawable/myxjmei_tab_bts_divider_bk" -->
+        <Button 
+            android:id="@+id/mcAy_foodCBt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/normal_button_selector"
+            android:text="@string/mcAy_foodCBtTxt"/>
+        <!-- android:background="@drawable/myxjmei_tab_bt_unselected_bk_bmp" -->
+    </LinearLayout>
+	
+    <!-- 横线 -->
+    <LinearLayout android:layout_width="fill_parent"
+       	android:layout_height="1dp"
+       	android:background="#C8CCC8"></LinearLayout>
+
+    
+   <LinearLayout
+       	android:id="@+id/mcAy_fragmentContainerLl" 
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="1"
+	    android:orientation="vertical">   
+   		<!-- <fragment 
+	        android:name="rxzy.xjmei.activity.SellerOrderManagerFragment"
+	        android:id="@+id/sellerCAy_fragmentContainer"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        /> -->
+    </LinearLayout>
+    
+    <!-- 菜单部分 -->
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       >
+       <include layout="@layout/include_main_navbar_menu"/>
+   </LinearLayout> 
+    
+
+</LinearLayout>

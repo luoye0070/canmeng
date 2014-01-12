@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!-- 无记录提示 -->
+    <TextView
+            android:id="@+id/ffcFm_noNotifyTv"            
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center"
+            android:textSize="14sp"
+            android:text="@string/ffcFm_noNotify"
+            android:drawableTop="@drawable/not_found"
+            android:visibility="gone"/>
+    <!-- 订单列表 -->
+    <ListView 
+        android:id="@+id/ffcFm_foodListLv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></ListView>
+	<!-- 横线 -->
+    <LinearLayout android:layout_width="fill_parent"
+       	android:layout_height="1dp"
+       	android:background="#C8CCC8"></LinearLayout>
+    <!-- 操作按钮 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+	        android:id="@+id/ffcFm_submitBt"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="@string/ffcFm_submitBtTxt"
+	        android:padding="5dp"
+	        android:textColor="#ffffff"
+	        android:background="@drawable/normal_button_selector"
+	        android:textSize="18sp"/>
+        <Button
+	        android:id="@+id/ffcFm_cancelBt"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="@string/ffcFm_cancelBtTxt"
+	        android:padding="5dp"
+	        android:textColor="#ffffff"
+	        android:background="@drawable/normal_button_selector"
+	        android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>
