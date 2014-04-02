@@ -1,0 +1,14 @@
+
+label.valid {
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    background: url(../../images/valid.png) center center no-repeat;
+    display: inline-block;
+    text-indent: -9999px;
+}
+label.error {
+    font-size: 12px;
+    color: red;
+
+}
