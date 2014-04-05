@@ -23,4 +23,6 @@ public class MessageInfo {
     public int sendType=0;
     //·¢ËÍÊ±¼ä
     public Date sendTime;
+    //·¹µêID
+    public long restaurantId;
 }
