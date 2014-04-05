@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+	<Gallery
+    	    android:id="@+id/cv_ge_adG" 
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_marginBottom="3dp"
+    	    android:layout_marginTop="3dp"
+    	    android:fadingEdge="none"
+    	    />
+	
+	<Button   
+ 	    android:layout_width="18dp"   
+ 	    android:layout_height="20dp" 
+ 	    android:id="@+id/cv_ge_ivl"       
+ 	    android:layout_gravity="left|center_vertical"
+ 	    android:background="@drawable/arrows_left_bt_selector"   
+ 	    /> 
+ 	
+	<HorizontalScrollView 
+	    android:id="@+id/cv_ge_hsv"
+	    android:layout_width="wrap_content"
+	    android:layout_height="10dp"
+	    android:layout_marginBottom="0dp"
+	    android:overScrollMode="ifContentScrolls"
+	    android:scrollbars="none"
+	    android:fadingEdge="none"
+	    android:layout_gravity="center_horizontal|bottom"
+	    android:visibility="gone">
+	    <LinearLayout 
+	        android:id="@+id/cv_ge_ll"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal"
+	        android:gravity="center"
+	        ></LinearLayout>
+	</HorizontalScrollView>
+	
+	<Button   
+ 	    android:layout_width="18dp"   
+ 	    android:layout_height="20dp" 
+ 	    android:id="@+id/cv_ge_ivr"       
+ 	    android:layout_gravity="right|center_vertical"
+ 	    android:background="@drawable/arrows_right_bt_selector"  
+ 	    />
+</FrameLayout>

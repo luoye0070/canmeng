@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_login"
+        android:title="@string/menu_loginTxt"
+        android:orderInCategory="100"
+        android:showAsAction="never" 
+        android:icon="@drawable/menu_login_icon"/>
+    <item android:id="@+id/menu_refresh"
+        android:title="@string/menu_refreshTxt"
+        android:orderInCategory="101"
+        android:showAsAction="never"
+        android:icon="@drawable/menu_refresh_icon" />
+    <item android:id="@+id/menu_exit"
+        android:title="@string/menu_exitTxt"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:icon="@drawable/menu_exit_icon" />
+</menu>

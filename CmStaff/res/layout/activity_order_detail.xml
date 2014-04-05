@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/lj.cms"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bk_bitmap"
+    android:orientation="vertical" >
+
+    <!-- 标题 -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/top_bk_bitmap"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableRight="@drawable/logo_i"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/odAy_titleTvTxt"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/odAy_goback"
+            android:layout_width="47dp"
+            android:layout_height="30dp"
+            android:background="@drawable/goback_bt_bk_selector" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#58381f" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/corners_bg_white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <!-- 订单概要 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#e7b269"
+            android:orientation="horizontal"
+            android:paddingBottom="1dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp" >
+            <TextView
+                android:id="@+id/odAy_orderIdTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="0dp"
+                android:text=""
+                android:textColor="#8d5748"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/odAy_partakeCodeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:text=""
+                android:textColor="#8d5748"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!-- 操作按钮列表 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="#e7b269"
+            android:fadingEdge="none"
+            android:scrollbars="none" >
+            <LinearLayout
+                android:id="@+id/odAy_odCzListLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="0dp"
+                android:orientation="vertical"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="0dp" >
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <!-- 点菜列表 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="30dp" >
+
+                <!-- 无记录提示 -->
+
+                <TextView
+                    android:id="@+id/odAy_noNotifyTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/not_found"
+                    android:gravity="top|center"
+                    android:text="@string/odAy_noDishNotify"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+                <!-- 点菜列表 -->
+
+                <ListView
+                    android:id="@+id/odAy_dishListLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:divider="#ffffff"
+                    android:dividerHeight="10dp"
+                    android:paddingTop="10dp"
+                    android:visibility="visible" >
+                </ListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <!-- 订单详情 -->
+
+                <lj.cms.custom_view.MultiDirectionSlidingDrawer
+                    android:id="@+id/odAy_orderDetailSd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    custom:content="@+id/odAy_sdContent"
+                    custom:direction="topToBottom"
+                    custom:handle="@+id/odAy_sdHandle" >
+
+                    <Button
+                        android:id="@+id/odAy_sdHandle"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="#e7b269"
+                        android:drawableRight="@drawable/sliding_down_bt_bk_selector"
+                        android:gravity="right|center_vertical"
+                        android:text="@string/odAy_slidingBtDownTxt"
+                        android:textColor="#f86d10"
+                        android:textSize="14sp" />
+
+                    <ScrollView
+                        android:id="@+id/odAy_sdContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/stroke_bg_tuse"
+                        android:fadingEdge="none"
+                        android:overScrollMode="ifContentScrolls"
+                        android:scrollbars="none" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/odAy_restaurantIdTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_restaurantNameTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_tableIdTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_tableNameTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_dateTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_timeTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_statusTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_validTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_cancelReasonTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_personCountTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/odAy_remarkTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:paddingBottom="1dp"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingTop="1dp"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="#8d5748"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </ScrollView>
+                </lj.cms.custom_view.MultiDirectionSlidingDrawer>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

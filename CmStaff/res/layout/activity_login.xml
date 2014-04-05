@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bk_bitmap"
+    android:orientation="vertical" >
+    
+    <!-- 头部 -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:background="@drawable/top_bk_bitmap"
+        android:maxHeight="50dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#58381f" >
+    </LinearLayout>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:fadingEdge="none"
+        android:scrollbars="none"
+        android:background="@drawable/corners_bg_white" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:orientation="vertical" >
+
+        <!-- 标题 -->
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:singleLine="true"
+            android:text="@string/loginAy_titleTvTxt"
+            android:textColor="#442817"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    
+    
+        <!-- 饭店ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/input_bk"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
+            <TextView 
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/loginAy_restaurantIdLable"
+                android:textColor="#442817"
+                android:textSize="18sp"               
+                />
+            <AutoCompleteTextView 
+                android:id="@+id/loginAy_restaurantIdAt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:hint="@string/loginAy_restaurantIdHintTxt"
+                android:text=""
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:background="#f2f2f3"
+        		/>
+        </LinearLayout>
+        <!-- 用户名 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/input_bk"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
+            <TextView 
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/loginAy_userNameLable"
+                android:textColor="#442817"
+                android:textSize="18sp"             
+                />
+            <AutoCompleteTextView 
+                android:id="@+id/loginAy_userNameAt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:hint="@string/loginAy_userNameHintTxt"
+                android:text=""
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:background="#f2f2f3"
+        		/>
+        </LinearLayout>
+        <!-- 密码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/input_bk"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" >
+            <TextView 
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/loginAy_passwdLable"
+                android:textColor="#442817"
+                android:textSize="18sp" 
+                />
+            <EditText 
+                android:id="@+id/loginAy_passwdEt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:hint="@string/loagiAy_passwdHintTxt"
+                android:text=""
+                android:inputType="textPassword"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:background="#f2f2f3"
+                />
+        </LinearLayout>
+   
+    <!-- 操作 -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal" >
+            
+            <Button 
+                android:id="@+id/loginAy_registerBt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="14dp"
+                android:background="@drawable/normal_button_selector1"
+                android:textColor="#ffffff"
+                android:text="@string/loginAy_registerBtTxt"
+                android:visibility="gone"/>
+            <Button 
+                android:id="@+id/loginAy_loginBt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/normal_button_selector"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/loginAy_loginBtTxt"
+                android:textColor="#ffffff"
+                android:textSize="18sp"/>
+    </LinearLayout>
+     <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone">
+        <CheckBox 
+                android:id="@+id/loginAy_autoLoginCb"
+                style="@style/login_checkbox_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:textColor="#000000"
+                android:text="@string/loginAy_autoLoginCbTxt"/>
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+    <!-- 底部 -->
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bottom_bk_bitmap" >
+    </LinearLayout>
+</LinearLayout>

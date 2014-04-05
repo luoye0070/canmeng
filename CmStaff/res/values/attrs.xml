@@ -1,0 +1,42 @@
+<resources>
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="verticalSpacing" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+    	<attr name="layout_breakLine" format="boolean" />
+        <attr name="layout_horizontalSpacing" format="dimension" />
+    </declare-styleable>
+    
+    <declare-styleable name="custom_view_itvParams">
+        <attr name="layout_imageBehind" format="boolean"></attr>
+        <attr name="tv_textColor" format="color"></attr>
+        <attr name="tv_bgColor" format="color"></attr>
+        <attr name="iv_bgColor" format="color"></attr>
+        <attr name="tv_textSize" format="dimension"></attr>
+    </declare-styleable>
+    
+    <declare-styleable name="custom_view_gallery_expandParams">
+        <attr name="cvge_showArrows" format="boolean"></attr>
+        <attr name="cvge_showIndexPrompt" format="boolean"></attr>
+    </declare-styleable>
+    
+    
+    <attr name="direction">
+        <enum name="rightToLeft" value="0" />
+        <enum name="bottomToTop" value="1" />
+        <enum name="leftToRight" value="2" />
+        <enum name="topToBottom" value="3" />
+    </attr>
+    
+    <declare-styleable name="MultiDirectionSlidingDrawer">
+        <attr name="handle" format="reference" />
+        <attr name="content" format="reference" />
+        <attr name="direction" />
+        <attr name="bottomOffset" format="dimension"  />
+        <attr name="topOffset" format="dimension"  />
+        <attr name="allowSingleTap" format="boolean" />
+        <attr name="animateOnClick" format="boolean" />
+    </declare-styleable>
+    
+</resources>
