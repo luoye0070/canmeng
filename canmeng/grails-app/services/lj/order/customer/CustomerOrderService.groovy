@@ -347,7 +347,7 @@ class CustomerOrderService {
                 msgParams.orderId=orderInfo.id;
                 msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
                 msgParams.receiveId=waiterId;
-                msgParams.content="有新的订单需要处理";
+                msgParams.content="有新的订单需要处理,订单id是"+orderInfo.id+",赶快点击去处理吧";
                 msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
                 msgParams.restaurantId=orderInfo.restaurantId;
                 def reInfo=messageService.createMsg(msgParams);
@@ -402,7 +402,7 @@ class CustomerOrderService {
                 msgParams.orderId=orderInfo.id;
                 msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
                 msgParams.receiveId=orderInfo.listenWaiterId;
-                msgParams.content="顾客已经取消该订单";
+                msgParams.content="顾客已经取消订单id是"+orderInfo.id+"的订单，赶快点击去查看详情吧";
                 msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
                 msgParams.restaurantId=orderInfo.restaurantId;
                 def reInfo=messageService.createMsg(msgParams);
@@ -514,7 +514,7 @@ class CustomerOrderService {
                         msgParams.orderId=orderInfo.id;
                         msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
                         msgParams.receiveId=orderInfo.listenWaiterId;
-                        msgParams.content="订单状态改变，需要处理";
+                        msgParams.content="订单id是"+orderInfo.id+"的订单状态已改为"+OrderStatus.getLable(orderInfo.status)+"，赶快点击去处理吧";
                         msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
                         msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
