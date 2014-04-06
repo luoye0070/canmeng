@@ -114,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		//写入数据
 		ContentValues values=new ContentValues();
 		
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//id
 		values.put(MessageInfoProperty.id,msgi.id);
 		//订单ID
@@ -130,11 +130,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    //内容
 	    values.put(MessageInfoProperty.content,msgi.content);
 	    //预定接收时间
-	    values.put(MessageInfoProperty.recTime,msgi.recTime);
+	    values.put(MessageInfoProperty.recTime,sdf.format(msgi.recTime));
 	    //发送方向
 	    values.put(MessageInfoProperty.sendType,msgi.sendType);
 	    //发送时间
-	    values.put(MessageInfoProperty.sendTime,msgi.sendTime);
+	    values.put(MessageInfoProperty.sendTime,sdf.format(msgi.sendTime));
 	    //饭店ID
 		values.put(MessageInfoProperty.restaurantId,msgi.restaurantId);
 		
@@ -144,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	/****************
-	 * 更新制作状态为制作完成
+	 * 更新消息状态为已读
 	 * @param id, 消息编号
 	 * *************/
 	public void updateStatus(long id){
@@ -152,26 +152,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values=new ContentValues();
 		values.put(MessageInfoProperty.status, MessageStatus.READED_STATUS.code);
 		dbw.update(msgInfoTable, values, MessageInfoProperty.id+"=?", new String[]{String.valueOf(id)});
+		System.out.println("数据库中更新了状态-->"+id);
 		dbw.close();
 	}
 	
 	/********************
-	 * 查询获取所有未读消息
+	 * 查询获取所有未读消息,倒排序
 	 * ********************/
-	public ArrayList<MessageInfo> getOrderList(long receiveId){
+	public ArrayList<MessageInfo> getMsgNoReadList(long receiveId){
 		ArrayList<MessageInfo> msgiList=null;		
 		SQLiteDatabase dbr=getReadableDatabase();
-		Cursor c=dbr.query(msgInfoTable, null, MessageInfoProperty.status+"=? and "+MessageInfoProperty.receiveId+"=?", new String[]{String.valueOf(MessageStatus.ORIGINAL_STATUS.code),String.valueOf(receiveId)}, null, null, null);
+		Cursor c=dbr.query(msgInfoTable, null, MessageInfoProperty.status+"=? and "+MessageInfoProperty.receiveId+"=?", 
+				new String[]{String.valueOf(MessageStatus.ORIGINAL_STATUS.code),String.valueOf(receiveId)}, null, null, "id desc");
 		if(c.moveToFirst()){
 			msgiList=new ArrayList<MessageInfo>();
 			for(int i=0;i<c.getCount();i++){
 				MessageInfo msgi=new MessageInfo();
 				c.moveToPosition(i);
-				//msgi.id=c.getInt(0);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				//id
 				msgi.id=c.getLong(0);
 				//订单ID
-			    msgi.=c.getLong(1);
+			    msgi.orderId=c.getLong(1);
 			    //类型
 			    msgi.type=c.getInt(2);
 			    //状态
@@ -183,89 +185,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			    //内容
 			    msgi.content=c.getString(6);
 			    //预定接收时间
-			    msgi.recTime=c.getString(7);
+			    try{msgi.recTime=sdf.parse(c.getString(7));}catch(Exception ex){}
 			    //发送方向
-			    msgi.sendType+" INTEGER,");
+			    msgi.sendType=c.getInt(8);
 			    //发送时间
-			    msgi.sendTime+" TEXT,");
+			    try{msgi.sendTime=sdf.parse(c.getString(9));}catch(Exception ex){}
 			    //饭店ID
-				msgi.restaurantId+" LONG)");
-				omi.orderNumber=c.getString(1);//订单编号
-				omi.makeTime=c.getString(2);//下单时间
-				omi.imgUrl=c.getString(3);//图片地址
-				omi.goodsName=c.getString(4);//商品名称
-				omi.goodsAttr=c.getString(5);//商品属性说明
-				omi.buyCount=c.getInt(6);//购买数量
-				omi.statusDescription=c.getString(7);//状态描述
-				omi.statusCode=c.getInt(8);//状态编码,0什么也不做，1可修改金额，2可发货，3可评价
-				omi.totalMoney=c.getDouble(9);//实付金额
-				omi.remark=c.getString(10);//备注
-				omi.buyerId=c.getInt(11);// 买家用户ID
-				omi.buyerName=c.getString(12);//买家用户名
-				omi.consigneeMan=c.getString(13);//收货人
-				omi.consigneePhone=c.getString(14);//收货人电话
-				omi.consigneeAddr=c.getString(15);//收货人地址
-				omi.goodsPrice=c.getDouble(16);//单价
-				omi.postage=c.getDouble(17);//邮费
-				c.getInt(18);//制作状态，0未完成，1制作完成	
-				c.getInt(19);//用户ID
-				omiList.add(omi);
+				msgi.restaurantId=c.getLong(10);
+				msgiList.add(msgi);
 			}
 		}
 		dbr.close();
-		return omiList;
-	}
-
-	/********************
-	 * 查询获取所有已制作订单
-	 * ********************/
-	public ArrayList<OrderManageInfo> getMakedOrderList(int userId,int orderId,String orderNum){
-		ArrayList<OrderManageInfo> omiList=null;		
-		SQLiteDatabase dbr=getReadableDatabase();
-		Cursor c=null;
-		if(orderId!=0&&orderNum==null){
-			c=dbr.query(orderInfoTable, null, OrderMInfo.makeStatus+"=? and "+OrderMInfo.userId+"=? and "+OrderMInfo.orderId+"=?", new String[]{"1",String.valueOf(userId),String.valueOf(orderId)}, null, null, null,"0,10");			
-		}
-		else if(orderId==0&&orderNum!=null){
-			c=dbr.query(orderInfoTable, null, OrderMInfo.makeStatus+"=? and "+OrderMInfo.userId+"=? and "+OrderMInfo.orderNumber+" like ?", new String[]{"1",String.valueOf(userId),"%"+orderNum+"%"}, null, null, null,"0,10");			
-		}
-		else if(orderId==0&&orderNum==null)
-		{
-			c=dbr.query(orderInfoTable, null, OrderMInfo.makeStatus+"=? and "+OrderMInfo.userId+"=?", new String[]{"1",String.valueOf(userId)}, null, null, null,"0,10");
-		}
-		else{
-			c=dbr.query(orderInfoTable, null, OrderMInfo.makeStatus+"=? and "+OrderMInfo.userId+"=? and "+OrderMInfo.orderId+"=? and "+OrderMInfo.orderNumber+" like ?", new String[]{"1",String.valueOf(userId),String.valueOf(orderId),"%"+orderNum+"%"}, null, null, null,"0,10");
-		}
-		if(c.moveToFirst()){
-			omiList=new ArrayList<OrderManageInfo>();
-			for(int i=0;i<c.getCount();i++){
-				OrderManageInfo omi=new OrderManageInfo();
-				c.moveToPosition(i);
-				omi.id=c.getInt(0);
-				omi.orderNumber=c.getString(1);//订单编号
-				omi.makeTime=c.getString(2);//下单时间
-				omi.imgUrl=c.getString(3);//图片地址
-				omi.goodsName=c.getString(4);//商品名称
-				omi.goodsAttr=c.getString(5);//商品属性说明
-				omi.buyCount=c.getInt(6);//购买数量
-				omi.statusDescription=c.getString(7);//状态描述
-				omi.statusCode=c.getInt(8);//状态编码,0什么也不做，1可修改金额，2可发货，3可评价
-				omi.totalMoney=c.getDouble(9);//实付金额
-				omi.remark=c.getString(10);//备注
-				omi.buyerId=c.getInt(11);// 买家用户ID
-				omi.buyerName=c.getString(12);//买家用户名
-				omi.consigneeMan=c.getString(13);//收货人
-				omi.consigneePhone=c.getString(14);//收货人电话
-				omi.consigneeAddr=c.getString(15);//收货人地址
-				omi.goodsPrice=c.getDouble(16);//单价
-				omi.postage=c.getDouble(17);//邮费
-				c.getInt(18);//制作状态，0未完成，1制作完成	
-				c.getInt(19);//用户ID
-				omiList.add(omi);
-			}
-		}
-		dbr.close();
-		return omiList;
+		return msgiList;
 	}
 	
 }

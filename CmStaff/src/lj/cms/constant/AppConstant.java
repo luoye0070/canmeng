@@ -168,6 +168,7 @@ public interface AppConstant {
 		public final static String FOOD_ID="foodId";
 		public final static String RESTAURANT_ID="restaurantId";
 		
+		public final static String MESSAGE_CONTENT="messageContent";
 	}
 	/***************************
 	 *排序状态
@@ -195,7 +196,7 @@ public interface AppConstant {
 	 *广播事件
 	 *******************/
 	class BroadcastActions{
-//		public final static String GOODS_CLASS_SELECTED="rxzy.xjmei.goods_class_selected";//商品类目选中
+		public final static String UPDATE_MSG_VIEW="lj.cms.update_msg_view";//更新消息列表
 //		public final static String GOODS_AREA_SELECTED="rxzy.xjmei.goods_area_selected";//商品地区选中
 	}
 	

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/stroke_orange_corners_white" >
+    
+    <TextView 
+        android:id="@+id/lmli_rtimeTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#70CD18"
+        android:text="2013-01-23 12:45:45"/>
+    
+    <TextView 
+        android:id="@+id/lmli_contentTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:maxLines="5"
+        android:gravity="left|center_vertical"
+        android:textSize="14sp"
+        android:textColor="#808080"
+        android:text="有新的订单需要处理,了的缴费，神经分裂送两份接收到了放假收到了放假收到了放假收到了福建省的房间里伺机待发桑德菲杰了桑德菲杰了"/>
+
+</LinearLayout>

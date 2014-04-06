@@ -169,7 +169,7 @@ public class DataOfMessageAnalyzeHelper extends AnalyzeHelper {
 								try{
 									String str=jrd.nextString();
 									System.out.println(str);
-									SimpleDateFormat sdf=new SimpleDateFormat();
+									SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 									this.messageInfo.recTime=sdf.parse(str);
 								}
 								catch (ParseException e) {
@@ -200,7 +200,7 @@ public class DataOfMessageAnalyzeHelper extends AnalyzeHelper {
 								try{
 									String str=jrd.nextString();
 									System.out.println(str);
-									SimpleDateFormat sdf=new SimpleDateFormat();
+									SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 									this.messageInfo.sendTime=sdf.parse(str);
 								}
 								catch (ParseException e) {

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@drawable/bk_bitmap" >
+    android:orientation="vertical" 
+android:background="@drawable/bk_bitmap" >
     <!-- 标题 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
         android:ellipsize="end"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        android:text="@string/dlAy_titleTvTxt"
+        android:text="@string/mlAy_titleTvTxt"
         android:layout_gravity="center"
         android:gravity="center"
         android:drawableRight="@drawable/logo_i"
@@ -33,37 +34,19 @@
         android:background="#58381f" >
     </LinearLayout>
     
-    <LinearLayout
+    
+    
+    
+    <TextView android:id="@+id/msgAy_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
         android:layout_weight="1"
-        android:background="@drawable/corners_bg_white"
-        android:gravity="center"
-        android:orientation="vertical" >
-    <!-- 无记录提示 -->
-    <TextView
-            android:id="@+id/dlAy_noNotifyTv"            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|center"
-            android:textSize="14sp"
-            android:text="@string/dlAy_noDishNotify"
-            android:drawableTop="@drawable/not_found"
-            android:visibility="gone"/>
-    <!-- 订单列表 -->
-    <ListView 
-        android:id="@+id/dlAy_dishListLv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"
-        android:fadingEdge="none"
-        android:scrollbars="none"
         android:layout_margin="10dp"
-        android:divider="#ffffff"
-        android:dividerHeight="10dp"
-        android:background="#ffffff"></ListView>
-</LinearLayout>
-     <!-- 菜单部分 -->
-     <include layout="@layout/include_main_navbar_menu"/>
+        android:padding="10dp"
+        android:background="@drawable/corners_bg_white"
+        android:lines="10"
+        android:gravity="center"
+            android:textSize="14sp"
+        />"
+
 </LinearLayout>

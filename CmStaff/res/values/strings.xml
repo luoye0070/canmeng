@@ -84,8 +84,10 @@
     <string name="mainAy_cancelScanBtTxt">取消</string>
     <string name="mainAy_createOrderBtTxt">创建订单</string>
     <string name="mainAy_reserveBtTxt">创建预定订单</string>
+    <string name="mainAy_seeMsgBtTxt">查看未处理的消息</string>
     <string name="mainAy_orderIdEditHint">输入订单ID</string>
     <string name="mainAy_accountBtTxt">处理订单</string>
+    <string name="mainAy_otherLabelTxt">其他</string>
     
     <!-- 点菜界面 -->
     <string name="dishAy_titleTvTxt">点菜</string>
@@ -137,7 +139,11 @@
     
     <!-- 点菜列表界面 -->
     <string name="dlAy_titleTvTxt">点菜列表</string>
-    <string name="dlAy_noDishNotify">还没有点菜哦</string>
+    <string name="dlAy_noDishNotify">还没有需处理的点菜哦</string>
+    
+    <!-- 消息列表界面 -->
+    <string name="mlAy_titleTvTxt">消息</string>
+    <string name="mlAy_noMsgNotify">没有消息</string>
     
     <!-- 系统菜单相关 -->
     <string name="menu_loginTxt">登录/切换用户</string>

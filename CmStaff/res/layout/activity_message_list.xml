@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@drawable/bk_bitmap" >
-    <!-- 标题 -->
+    android:orientation="vertical" 
+    android:background="@drawable/bk_bitmap" >
+    
+<!-- 标题 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -21,7 +23,7 @@
         android:ellipsize="end"
         android:textColor="#ffffff"
         android:textSize="24sp"
-        android:text="@string/dlAy_titleTvTxt"
+        android:text="@string/mlAy_titleTvTxt"
         android:layout_gravity="center"
         android:gravity="center"
         android:drawableRight="@drawable/logo_i"
@@ -43,17 +45,17 @@
         android:orientation="vertical" >
     <!-- 无记录提示 -->
     <TextView
-            android:id="@+id/dlAy_noNotifyTv"            
+            android:id="@+id/mlAy_noNotifyTv"            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|center"
             android:textSize="14sp"
-            android:text="@string/dlAy_noDishNotify"
+            android:text="@string/mlAy_noMsgNotify"
             android:drawableTop="@drawable/not_found"
             android:visibility="gone"/>
     <!-- 订单列表 -->
     <ListView 
-        android:id="@+id/dlAy_dishListLv"
+        android:id="@+id/mlAy_msgListLv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
@@ -65,5 +67,5 @@
         android:background="#ffffff"></ListView>
 </LinearLayout>
      <!-- 菜单部分 -->
-     <include layout="@layout/include_main_navbar_menu"/>
+     <!-- <include layout="@layout/include_main_navbar_menu"/> -->
 </LinearLayout>

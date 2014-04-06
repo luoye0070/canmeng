@@ -1,12 +1,16 @@
 package lj.cms.service;
 
 import lj.cms.activity.LoginActivity;
+import lj.cms.activity.MessageActivity;
+import lj.cms.activity.MessageListActivity;
 import lj.cms.activity.OrderDetailActivity;
 import lj.cms.common.ActivityCallBackInterface;
 import lj.cms.common.AcvivityLoginGoto;
 import lj.cms.common.NotifyId;
 import lj.cms.common.StaticData;
 import lj.cms.constant.AppConstant;
+import lj.cms.constant.MessageType;
+import lj.cms.database.DatabaseHelper;
 import lj.cms.internet.HttpClientHelper;
 import lj.cms.internet.ParamCollect;
 import lj.cms.internet.ParamsCollect;
@@ -117,7 +121,24 @@ public class MessageService extends Service {
 						currentMsg=analyzeHelper.messageInfo;
 						System.out.println("currentMsg-->"+currentMsg);
 						System.out.println("analyzeHelper.messageInfo-->"+analyzeHelper.messageInfo);
-						notifyMsg();
+						if(currentMsg.type!=MessageType.ORDER_HANDLE_TYPE.code){//非订单处理类消息
+							String content=currentMsg.content; //通知栏内容
+							Intent notificationIntent = new Intent(context,MessageActivity.class); //点击该通知后要跳转的Activity
+							notificationIntent.putExtra(AppConstant.IntentExtraName.MESSAGE_CONTENT, content);
+							notifyMsg(content,notificationIntent,1,true);
+							Intent intent=new Intent(AppConstant.BroadcastActions.UPDATE_MSG_VIEW);
+							intent.putExtra(AppConstant.IntentExtraName.MESSAGE_CONTENT, content);
+							sendBroadcast(intent);
+						}else{
+							//将消息写入数据,并发出广播
+							DatabaseHelper dh=new DatabaseHelper(getApplicationContext());
+							if(dh.insert(currentMsg)){
+								Intent intent=new Intent(AppConstant.BroadcastActions.UPDATE_MSG_VIEW);
+								sendBroadcast(intent);
+								//在通知栏通知
+								notifyMsg();
+							}
+						}
 					}
 				}
 			});
@@ -168,7 +189,8 @@ public class MessageService extends Service {
 	}
 	private void notifyMsg(){
 		String content=currentMsg.content; //通知栏内容
-		Intent notificationIntent = new Intent(context,OrderDetailActivity.class); //点击该通知后要跳转的Activity
+		//Intent notificationIntent = new Intent(context,OrderDetailActivity.class); //点击该通知后要跳转的Activity
+		Intent notificationIntent = new Intent(context,MessageListActivity.class); //点击该通知后要跳转的Activity
 		notificationIntent.putExtra(AppConstant.IntentExtraName.ORDER_ID, currentMsg.orderId);
 		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -49,6 +49,8 @@
     	<activity android:name=".activity.ReserveTablesActivity"></activity>
     	<activity android:name=".activity.DishListActivity"></activity>
     	<activity android:name=".activity.JumpActivity"></activity>
+    	<activity android:name=".activity.MessageListActivity" android:screenOrientation="nosensor"></activity>
+    	<activity android:name=".activity.MessageActivity" android:screenOrientation="nosensor" android:launchMode="singleInstance"></activity>
     	
     	<service android:name="lj.cms.service.MessageService"></service>
     </application>

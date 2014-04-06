@@ -43,6 +43,7 @@ public class MainActivity extends Activity implements ActivityCallBackInterface 
 	EditText mainAy_tableIdEt=null;//桌位ID
 	Button mainAy_scanBt=null;//扫描按钮
 	Button mainAy_createOrderBt=null;//创建订单按钮
+	Button mainAy_seeMsgBt=null;//查看未处理消息
 	
 	Button mainAy_reserveBt=null;//参与点菜按钮
 	EditText mainAy_orderIdEt=null;//订单ID
@@ -91,7 +92,8 @@ public class MainActivity extends Activity implements ActivityCallBackInterface 
 		mainAy_scanBt=(Button) findViewById(R.id.mainAy_scanBt);
 		mainAy_createOrderBt=(Button) findViewById(R.id.mainAy_createOrderBt);//创建订单按钮
 		
-		mainAy_reserveBt=(Button) findViewById(R.id.mainAy_reserveBt);//参与点菜按钮
+		mainAy_reserveBt=(Button) findViewById(R.id.mainAy_reserveBt);//
+		mainAy_seeMsgBt=(Button) findViewById(R.id.mainAy_seeMsgBt);//查看未处理消息
 		mainAy_orderIdEt=(EditText) findViewById(R.id.mainAy_orderIdEt);//订单ID
 		mainAy_accountBt=(Button) findViewById(R.id.mainAy_accountBt);//结账按钮
 		
@@ -118,6 +120,7 @@ public class MainActivity extends Activity implements ActivityCallBackInterface 
 		mainAy_scanBt.setOnClickListener(new BTOnClickListener());
 		mainAy_createOrderBt.setOnClickListener(new BTOnClickListener());
 		mainAy_reserveBt.setOnClickListener(new BTOnClickListener());
+		mainAy_seeMsgBt.setOnClickListener(new BTOnClickListener());
 		mainAy_accountBt.setOnClickListener(new BTOnClickListener());
 	}
 	class BTOnClickListener implements OnClickListener{
@@ -157,6 +160,11 @@ public class MainActivity extends Activity implements ActivityCallBackInterface 
 					return;
 				}
 				
+				break;
+			case R.id.mainAy_seeMsgBt:
+				Intent intentMsg=new Intent();
+				intentMsg.setClass(MainActivity.this, MessageListActivity.class);
+				startActivity(intentMsg);
 				break;
 			case R.id.mainAy_accountBt:
 				//进入订单详细信息界面

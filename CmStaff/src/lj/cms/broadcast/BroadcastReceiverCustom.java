@@ -2,6 +2,8 @@ package lj.cms.broadcast;
 
 import java.lang.ref.Reference;
 
+import lj.cms.activity.MessageActivity;
+import lj.cms.activity.MessageListActivity;
 import lj.cms.constant.AppConstant;
 
 import android.app.Activity;
@@ -24,27 +26,17 @@ public class BroadcastReceiverCustom extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
-//		if(intent.getAction().equals(AppConstant.BroadcastActions.GOODS_CLASS_SELECTED))
-//		{//商品类目选中
-//			if(this.a!=null)
-//			{
-//				
-//			}
-//			else
-//			{//如果activity已经销毁，则将数据存到SharedPreferences
-//				
-//			}
-//		}
-//		else if(intent.getAction().equals(AppConstant.BroadcastActions.GOODS_AREA_SELECTED))
-//		{//商品地区选中
-//			if(this.a!=null)
-//			{
-//				
-//			}
-//			else
-//			{//如果activity已经销毁，则将数据存到SharedPreferences
-//				System.out.println("如果activity已经销毁，则将数据存到SharedPreferences");
-//			}
-//		}
+		if(intent.getAction().equals(AppConstant.BroadcastActions.UPDATE_MSG_VIEW))
+		{//更新主页视图
+			if(this.a!=null&&this.a instanceof MessageListActivity){
+				MessageListActivity ma=(MessageListActivity)this.a;
+				System.out.println("接收到广播，刷新界面数据");
+				ma.refreshData();
+			}else if(this.a!=null&&this.a instanceof MessageActivity){
+				MessageActivity ma=(MessageActivity)this.a;
+				System.out.println("接收到广播，刷新界面数据");
+				ma.refreshData(intent.getStringExtra(AppConstant.IntentExtraName.MESSAGE_CONTENT));
+			}
+		}
 	}
 }

@@ -9,7 +9,7 @@ public class MessageInfo {
 				+ type + ", status=" + status + ", receiveId=" + receiveId
 				+ ", sendId=" + sendId + ", content=" + content + ", recTime="
 				+ recTime + ", sendType=" + sendType + ", sendTime=" + sendTime
-				+ "]";
+				+ ", restaurantId=" + restaurantId + "]";
 	}
 	//id
 	public long id;
@@ -31,6 +31,7 @@ public class MessageInfo {
     public int sendType=0;
     //∑¢ÀÕ ±º‰
     public Date sendTime;
-    
+  //∑πµÍID
+    public long restaurantId;
     
 }
