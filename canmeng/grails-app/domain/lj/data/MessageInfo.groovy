@@ -39,7 +39,7 @@ class MessageInfo {
         recTime(nullable:false)
         sendType(nullable:false,inList:MsgSendType.getCodeList())
         sendTime(nullable: false);
-        restaurantId(nullable:true,min: 1);
+        restaurantId(nullable:true,min: 0l);
     }
 
 
