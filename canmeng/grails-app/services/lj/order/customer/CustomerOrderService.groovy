@@ -349,6 +349,7 @@ class CustomerOrderService {
                 msgParams.receiveId=waiterId;
                 msgParams.content="有新的订单需要处理";
                 msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
+                msgParams.restaurantId=orderInfo.restaurantId;
                 def reInfo=messageService.createMsg(msgParams);
                 if(reInfo.recode!=ReCode.OK){
                     println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
@@ -403,6 +404,7 @@ class CustomerOrderService {
                 msgParams.receiveId=orderInfo.listenWaiterId;
                 msgParams.content="顾客已经取消该订单";
                 msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
+                msgParams.restaurantId=orderInfo.restaurantId;
                 def reInfo=messageService.createMsg(msgParams);
                 if(reInfo.recode!=ReCode.OK){
                     println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
@@ -514,6 +516,7 @@ class CustomerOrderService {
                         msgParams.receiveId=orderInfo.listenWaiterId;
                         msgParams.content="订单状态改变，需要处理";
                         msgParams.sendType=MsgSendType.CUSTOMER_TO_STAFF.code;
+                        msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);

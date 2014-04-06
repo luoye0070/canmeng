@@ -96,6 +96,7 @@ class StaffOrderService {
                         msgParams.receiveId=orderInfo.userId;
                         msgParams.content="订单状态改变，"+OrderStatus.getLable(orderInfo.status);
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
+                        msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
@@ -153,6 +154,7 @@ class StaffOrderService {
                         msgParams.receiveId=orderInfo.userId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经确认为有效订单";
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
+                        msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
@@ -224,6 +226,7 @@ class StaffOrderService {
                         msgParams.receiveId=orderInfo.userId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经被饭店取消，取消原因是："+orderInfo.cancelReason;
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
+                        msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
@@ -368,6 +371,7 @@ class StaffOrderService {
                         msgParams.receiveId=orderInfo.userId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经算账完成，你可以对本次用餐进行评价";
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
+                        msgParams.restaurantId=orderInfo.restaurantId;
                         def reInfo=messageService.createMsg(msgParams);
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);

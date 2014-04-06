@@ -25,6 +25,10 @@ class MessageInfo {
     //发送时间
     Date sendTime=new Date();
 
+    /*************为了方便的冗余数据***********/
+    //饭店ID
+    long restaurantId;
+
     static constraints = {
         orderId(nullable:false,min: 0l);
         type(nullable:false,inList:MessageType.getCodeList());
@@ -34,7 +38,8 @@ class MessageInfo {
         content (nullable:true,blank:true,maxSize:256)
         recTime(nullable:false)
         sendType(nullable:false,inList:MsgSendType.getCodeList())
-        sendTime(nullable: false)
+        sendTime(nullable: false);
+        restaurantId(nullable:true,min: 1);
     }
 
 
@@ -51,6 +56,7 @@ class MessageInfo {
                 ", recTime=" + recTime +
                 ", sendType=" + sendType +
                 ", sendTime=" + sendTime +
+                ", restaurantId=" + restaurantId +
                 ", version=" + version +
                 '}';
     }
