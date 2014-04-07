@@ -2,6 +2,7 @@ package lj.cms.activity;
 
 import lj.cms.R;
 import lj.cms.common.ActivityManager;
+import lj.cms.common.AcvivityLoginGoto;
 import lj.cms.constant.AppConstant;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -79,5 +80,12 @@ public class FoodDetailActivity extends Activity {
 		
 		fdAy_htmlWv.loadUrl(AppConstant.UrlStrs.URL_FOOD_DETAIL+"?id="+foodId);
 	}
-
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
+		super.onDestroy();
+	}
 }

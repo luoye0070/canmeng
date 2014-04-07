@@ -152,12 +152,13 @@ public class MainNavbarMenu {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(a instanceof ActivityCallBackInterface)
-					AcvivityLoginGoto.setAcbi((ActivityCallBackInterface)a);
+//				if(a instanceof ActivityCallBackInterface)
+//					AcvivityLoginGoto.setAcbi((ActivityCallBackInterface)a);
 				Intent loginIntent=new Intent();
 				loginIntent.setClass(a, LoginActivity.class);
 				loginIntent.putExtra(AppConstant.IntentExtraName.IN_LOGIN_FROM_BT, true);
 				a.startActivity(loginIntent);
+				a.finish();
 			}
 		});
 		

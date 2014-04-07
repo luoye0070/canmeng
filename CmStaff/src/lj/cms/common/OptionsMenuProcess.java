@@ -19,6 +19,8 @@ public class OptionsMenuProcess {
 		switch(menuId)
     	{
     	case R.id.menu_login:
+			if(a instanceof ActivityCallBackInterface)
+				AcvivityLoginGoto.setAcbi((ActivityCallBackInterface)a);
     		Intent loginIntent=new Intent();
 			loginIntent.setClass(a, LoginActivity.class);
 			loginIntent.putExtra(AppConstant.IntentExtraName.IN_LOGIN_FROM_BT, true);

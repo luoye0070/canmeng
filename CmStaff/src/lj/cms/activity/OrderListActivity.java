@@ -300,5 +300,12 @@ public class OrderListActivity extends Activity implements ActivityCallBackInter
 		pageNum=0;//Ò³ºÅ
 		loadData();
 	}
-	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
+		super.onDestroy();
+	}
 }

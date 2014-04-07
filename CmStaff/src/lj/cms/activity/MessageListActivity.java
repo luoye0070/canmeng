@@ -254,6 +254,10 @@ public class MessageListActivity extends Activity implements ActivityCallBackInt
 		//am.removeActivity(this);
 		
 		unregisterReceiver(brc);
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
 		super.onDestroy();
 	}
+	
 }

@@ -602,6 +602,7 @@ public void onDrawerOpened() {
 							@Override
 							public void doAfterSuccess() {//提交操作成功后，刷新数据
 								// TODO Auto-generated method stub
+								orderInfo=null;
 								list=null;
 								iatclAdapter=null;		
 								dataList=null;
@@ -631,6 +632,7 @@ public void onDrawerOpened() {
 					@Override
 					public void doAfterSuccess() {//提交操作成功后，刷新数据
 						// TODO Auto-generated method stub
+						orderInfo=null;
 						list=null;
 						iatclAdapter=null;		
 						dataList=null;
@@ -748,6 +750,7 @@ public void onDrawerOpened() {
 				@Override
 				public void doAfterSuccess() {//提交操作成功后，刷新数据
 					// TODO Auto-generated method stub
+					orderInfo=null;
 					list=null;
 					iatclAdapter=null;		
 					dataList=null;
@@ -769,11 +772,20 @@ public void onDrawerOpened() {
 	@Override
 	public void loginSuccessCallBack() {
 		// TODO Auto-generated method stub
+		orderInfo=null;
 		list=null;
 		iatclAdapter=null;		
 		dataList=null;
 		visibleLastIndex=0;		
 		pageNum=0;//页号
 		loadData();
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
+		super.onDestroy();
 	}
 }

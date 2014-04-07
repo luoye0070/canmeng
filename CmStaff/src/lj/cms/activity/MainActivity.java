@@ -262,4 +262,12 @@ public class MainActivity extends Activity implements ActivityCallBackInterface 
 		if(mnm!=null)
 			mnm.refreshView();
 	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
+		super.onDestroy();
+	}
 }

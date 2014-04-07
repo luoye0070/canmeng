@@ -11,6 +11,7 @@ import lj.cms.common.DESUtil;
 import lj.cms.common.ObjectSerialize;
 import lj.cms.common.StaticData;
 import lj.cms.constant.AppConstant;
+import lj.cms.constant.PositionType;
 import lj.cms.dataload.AfterAction;
 import lj.cms.dataload.BeforeAction;
 import lj.cms.dataload.DataLoadHelper;
@@ -206,7 +207,13 @@ public class LoginActivity extends Activity {
 				{
 					//跳转界面
 					Intent mainIntent=new Intent();
-					mainIntent.setClass(LoginActivity.this, MainActivity.class);
+					//根据权限设置跳转的位置
+					if(ui.positionTypeList.size()==1&&ui.positionTypeList.get(0)==PositionType.COOK.code){
+						//只有厨师权限
+						mainIntent.setClass(LoginActivity.this, DishListActivity.class);
+					}else{
+						mainIntent.setClass(LoginActivity.this, MainActivity.class);
+					}
 					a.startActivity(mainIntent);
 					a.finish();
 				}
@@ -243,7 +250,13 @@ public class LoginActivity extends Activity {
 			startService(service);
 			//跳转界面
 			Intent mainIntent=new Intent();
-			mainIntent.setClass(LoginActivity.this, MainActivity.class);
+			//根据权限设置跳转的位置
+			if(ui.positionTypeList!=null&&ui.positionTypeList.size()==1&&ui.positionTypeList.get(0)==PositionType.COOK.code){
+				//只有厨师权限
+				mainIntent.setClass(LoginActivity.this, DishListActivity.class);
+			}else{
+				mainIntent.setClass(LoginActivity.this, MainActivity.class);
+			}
 			startActivity(mainIntent);
 			finish();
 			return;

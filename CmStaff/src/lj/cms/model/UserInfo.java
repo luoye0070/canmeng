@@ -83,8 +83,11 @@ public class UserInfo implements Serializable {
 		if(this.positionTypeList!=null){
 			String positionTypeListStr="";
 			int size=this.positionTypeList.size();
-			for(int i=0;i<size;i++){
-				positionTypeListStr+=positionTypeList.get(i)+",";
+			if(size>0){
+				positionTypeListStr+=positionTypeList.get(0);
+				for(int i=1;i<size;i++){
+					positionTypeListStr+=","+positionTypeList.get(i);
+				}
 			}
 			editor.putString(AppConstant.SharedDataItemName.USER_INFO_POSITION_TYPES, positionTypeListStr);
 		}
@@ -101,10 +104,11 @@ public class UserInfo implements Serializable {
 		this.username=preferences.getString(AppConstant.SharedDataItemName.USER_INFO_USERNAME, "");
 		this.password=preferences.getString(AppConstant.SharedDataItemName.USER_INFO_PASSWORD, "");
 		String positionTypeListStr=preferences.getString(AppConstant.SharedDataItemName.USER_INFO_POSITION_TYPES, "");
+		System.out.println("positionTypeListStr-->"+positionTypeListStr);
 		String []strs=positionTypeListStr.split(",");
-		if(strs!=null&&strs.length>1){
+		if(strs!=null&&strs.length>0){
 			this.positionTypeList=new ArrayList<Integer>();
-			for(int i=0;i<strs.length-1;i++){
+			for(int i=0;i<strs.length;i++){
 				int p=0;
 				try{p=Integer.parseInt(strs[i]);}catch(Exception ex){}
 				System.out.print(p+",");

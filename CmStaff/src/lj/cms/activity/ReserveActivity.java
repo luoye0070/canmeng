@@ -7,6 +7,7 @@ import lj.cms.R;
 import lj.cms.activity.include.MainNavbarMenu;
 import lj.cms.common.ActivityCallBackInterface;
 import lj.cms.common.ActivityManager;
+import lj.cms.common.AcvivityLoginGoto;
 import lj.cms.common.OptionsMenuProcess;
 import lj.cms.constant.AppConstant;
 import lj.cms.dataload.AfterAction;
@@ -274,5 +275,12 @@ public class ReserveActivity extends Activity implements ActivityCallBackInterfa
 		pageNum=0;//Ò³ºÅ
 		loadData();
 	}
-
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		if(AcvivityLoginGoto.getAcbi()==this){
+			AcvivityLoginGoto.setAcbi(null);
+		}
+		super.onDestroy();
+	}
 }
