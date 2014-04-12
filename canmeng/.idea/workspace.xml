@@ -2,18 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="1b781c17-c538-45d9-a11b-ce917fe8e8d9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grails-app/views/message/sendMsg.gsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/canmeng.war" afterPath="$PROJECT_DIR$/target/canmeng.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy" afterPath="$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/lj/data/MessageInfo.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/lj/data/MessageInfo.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy" afterPath="$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/lj/data/OrderInfo.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/lj/data/OrderInfo.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/domain/lj/data/TableInfo.groovy" afterPath="$PROJECT_DIR$/grails-app/domain/lj/data/TableInfo.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="canmeng.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$USER_HOME$/.grails/" />
     <file path="/CustomerOrderService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396785196090" ignored="false" />
-    <file path="/CustomerDishService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1375554174914" ignored="false" />
-    <file path="/Dummy.txt" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396795318600" ignored="false" />
+    <file path="/CustomerDishService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397208521675" ignored="false" />
+    <file path="/Dummy.txt" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397329599069" ignored="false" />
     <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/views/tableManage/_form.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396535179286" ignored="false" />
     <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/services/com/xjmei/dinner/phone/PhoneService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396534877795" ignored="false" />
     <file path="/PhoneService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396534876132" ignored="false" />
@@ -21,9 +25,31 @@
     <file path="/WebUtilService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396534867040" ignored="false" />
     <file path="/_form.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396535134266" ignored="false" />
     <file path="/MessageInfo.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396779346757" ignored="false" />
-    <file path="/a.dummy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396795315992" ignored="false" />
+    <file path="/a.dummy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397328374523" ignored="false" />
     <file path="/MessageController.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396795292960" ignored="false" />
     <file path="/sendMsg.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1396795214111" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/.idea/workspace.xml" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397062259964" ignored="false" />
+    <file path="/fragment.java" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397051729025" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/domain/com/xjmei/dinner/DinnerReserveTypeInfo.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397051729025" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/src/groovy/com/xjmei/dinner/enums/ReserveType.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397051729025" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/controllers/com/xjmei/dinner/shop/ShopController.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397052118803" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/services/com/xjmei/dinner/shop/ShopService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397055740843" ignored="false" />
+    <file path="/ShopService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397055693686" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/views/shop/editReserveType.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397060589773" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/views/layouts/_shopMenu.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397052573743" ignored="false" />
+    <file path="/_shopMenu.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397052569520" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/controllers/com/xjmei/dinner/shop/InfoShowController.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397061283343" ignored="false" />
+    <file path="/InfoShowController.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397061276615" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/views/infoShow/tablesShow.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397061409062" ignored="false" />
+    <file path="/tablesShow.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397056806664" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/views/infoShow/phone_tablesShow.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397061133743" ignored="false" />
+    <file path="/phone_tablesShow.gsp" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397058163370" ignored="false" />
+    <file path="G:/Dropbox/netbeans/dinnerReserve/grails-app/controllers/com/xjmei/dinner/order/CustomerController.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397058733649" ignored="false" />
+    <file path="/MessageType.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397200606831" ignored="false" />
+    <file path="/StaffOrderService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397201565901" ignored="false" />
+    <file path="/MessageService.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397327471792" ignored="false" />
+    <file path="/DishesInfo.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397207877652" ignored="false" />
+    <file path="/OrderInfo.groovy" changelist="1b781c17-c538-45d9-a11b-ce917fe8e8d9" time="1397207976639" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,39 +110,76 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="MessageController.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="39" selection-start="394" selection-end="394" vertical-scroll-proportion="-0.95652175">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tablesShow.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/infoShow/tablesShow.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="123" column="34" selection-start="3976" selection-end="3976" vertical-scroll-proportion="-0.4074074">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StaffOrderService.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="4" selection-start="599" selection-end="629" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageService.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="56" selection-start="1913" selection-end="1913" vertical-scroll-proportion="0.3666027">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StaffPositionInfo.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/StaffPositionInfo.groovy">
+          <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="23" selection-start="30" selection-end="47" vertical-scroll-proportion="-1.3469387">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="CustomerOrderService.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerOrderService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="519" column="75" selection-start="22181" selection-end="22748" vertical-scroll-proportion="0.0">
+            <state line="168" column="43" selection-start="6943" selection-end="6953" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageType.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy">
+      <file leaf-file-name="DishesInfo.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="14" selection-start="151" selection-end="161" vertical-scroll-proportion="0.0">
+            <state line="59" column="55" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageController.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy">
+      <file leaf-file-name="CustomerDishService.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="12" selection-start="196" selection-end="196" vertical-scroll-proportion="0.24765478">
-              <folding>
-                <element signature="e#20#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sendMsg.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/message/sendMsg.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="88" selection-start="366" selection-end="366" vertical-scroll-proportion="-4.0740743">
+            <state line="157" column="65" selection-start="6691" selection-end="6691" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,22 +195,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/StaffInfo.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/lj/data/StaffPositionInfo.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/TableInfo.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/src/groovy/lj/enumCustom/ReCode.groovy" />
         <option value="$PROJECT_DIR$/src/groovy/lj/enumCustom/MsgSendType.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/OrderInfo.groovy" />
         <option value="$PROJECT_DIR$/grails-app/controllers/lj/order/CustomerController.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/MessageInfo.groovy" />
         <option value="$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerOrderService.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/message/sendMsg.gsp" />
         <option value="$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/MessageInfo.groovy" />
+        <option value="$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/TableInfo.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/domain/lj/data/OrderInfo.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy" />
       </list>
     </option>
   </component>
@@ -190,6 +253,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -200,16 +273,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="canmeng" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -330,7 +393,51 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="shop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grails-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="message" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grails-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="infoShow" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -419,6 +526,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="lj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grails-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shop" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -555,6 +688,10 @@
               <option name="myItemId" value="domain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -575,6 +712,58 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="lj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grails-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sysparameter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canmeng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grails-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lj" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shop" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -785,12 +974,16 @@
       <created>1396791240109</created>
       <updated>1396791240109</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003">
+      <created>1396797893111</created>
+      <updated>1396797893111</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32649574" sideWeight="0.4969697" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -806,7 +999,6 @@
       <window_info id="Grails View" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -822,6 +1014,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329806" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -924,117 +1117,133 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/MsgSendType.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/UserInfo.groovy">
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="24" selection-start="339" selection-end="339" vertical-scroll-proportion="0.45740741" />
+        <state line="9" column="31" selection-start="108" selection-end="108" vertical-scroll-proportion="-0.8164948">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/RestaurantInfo.groovy">
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="15" selection-start="703" selection-end="703" vertical-scroll-proportion="0.73960215">
+        <state line="67" column="53" selection-start="1237" selection-end="1249" vertical-scroll-proportion="0.45360824">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/OrderInfo.groovy">
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="60" selection-start="2226" selection-end="2226" vertical-scroll-proportion="0.7257732">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/DishesInfo.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="18" selection-start="57" selection-end="69" vertical-scroll-proportion="0.033962265" />
-      </provider>
       <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/user/LoginController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/user/UserHandleService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="42" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+        <state line="59" column="55" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/util/WebUtilService.groovy">
+    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/OrderStatus.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="33" selection-start="896" selection-end="896" vertical-scroll-proportion="0.0">
+        <state line="10" column="4" selection-start="164" selection-end="164" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/jobs/ShopJobService.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffDishService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="6" selection-start="76" selection-end="76" vertical-scroll-proportion="0.039568346">
+        <state line="14" column="6" selection-start="351" selection-end="351" vertical-scroll-proportion="-5.9117084">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageStatus.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="79" selection-start="110" selection-end="110" vertical-scroll-proportion="0.2769784">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/MessageInfo.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="41" selection-start="930" selection-end="930" vertical-scroll-proportion="0.041275796">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/staff/StaffOrderService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="373" column="70" selection-start="15394" selection-end="15394" vertical-scroll-proportion="14.585635">
+        <state line="21" column="4" selection-start="599" selection-end="629" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/message/MessageAjaxController.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/StaffPositionInfo.groovy">
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="6" selection-start="95" selection-end="95" vertical-scroll-proportion="0.16510318">
+        <state line="3" column="23" selection-start="30" selection-end="47" vertical-scroll-proportion="-1.3469387">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/shop/InfoShowController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="14" selection-start="151" selection-end="161" vertical-scroll-proportion="0.0">
+        <state line="110" column="40" selection-start="3624" selection-end="3624" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/PositionType.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="4" selection-start="245" selection-end="245" vertical-scroll-proportion="0.33203125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerDishService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="65" selection-start="6691" selection-end="6691" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/customer/CustomerOrderService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="519" column="75" selection-start="22181" selection-end="22748" vertical-scroll-proportion="0.0">
+        <state line="168" column="43" selection-start="6943" selection-end="6953" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/message/sendMsg.gsp">
+    <entry file="file://$PROJECT_DIR$/grails-app/domain/lj/data/TableInfo.groovy">
+      <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="88" selection-start="366" selection-end="366" vertical-scroll-proportion="-4.0740743">
+        <state line="24" column="50" selection-start="448" selection-end="448" vertical-scroll-proportion="0.42886597">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/groovy/lj/enumCustom/MessageType.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="4" selection-start="222" selection-end="222" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/infoShow/tablesShow.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="34" selection-start="3976" selection-end="3976" vertical-scroll-proportion="-0.4074074">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/services/lj/order/common/MessageService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="6" selection-start="327" selection-end="327" vertical-scroll-proportion="-2.0257826">
+        <state line="64" column="56" selection-start="1913" selection-end="1913" vertical-scroll-proportion="0.3666027">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/lj/message/MessageController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="12" selection-start="196" selection-end="196" vertical-scroll-proportion="0.24765478">
-          <folding>
-            <element signature="e#20#52#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

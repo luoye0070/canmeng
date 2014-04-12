@@ -7,7 +7,8 @@ public enum MessageType {
     TEAWATER_TYPE(2,'茶水'),
     OTHER_TYPE(3,'其它'),
     PACKAGE(4,'打包'),
-    CLEAR_AWAY(5,"餐桌收拾")
+    CLEAR_AWAY(5,"餐桌收拾"),
+    UPDATE_DISH_LIST(6,"更新点菜列表");
     public Integer code
     public String label
     MessageType(Integer code,String label){
@@ -21,7 +22,8 @@ public enum MessageType {
                 TEAWATER_TYPE.code,
                 OTHER_TYPE.code,
                 PACKAGE.code,
-                CLEAR_AWAY.code
+                CLEAR_AWAY.code,
+                UPDATE_DISH_LIST.code
         ];
     }
 }

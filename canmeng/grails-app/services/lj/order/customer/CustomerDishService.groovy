@@ -4,17 +4,20 @@ import lj.data.DishesInfo
 import lj.data.FoodInfo
 import lj.data.OrderInfo
 import lj.enumCustom.DishesValid
+import lj.enumCustom.MessageType
+import lj.enumCustom.MsgSendType
 import lj.enumCustom.OrderStatus
 import lj.enumCustom.OrderValid
 import lj.enumCustom.ReCode
 
 import lj.Number
+import lj.order.common.MessageService
 
 import java.text.SimpleDateFormat;
 
 class CustomerDishService {
     def webUtilService;
-
+    MessageService messageService;
     def serviceMethod() {
 
     }
@@ -137,11 +140,28 @@ class CustomerDishService {
                     dishesInfo.date=orderInfo.date;
                     dishesInfo.time=orderInfo.time;
                     dishesInfo.foodImg=foodInfo.image;
+                    dishesInfo.tableName=orderInfo.tableName;
                     if (!dishesInfo.save(flush: true)) {//保存数据失败输出日志
                         println("保存点菜记录失败:" + dishesInfo);
                         failedList.add([foodId: it.foodId, msg: "保存点菜记录失败",errors:dishesInfo.errors.allErrors]);
                     }
                 }
+                //点菜完成后，根据订单状态来确定是否，在饭店的点菜列表中更新
+                if (orderInfo.status >= OrderStatus.VERIFY_ORDERED_STATUS.code) {//订单的状态是点菜确认完成后,这时点的菜默认设置点菜的有效性和状态为1和1
+                    //生成消息通知顾客
+                    def msgParams=[:];
+                    msgParams.orderId=orderId;
+                    msgParams.type=MessageType.UPDATE_DISH_LIST.code;
+                    msgParams.receiveId=0;
+                    msgParams.content="需要更新点菜列表";
+                    msgParams.sendType=MsgSendType.STAFF_TO_STAFF.code;
+                    msgParams.restaurantId=orderInfo.restaurantId;
+                    def reInfo=messageService.createMsg(msgParams);
+                    if(reInfo.recode!=ReCode.OK){
+                        println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
+                    }
+                }
+
                 if(failedList.size()>0){
                     return [recode: ReCode.DISH_HAVEERROR,failedList: failedList];
                 }

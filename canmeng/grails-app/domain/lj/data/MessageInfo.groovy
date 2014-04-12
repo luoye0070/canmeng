@@ -7,15 +7,15 @@ import lj.enumCustom.MsgSendType
 class MessageInfo {
 
     //订单ID
-    long orderId
+    long orderId=0
     //类型
     Integer type=0
     //状态
     Integer status=0
     //接受方ID
-    long receiveId
+    long receiveId=0;
     //发送方ID
-    long sendId
+    long sendId=0;
     //内容
     String content
     //预定接收时间

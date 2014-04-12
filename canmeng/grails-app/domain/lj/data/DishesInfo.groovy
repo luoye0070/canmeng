@@ -38,6 +38,8 @@ class DishesInfo {
     Date time;
     //菜谱图片
     String foodImg;
+    //桌位
+    String tableName;
 
     static constraints = {
         orderId(nullable:false,min: 1l)
@@ -55,6 +57,7 @@ class DishesInfo {
         date(nullable: false);
         time(nullable: false);
         foodImg(nullable:true,blank: true, maxSize:128);
+        tableName(nullable:true,blank: true,maxSize: 64);
     }
 
 
@@ -77,6 +80,7 @@ class DishesInfo {
                 ", date=" + date +
                 ", time=" + time +
                 ", foodImg='" + foodImg + '\'' +
+                ", tableName='" + tableName + '\'' +
                 ", version=" + version +
                 '}';
     }

@@ -3,9 +3,12 @@ package lj.order.common
 import grails.converters.JSON
 import lj.data.MessageInfo
 import lj.data.OrderInfo
+import lj.data.StaffPositionInfo
 import lj.enumCustom.MessageStatus
+import lj.enumCustom.MessageType
 import lj.enumCustom.MsgSendType
 import lj.enumCustom.OrderValid
+import lj.enumCustom.PositionType
 import lj.enumCustom.ReCode
 import lj.Number
 import lj.mina.server.MinaServer
@@ -56,22 +59,54 @@ class MessageService {
             }
             //发送消息
             int userType = 0;
-            if (messageInfo.sendType == MsgSendType.CUSTOMER_TO_STAFF.code || messageInfo.sendType == MsgSendType.STAFF_TO_STAFF.code) {
-                userType = 0;
+            if (messageInfo.sendType == MsgSendType.CUSTOMER_TO_STAFF.code || messageInfo.sendType == MsgSendType.STAFF_TO_STAFF.code)
+            {
+                userType = 0; //饭店方
+                if(messageInfo.type==MessageType.UPDATE_DISH_LIST.code){//要求更新点菜列表的消息，需发送给所有在线的厨师
+                    def staffPositionInfos= StaffPositionInfo.findAllByRestaurantIdAndPositionType(messageInfo.restaurantId,PositionType.COOK.code);
+                    if(staffPositionInfos){
+                        staffPositionInfos.each {//每个在线厨师都发送消息,并且不关心是否发送成功
+                            if(MinaServer.isOnline(it.staffId, userType))
+                                MinaServer.sendMsg(it.staffId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString());
+                        }
+                    }
+                //}else if(messageInfo.type==MessageType.ORDER_HANDLE_TYPE.code){//订单处理消息，发送给在线服务员
+                }else{
+                    //检查接收服务员是否在线，不在线换一个在线的发过去
+                    if(!MinaServer.isOnline(messageInfo.receiveId, userType)){ //不在线则查找到一个在线的服务员
+                        def staffPositionInfos= StaffPositionInfo.findAllByRestaurantIdAndPositionType(messageInfo.restaurantId,PositionType.WAITER.code);
+                        if(staffPositionInfos){
+                            int size=staffPositionInfos.size();
+                            int rand=new Random().nextInt(size);
+                            StaffPositionInfo staffPositionInfoIsOnline=null;
+                            for(int i=0;i<=size;i++) {
+                                StaffPositionInfo staffPositionInfo=staffPositionInfos.get(i);
+                                if(MinaServer.isOnline(staffPositionInfo.staffId, userType)){
+                                    staffPositionInfoIsOnline=staffPositionInfo;
+                                    if(i>=rand){
+                                        break;
+                                    }
+                                }
+                            }
+                            if(staffPositionInfoIsOnline){
+                                messageInfo.receiveId=staffPositionInfoIsOnline.staffId;
+                                if (MinaServer.sendMsg(messageInfo.receiveId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString())) {
+                                    messageInfo.status = MessageStatus.READED_STATUS.code;
+                                }
+                            }
+                        }
+                    }
+                }
             } else {
-                userType = 1;
+                userType = 1; //顾客方
             }
-            if (MinaServer.sendMsg(messageInfo.receiveId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString())) {
-                messageInfo.status = MessageStatus.READED_STATUS.code;
-            }
-            if (messageInfo.validate()) {
-                if (messageInfo.save(flush: true))
-                    return [recode: ReCode.OK];
-                else
-                    return [recode: ReCode.SAVE_FAILED, errors: messageInfo.errors.allErrors];
-            } else {
+
+            //发送完保存消息状态
+            if (messageInfo.save(flush: true))
+                return [recode: ReCode.OK];
+            else
                 return [recode: ReCode.SAVE_FAILED, errors: messageInfo.errors.allErrors];
-            }
+
         } else {
             return [recode: ReCode.NOT_LOGIN];
         }

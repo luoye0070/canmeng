@@ -91,9 +91,9 @@ class OrderInfo {
                 }
             }
         });
-        restaurantName(nullable:true,blank: true);
-        userName(nullable:true,blank: true);
-        tableName(nullable:true,blank: true);
+        restaurantName(nullable:true,blank: true,maxSize:256);
+        userName(nullable:true,blank: true,maxSize: 32);
+        tableName(nullable:true,blank: true,maxSize: 64);
     }
 
 }

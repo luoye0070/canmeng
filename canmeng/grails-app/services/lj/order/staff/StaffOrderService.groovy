@@ -77,6 +77,20 @@ class StaffOrderService {
                 if (statusCode == OrderStatus.VERIFY_ORDERED_STATUS.code) {// 确认点菜完成
                     //先修改订单中点菜的状态为状态为“0”有效性为“0”的菜的状态改为“1确定完成”，有效性改为“1有效”。
                     staffDishService.dishConfirm(params);
+                    //发送消息让厨师端，点菜列表进行更新
+                    //生成消息通知顾客
+                    def msgParams=[:];
+                    msgParams.orderId=orderId;
+                    msgParams.type=MessageType.UPDATE_DISH_LIST.code;
+                    msgParams.receiveId=staffId;
+                    msgParams.content="需要更新点菜列表";
+                    msgParams.sendType=MsgSendType.STAFF_TO_STAFF.code;
+                    msgParams.restaurantId=0;
+                    def reInfo=messageService.createMsg(msgParams);
+                    if(reInfo.recode!=ReCode.OK){
+                        println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
+                    }
+
                 }
                 //修改订单订单状态，如果有效性为初始态则更新有效性改为“1有效”
                 OrderInfo orderInfo=OrderInfo.get(orderId);

@@ -22,7 +22,7 @@ class TableInfo {
 
     static constraints = {
         restaurantId(nullable:false,min: 1l);
-        name(nullable:false,blank:false,maxSize:32);
+        name(nullable:false,blank:false,maxSize:64);
         minPeople(nullable:false,min:1);
         maxPeople(nullable:false,min:1);
         canMultiOrder(nullable: false);
