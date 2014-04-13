@@ -327,7 +327,13 @@ class StaffOrderService {
                      orderInfo.postage=postage;
                      orderInfo.realAccount=realAccount;
                      if(orderInfo.save(flush: true)){
-                         return [recode: ReCode.OK, orderInfo: orderInfo];
+                         //查询是否存在做菜中或做菜完成的点菜，有则需提醒收银员
+                         DishesInfo dishesInfo=DishesInfo.findByStatusBetweenAndValid(DishesStatus.COOKING_ORDERED_STATUS.code,DishesStatus.COOKED_STATUS.code,DishesValid.EFFECTIVE_VALID.code);
+                         if(dishesInfo){
+                             return [recode: ReCode.OK, orderInfo: orderInfo,warning:"还有做菜中或做菜完成的点菜因未上菜而未将费用计入到消费费用中，请注意查看确定后再做结账操作！"];
+                         }else{
+                            return [recode: ReCode.OK, orderInfo: orderInfo];
+                         }
                      }
                      else{
                          return [recode: ReCode.SAVE_FAILED,errors: orderInfo.errors.allErrors];
@@ -377,6 +383,26 @@ class StaffOrderService {
                     if(realAccount>0)
                         orderInfo.realAccount=realAccount;
                     if(orderInfo.save(flush: true)){
+                        //未做的有效的菜改为取消，并给厨师端点菜列表发消息刷新列表
+                        def dishesInfos=DishesInfo.findAllByRestaurantIdAndValidAndStatus(orderInfo.restaurantId,DishesValid.EFFECTIVE_VALID.code,DishesStatus.VERIFYING_STATUS.code);
+                        if(dishesInfos){
+                            dishesInfos.each {
+                                it.valid=DishesValid.RESTAURANT_AFTER_VERIFYED_CANCEL_VALID.code;
+                                it.cancelReason="结账完成";
+                            }
+                            //发送消息让厨师端，点菜列表进行更新
+                            def msgParams=[:];
+                            msgParams.orderId=orderId;
+                            msgParams.type=MessageType.UPDATE_DISH_LIST.code;
+                            msgParams.receiveId=staffId;
+                            msgParams.content="需要更新点菜列表";
+                            msgParams.sendType=MsgSendType.STAFF_TO_STAFF.code;
+                            msgParams.restaurantId=0;
+                            def reInfo=messageService.createMsg(msgParams);
+                            if(reInfo.recode!=ReCode.OK){
+                                println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
+                            }
+                        }
 
                         //生成消息通知顾客
                         def msgParams=[:];

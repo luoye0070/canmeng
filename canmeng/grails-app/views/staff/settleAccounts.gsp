@@ -119,6 +119,11 @@
         ${flash.message}
     </div>
 </g:if>
+<g:if test="${flash.warning}">
+    <div class="alert">
+        ${flash.warning}
+    </div>
+</g:if>
 
 <!--订单信息-->
 <div class="mcmc_detail">

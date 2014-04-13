@@ -103,7 +103,7 @@
 
                 <div class="control-group">
                     <label class="control-label" for="province"><g:message code="restaurantInfo.areaId.label" default="Area Id"/></label>
-                    <input name="areaId" id="areaId" type="hidden" value="0">
+                    <input name="areaId" id="areaId" type="hidden" value="${restaurantInfoInstance?.areaId}">
                     <input type="hidden" name="province" id="provinceHidden"  value="${restaurantInfoInstance?.province}">
                     <div class="controls">
                         省 <span class="required-indicator">*</span>

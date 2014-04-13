@@ -357,6 +357,9 @@ class StaffController {
         def reInfo=null;
         if(request.method=="GET"){
             reInfo=staffOrderService.castAccounts(params);
+            if(reInfo.warning){
+                flash.warning=reInfo.warning;
+            }
             render(view: "settleAccounts",model: reInfo);
         }
         if(request.method=="POST"){//提交算账
