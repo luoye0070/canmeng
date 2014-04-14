@@ -90,11 +90,11 @@ class MessageService {
                             }
                             if(staffPositionInfoIsOnline){
                                 messageInfo.receiveId=staffPositionInfoIsOnline.staffId;
-                                if (MinaServer.sendMsg(messageInfo.receiveId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString())) {
-                                    messageInfo.status = MessageStatus.READED_STATUS.code;
-                                }
                             }
                         }
+                    }
+                    if (MinaServer.sendMsg(messageInfo.receiveId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString())) {
+                        messageInfo.status = MessageStatus.READED_STATUS.code;
                     }
                 }
             } else {

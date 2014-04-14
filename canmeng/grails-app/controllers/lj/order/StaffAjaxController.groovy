@@ -149,7 +149,7 @@ class StaffAjaxController {
     }
     //订单详细信息
     def orderShow(){
-        staffOrderService.castAccounts(params);//算下账，方便获取算账金额
+        //staffOrderService.castAccounts(params);//算下账，方便获取算账金额
         OrderInfo orderInfoInstance=null;
         def reInfo=staffOrderService.orderInfo(params);
         if(reInfo.recode==ReCode.OK){
@@ -214,6 +214,13 @@ class StaffAjaxController {
         def reInfo=staffOrderService.orderStatusUpdate(params);
         println("reInfo-->"+reInfo);
         render(reInfo as JSON);
+    }
+    //算账
+    def getAccounts(){
+        def reInfo=staffOrderService.castAccounts(params);
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+        return ;
     }
     //结账
     def settleAccounts(){
