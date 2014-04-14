@@ -79,7 +79,7 @@ class MessageService {
                             int size=staffPositionInfos.size();
                             int rand=new Random().nextInt(size);
                             StaffPositionInfo staffPositionInfoIsOnline=null;
-                            for(int i=0;i<=size;i++) {
+                            for(int i=0;i<size;i++) {
                                 StaffPositionInfo staffPositionInfo=staffPositionInfos.get(i);
                                 if(MinaServer.isOnline(staffPositionInfo.staffId, userType)){
                                     staffPositionInfoIsOnline=staffPositionInfo;

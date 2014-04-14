@@ -8,9 +8,10 @@ public enum MessageType {
     OTHER_TYPE(3,'其它'),
     PACKAGE(4,'打包'),
     CLEAR_AWAY(5,"餐桌收拾"),
-    UPDATE_DISH_LIST(6,"更新点菜列表");
-    public Integer code
-    public String label
+    UPDATE_DISH_LIST(6,"更新点菜列表"),
+    SERVED_FOOD(7,"上菜");
+    public Integer code;
+    public String label;
     MessageType(Integer code,String label){
         this.code=code
         this.label=label
@@ -23,7 +24,8 @@ public enum MessageType {
                 OTHER_TYPE.code,
                 PACKAGE.code,
                 CLEAR_AWAY.code,
-                UPDATE_DISH_LIST.code
+                UPDATE_DISH_LIST.code,
+                SERVED_FOOD.code
         ];
     }
 }

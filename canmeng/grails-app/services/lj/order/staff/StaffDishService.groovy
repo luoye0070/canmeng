@@ -6,8 +6,11 @@ import lj.data.OrderInfo
 import lj.data.StaffInfo
 import lj.enumCustom.DishesStatus
 import lj.enumCustom.DishesValid
+import lj.enumCustom.MessageType
+import lj.enumCustom.MsgSendType
 import lj.enumCustom.OrderValid
 import lj.enumCustom.ReCode
+import lj.order.common.MessageService
 import lj.order.customer.CustomerDishService
 import lj.Number
 import lj.util.WebUtilService;
@@ -15,6 +18,7 @@ import lj.util.WebUtilService;
 class StaffDishService {
     CustomerDishService customerDishService;
     WebUtilService webUtilService;
+    MessageService messageService;
     def serviceMethod() {
 
     }
@@ -207,6 +211,20 @@ class StaffDishService {
                         it.status=statusCode;
                         if(statusCode==DishesStatus.COOKING_ORDERED_STATUS.code){// 更新为做菜中，则更新厨师ID
                             it.cookId=staffId;
+                        }
+                        if(statusCode==DishesStatus.COOKED_STATUS.code){//做菜完成，通知服务员上菜
+                            //生成消息通知服务员
+                            def msgParams=[:];
+                            msgParams.orderId=it.orderId;
+                            msgParams.type=MessageType.SERVED_FOOD.code;
+                            msgParams.receiveId=0;
+                            msgParams.content="桌位“"+it.tableName+"”点的菜“"+it.foodName+"”已做好，请上菜。";
+                            msgParams.sendType=MsgSendType.STAFF_TO_STAFF.code;
+                            msgParams.restaurantId=it.restaurantId;
+                            def reInfo=messageService.createMsg(msgParams);
+                            if(reInfo.recode!=ReCode.OK){
+                                println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
+                            }
                         }
                     }
                 }

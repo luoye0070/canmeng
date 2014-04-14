@@ -360,6 +360,7 @@ class StaffController {
             if(reInfo.warning){
                 flash.warning=reInfo.warning;
             }
+            println("reInfo-->"+reInfo);
             render(view: "settleAccounts",model: reInfo);
         }
         if(request.method=="POST"){//提交算账
