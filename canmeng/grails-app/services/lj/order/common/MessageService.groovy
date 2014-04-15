@@ -74,11 +74,12 @@ class MessageService {
                 }else{
                     //检查接收服务员是否在线，不在线换一个在线的发过去
                     if(!MinaServer.isOnline(messageInfo.receiveId, userType)){ //不在线则查找到一个在线的服务员
+
                         def staffPositionInfos= StaffPositionInfo.findAllByRestaurantIdAndPositionType(messageInfo.restaurantId,PositionType.WAITER.code);
+                        StaffPositionInfo staffPositionInfoIsOnline=null;
                         if(staffPositionInfos){
                             int size=staffPositionInfos.size();
                             int rand=new Random().nextInt(size);
-                            StaffPositionInfo staffPositionInfoIsOnline=null;
                             for(int i=0;i<size;i++) {
                                 StaffPositionInfo staffPositionInfo=staffPositionInfos.get(i);
                                 if(MinaServer.isOnline(staffPositionInfo.staffId, userType)){
@@ -88,9 +89,44 @@ class MessageService {
                                     }
                                 }
                             }
-                            if(staffPositionInfoIsOnline){
-                                messageInfo.receiveId=staffPositionInfoIsOnline.staffId;
+
+                        }
+                        if(staffPositionInfoIsOnline==null){//没有在线服务员,是否有在线服务员主管
+                            staffPositionInfos= StaffPositionInfo.findAllByRestaurantIdAndPositionType(messageInfo.restaurantId,PositionType.WAITER_HEADER.code);
+                            if(staffPositionInfos){
+                                int size=staffPositionInfos.size();
+                                int rand=new Random().nextInt(size);
+                                for(int i=0;i<size;i++) {
+                                    StaffPositionInfo staffPositionInfo=staffPositionInfos.get(i);
+                                    if(MinaServer.isOnline(staffPositionInfo.staffId, userType)){
+                                        staffPositionInfoIsOnline=staffPositionInfo;
+                                        if(i>=rand){
+                                            break;
+                                        }
+                                    }
+                                }
                             }
+                        }
+
+                        if(staffPositionInfoIsOnline==null){//没有在线服务员主管,是否有在线店主
+                            staffPositionInfos= StaffPositionInfo.findAllByRestaurantIdAndPositionType(messageInfo.restaurantId,PositionType.SHOPKEEPER.code);
+                            if(staffPositionInfos){
+                                int size=staffPositionInfos.size();
+                                int rand=new Random().nextInt(size);
+                                for(int i=0;i<size;i++) {
+                                    StaffPositionInfo staffPositionInfo=staffPositionInfos.get(i);
+                                    if(MinaServer.isOnline(staffPositionInfo.staffId, userType)){
+                                        staffPositionInfoIsOnline=staffPositionInfo;
+                                        if(i>=rand){
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if(staffPositionInfoIsOnline){
+                            messageInfo.receiveId=staffPositionInfoIsOnline.staffId;
                         }
                     }
                     if (MinaServer.sendMsg(messageInfo.receiveId, userType, ([recode: ReCode.OK, messageInfo: messageInfo] as JSON).toString())) {
