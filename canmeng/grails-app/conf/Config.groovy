@@ -163,3 +163,14 @@ grails {
     }
 }
 
+environments {
+    development {
+        // relative to web-app
+        jasper.dir.reports = 'src/reports'
+    }
+    production {
+        // relative to web-app
+        jasper.dir.reports = '../src/reports'
+    }
+}
+

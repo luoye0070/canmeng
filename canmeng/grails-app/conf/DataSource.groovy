@@ -14,8 +14,12 @@ hibernate {
 environments {
     development {
         dataSource {
+            //dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            //url = "jdbc:mysql://localhost:3306/canmeng?useUnicode=true&autoreconnect=true&characterEncoding=UTF-8"
+            username = "ljsj_2009"
+            password = "ljgzs2009LJ"
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/canmeng?useUnicode=true&autoreconnect=true&characterEncoding=UTF-8"
+            url = "jdbc:mysql://42.96.176.228:3306/canmeng?useUnicode=true&autoreconnect=true&characterEncoding=UTF-8"
         }
     }
     test {
