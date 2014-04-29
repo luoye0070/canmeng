@@ -54,12 +54,12 @@
     }
 
     .mcmcs_field_middle {
-        width: 160px;
+        width: 130px;
         float: left;
     }
 
     .mcmcsf_input_middle {
-        width: 80px;
+        width: 70px;
     }
 
     .mcmcs_field_small {
@@ -169,6 +169,10 @@
                 <div class="ms_field_small">
                     <input type="submit" value="${message(code: 'default.button.search.label', default: 'search')}"
                            class="btn btn-primary"/>
+
+
+                    <g:actionSubmit value="导出Excel" action="exportOrderList" class="btn btn-primary"/>
+
                 </div>
 
             </form>
