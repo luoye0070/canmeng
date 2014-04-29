@@ -19,6 +19,9 @@ class StaffController {
     StaffDishService staffDishService;
     SearchService searchService;
     CustomerAppraiseService customerAppraiseService;
+
+    def jasperReportService
+
     def index() {//根据不同的职位跳转到不同界面
         redirect(action: "orderList");
     }
@@ -497,5 +500,30 @@ class StaffController {
             return ;
         }
         redirect(action: "orderShow",params: [orderId:orderId]);
+    }
+
+
+    def exportOrderList() {
+
+        params.locale=request.locale
+        params.reportName="orderList"
+        generateResponse(jasperReportService.exportOrderList(params),"订单列表")
+    }
+
+    //输出流
+    def generateResponse = {reportDef,expName->
+        def name=URLEncoder.encode(expName, "UTF-8")
+        if(name.length()>150){
+            name=new String(expName.getBytes("UTF-8"), "GB2312");
+        }
+
+        if (!reportDef.fileFormat.inline &&!reportDef.parameters._inline) {
+            response.setHeader("Content-disposition", "attachment; filename=" + (name?:(reportDef.name)) + "." + reportDef.fileFormat.extension);
+            response.contentType = reportDef.fileFormat.mimeTyp
+            response.characterEncoding = "UTF-8"
+            response.outputStream << reportDef.contentStream.toByteArray()
+        } else {
+            render(text: reportDef.contentStream, contentType: reportDef.fileFormat.mimeTyp, encoding: 'UTF-8');
+        }
     }
 }
