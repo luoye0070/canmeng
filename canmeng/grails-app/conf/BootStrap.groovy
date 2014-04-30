@@ -10,7 +10,17 @@ class BootStrap {
         JSON.registerObjectMarshaller(Date){
             return it?.format("yyyy-MM-dd HH:mm:ss")
         }
-        MinaServer.start(5000,"UTF-8","\n","\n",null);
+        MinaServer.start(5000,"UTF-8","\n","\n",new OnLineListener() {
+            @Override
+            void on(long l, String s, String s1, int i) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            void down(long l, String s, String s1, int i) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
     }
     def destroy = {
     }
