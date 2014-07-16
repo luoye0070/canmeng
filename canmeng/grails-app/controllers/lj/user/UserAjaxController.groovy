@@ -14,7 +14,8 @@ class UserAjaxController {
         String passWord=DESUtil.decryptDES(params.passWord,USER_SECRET_KEY);
         println("passWord-->"+passWord);
         params.passWord=passWord;
-        render(userService.login(params,request)<<[originalPassWord:originalPassWord] as JSON);
+        //render(userService.login(params,request)<<[originalPassWord:originalPassWord] as JSON);
+        render(userService.loginByUser(params,request)<<[originalPassWord:originalPassWord] as JSON);
     }
     //退出
     def logoutAjax(){

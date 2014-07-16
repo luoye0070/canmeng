@@ -1,5 +1,6 @@
 package lj.shop
 
+import lj.data.ClientInfo
 import lj.data.CustomerRelations
 import lj.data.FoodInfo
 import lj.data.OrderInfo
@@ -36,17 +37,17 @@ class CustomerRelationsService {
                 restaurantId=reInfo.restaurantInfo.id;
             }
             //def orderInfoList=OrderInfo.findAllByRestaurantIdAndValidAndStatus(restaurantId,OrderValid.EFFECTIVE_VALID.code,OrderStatus.CHECKOUTED_STATUS.code);
-            String sql_str="select distinct userId from OrderInfo where userId!=0"+
+            String sql_str="select distinct clientId from OrderInfo where clientId!=0"+
                     " and restaurantId="+restaurantId+
                     " and valid="+ OrderValid.EFFECTIVE_VALID.code+
                     " and status="+OrderStatus.CHECKOUTED_STATUS.code;
-            def userIdList=OrderInfo.executeQuery(sql_str);
+            def clientIdList=OrderInfo.executeQuery(sql_str);
             //def userList=null;
-            println(userIdList);
-            if(userIdList){
-                def userList=userIdList.collect {
+            println(clientIdList);
+            if(clientIdList){
+                def userList=clientIdList.collect {
                     [
-                            userId:it,
+                            clientId:it,
                             userName:UserInfo.get(it)?.userName
                     ];
                 }
@@ -69,10 +70,10 @@ class CustomerRelationsService {
         if(userId){
             //取参数
             Long id=lj.Number.toLong(params.id);//非必须
-            Long customerUserId=lj.Number.toLong(params.customerUserId);  //客户用户ID,非必须
+            Long customerClientId=lj.Number.toLong(params.customerClientId);  //客户用户ID,非必须
             String customerUserName=params.customerUserName;//客户用户名,非必须
             int type=lj.Number.toInteger(params.type);//客户类型,必须,默认为0普通客户
-            if(customerUserId==0&&(customerUserName==""||customerUserName==null)){
+            if(customerClientId==0&&(customerUserName==""||customerUserName==null)){
                 return [recode: ReCode.NEED_CUSTOMER_ID_OR_NAME];
             }
 
@@ -95,21 +96,21 @@ class CustomerRelationsService {
             }
             else{
                 //检查客户关系是否已经存在
-                customerRelations=CustomerRelations.findByRestaurantIdAndCustomerUserId(restaurantId,customerUserId);
+                customerRelations=CustomerRelations.findByRestaurantIdAndCustomerClientId(restaurantId,customerClientId);
                 if(customerRelations){//客户关系已经存在
                     return [recode: ReCode.CUSTOMER_RELATIONS_EXIST];
                 }
                 //检查客户用户是否存在
-                UserInfo userInfo=null;
-                if(customerUserId)
-                    userInfo= UserInfo.get(customerUserId);
+                ClientInfo clientInfo=null;
+                if(customerClientId)
+                    clientInfo= ClientInfo.get(customerClientId);
                 else if(customerUserName)
-                    userInfo=UserInfo.findByUserName(customerUserName);
-                if(userInfo){
+                    clientInfo=ClientInfo.findByUserName(customerUserName);
+                if(clientInfo){
                     customerRelations=new CustomerRelations();
                     customerRelations.restaurantId=restaurantId;
-                    customerRelations.customerUserId=userInfo.id;
-                    customerRelations.customerUserName=userInfo.userName;
+                    customerRelations.customerClientId=clientInfo.id;
+                    customerRelations.customerUserName=clientInfo.userName;
                     customerRelations.type=type;
                 }
                 else{
@@ -178,7 +179,7 @@ class CustomerRelationsService {
         if(userId){
             //取参数
             Long id=lj.Number.toLong(params.id);
-            Long customerUserId=lj.Number.toLong(params.customerUserId);  //客户用户ID
+            Long customerClientId=lj.Number.toLong(params.customerClientId);  //客户用户ID
             int type=lj.Number.toInteger(params.type);//客户类型
 
             if(!params.max){
@@ -205,8 +206,8 @@ class CustomerRelationsService {
                 if(id){
                     eq("id",id);
                 }
-                if(customerUserId) {
-                    eq("customerUserId",customerUserId);
+                if(customerClientId) {
+                    eq("customerClientId",customerClientId);
                 }
                 if(params.type){
                     eq("type",type);

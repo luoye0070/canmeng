@@ -206,14 +206,14 @@
     </div>
 </g:if>
 
-<g:if test="${orderInfo?.userId}">
+<g:if test="${orderInfo?.clientId}">
     <div class="mcmcd_item">
         <div class="mcmcdi_label">
-            <g:message code="orderInfo.userId.label" default="User Id"/>
+            <g:message code="orderInfo.clientId.label" default="Client Id"/>
         </div>
 
         <div class="mcmcdi_info">
-            <g:fieldValue bean="${orderInfo}" field="userId"/>
+            <g:fieldValue bean="${orderInfo}" field="clientId"/>
         </div>
     </div>
 </g:if>

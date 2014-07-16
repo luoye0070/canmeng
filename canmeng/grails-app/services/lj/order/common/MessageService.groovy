@@ -43,10 +43,11 @@ class MessageService {
     def createMsg(def params) {
         def session = webUtilService.getSession();
         long userId = Number.toLong(session.userId);//用户ID
-        if (!userId) {
-            userId = Number.toLong(session.staffId);//取工作人员ID,
-        }
-        if (userId) {
+        println("发送消息-》"+params.content);
+//        if (!userId) {
+//            userId = Number.toLong(session.staffId);//取工作人员ID,
+//        }
+//        if (userId) {
             if (!params.sendId) {
                 params.sendId = userId;
             }
@@ -143,9 +144,9 @@ class MessageService {
             else
                 return [recode: ReCode.SAVE_FAILED, errors: messageInfo.errors.allErrors];
 
-        } else {
-            return [recode: ReCode.NOT_LOGIN];
-        }
+//        } else {
+//            return [recode: ReCode.NOT_LOGIN];
+//        }
     }
 
     //接收消息

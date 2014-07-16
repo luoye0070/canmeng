@@ -157,14 +157,14 @@
     </div>
 </g:if>
 
-<g:if test="${orderInfoInstance?.userId}">
+<g:if test="${orderInfoInstance?.clientId}">
     <div class="mcmcd_item">
         <div class="mcmcdi_label">
-            <g:message code="orderInfo.userId.label" default="User Id"/>
+            <g:message code="orderInfo.clientId.label" default="Client Id"/>
         </div>
 
         <div class="mcmcdi_info">
-            <g:fieldValue bean="${orderInfoInstance}" field="userId"/>
+            <g:fieldValue bean="${orderInfoInstance}" field="clientId"/>
         </div>
     </div>
 </g:if>
@@ -621,16 +621,16 @@
                 </div></div>
         </g:if>
 
-        <g:if test="${appraiseInfoInstance?.userId}">
+        <g:if test="${appraiseInfoInstance?.clientId}">
             <div class="mcmcd_item"><div class="mcmcdi_label">
-                <span id="userId-label" class="property-label"><g:message code="appraiseInfo.userId.label"
-                                                                          default="User Id"/></span>
+                <span id="clientId-label" class="property-label"><g:message code="appraiseInfo.clientId.label"
+                                                                          default="Client Id"/></span>
             </div>
 
                 <div class="mcmcdi_info">
-                    <span class="property-value" aria-labelledby="userId-label"><g:fieldValue
+                    <span class="property-value" aria-labelledby="clientId-label"><g:fieldValue
                             bean="${appraiseInfoInstance}"
-                            field="userId"/></span>
+                            field="clientId"/></span>
 
                 </div></div>
         </g:if>

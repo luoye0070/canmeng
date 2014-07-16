@@ -59,6 +59,8 @@ class RestaurantInfo {
     String remark;
     //简单描述
     String description;
+    //店铺url地址
+    String url;
 
     /*************为了方便加的冗余数据*************/
     String cuisineName;
@@ -98,6 +100,7 @@ class RestaurantInfo {
         averageConsume(nullable: true,min: 0d);
         remark(nullable:true,blank:true,maxSize:128);
         description (nullable:true,blank: true,maxSize:1024*128);
+        url(nullable:true,blank: true,maxSize:512);
         cuisineName(nullable: true,blank: true,maxSize: 16);
         packName(nullable: true,blank: true,maxSize: 16);
     }

@@ -74,12 +74,12 @@
 	<g:datePicker name="appraiseTime" precision="day"  value="${appraiseInfoInstance?.appraiseTime}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: appraiseInfoInstance, field: 'userId', 'error')} required">
-	<label for="userId">
-		<g:message code="appraiseInfo.userId.label" default="User Id" />
+<div class="fieldcontain ${hasErrors(bean: appraiseInfoInstance, field: 'clientId', 'error')} required">
+	<label for="clientId">
+		<g:message code="appraiseInfo.clientId.label" default="User Id" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="userId" type="number" min="0" value="${appraiseInfoInstance.userId}" required=""/>
+	<g:field name="clientId" type="number" min="0" value="${appraiseInfoInstance.clientId}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: appraiseInfoInstance, field: 'isAnonymity', 'error')} ">

@@ -158,7 +158,7 @@ class OneTagLib {
         try {
 
             //获取工作人员信息
-            StaffInfo staffInfo = session.staffInfo;
+            StaffInfo staffInfo = StaffInfo.get(session.staffId);
             if (staffInfo) {
                 //查询工作人员职务
                 def staffPositionInfoList = StaffPositionInfo.findAllByRestaurantIdAndStaffId(staffInfo.restaurantId, staffInfo.id);
@@ -184,6 +184,9 @@ class OneTagLib {
                                 }
                                 if (orderInfo.status == OrderStatus.ORDERED_STATUS.code) {
                                     htmlTag += "<a href='" + createLink(controller: "staff", action: "completeAffirmDish", params: [orderId: orderId,backUrl:backUrl]) + "'>确认点菜完成</a>&nbsp;&nbsp;";
+                                }
+                                if(!orderInfo.reachRestaurant){
+                                    htmlTag += "<a href='" + createLink(controller: "staff", action: "customerReach", params: [orderId: orderId],backUrl:backUrl) + "'>顾客到店</a>&nbsp;&nbsp;";
                                 }
                             }
                         }
@@ -212,7 +215,7 @@ class OneTagLib {
         String htmlTag = "";
         try {
             //获取工作人员信息
-            StaffInfo staffInfo = session.staffInfo;
+            StaffInfo staffInfo = StaffInfo.get(session.staffId);
             if (staffInfo) {
                 //查询工作人员职务
                 def staffPositionInfoList = StaffPositionInfo.findAllByRestaurantIdAndStaffId(staffInfo.restaurantId, staffInfo.id);

@@ -40,8 +40,8 @@
                     <g:sortableColumn property="restaurantId"
                                       title="${message(code: 'customerRelations.restaurantId.label', default: 'Restaurant Id')}"/>
 
-                    <g:sortableColumn property="customerUserId"
-                                      title="${message(code: 'customerRelations.customerUserId.label', default: 'Customer User Id')}"/>
+                    <g:sortableColumn property="customerClientId"
+                                      title="${message(code: 'customerRelations.customerClientId.label', default: 'Customer User Id')}"/>
 
                     <g:sortableColumn property="customerUserName"
                                       title="${message(code: 'customerRelations.customerUserName.label', default: 'Customer User Name')}"/>
@@ -58,7 +58,7 @@
                         <td><g:link action="show"
                                     id="${customerRelationsInstance.id}">${fieldValue(bean: customerRelationsInstance, field: "restaurantId")}</g:link></td>
 
-                        <td>${fieldValue(bean: customerRelationsInstance, field: "customerUserId")}</td>
+                        <td>${fieldValue(bean: customerRelationsInstance, field: "customerClientId")}</td>
 
                         <td>${fieldValue(bean: customerRelationsInstance, field: "customerUserName")}</td>
 

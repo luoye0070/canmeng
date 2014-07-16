@@ -1,5 +1,7 @@
 package lj.common
 
+import lj.data.CartInfo
+import lj.data.DishesForCartInfo
 import lj.data.StaffInfo
 
 import javax.servlet.http.HttpSessionEvent
@@ -41,9 +43,20 @@ class HttpSessionListenerCustom implements HttpSessionListener  {
                 }
             }
         }
-
-        long userId=lj.Number.toLong(se.session.getAttribute("userId"));
-        println("sessionDestroyed-userId-->"+userId);
+        //long userId=lj.Number.toLong(se.session.getAttribute("userId"));
+        //println("sessionDestroyed-userId-->"+userId);
+        //清除购餐车记录
+        String sessionMark=se.session.getId();
+        CartInfo.withTransaction {
+            def cartList=CartInfo.findAllBySessionMark(sessionMark);
+            if (cartList){
+                cartList.each {
+                    String sqlStr="delete from DishesForCartInfo where cartId="+it.id;
+                    DishesForCartInfo.executeUpdate(sqlStr);
+                    it.delete(flush: true);
+                }
+            }
+        }
 
     }
 }

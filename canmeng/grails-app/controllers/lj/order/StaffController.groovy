@@ -11,6 +11,7 @@ import lj.order.customer.CustomerAppraiseService
 import lj.order.staff.StaffDishService
 import lj.order.staff.StaffOrderService
 import lj.shop.SearchService
+import lj.util.WebUtilService
 
 import java.text.SimpleDateFormat
 
@@ -19,7 +20,7 @@ class StaffController {
     StaffDishService staffDishService;
     SearchService searchService;
     CustomerAppraiseService customerAppraiseService;
-
+    WebUtilService webUtilService;
     def jasperReportService
 
     def index() {//根据不同的职位跳转到不同界面
@@ -40,7 +41,7 @@ class StaffController {
         if(!params.reserveType){
             params.reserveType="1";
         }
-        StaffInfo staffInfo=session.staffInfo;
+        StaffInfo staffInfo=webUtilService.getStaff();
         if(staffInfo){
             params.restaurantId=staffInfo.restaurantId;
         }
@@ -63,7 +64,7 @@ class StaffController {
     //到店吃饭创建订单输入界面
     def orderInput(){
         //查询出相应的桌位
-        StaffInfo staffInfo=session.staffInfo;
+        StaffInfo staffInfo=webUtilService.getStaff();
         if(staffInfo){
             params.restaurantId=staffInfo.restaurantId;
         }
@@ -86,7 +87,7 @@ class StaffController {
     def reserveTable(){
         //获取参数
         println("params-->"+params);
-        StaffInfo staffInfo=session.staffInfo;
+        StaffInfo staffInfo=webUtilService.getStaff();
         if(staffInfo){
             params.restaurantId=staffInfo.restaurantId;
         }
@@ -501,7 +502,24 @@ class StaffController {
         }
         redirect(action: "orderShow",params: [orderId:orderId]);
     }
+    //顾客到店
+    def customerReach(){
+        def reInfo=staffOrderService.customerReach(params);
+        println("reInfo-->"+reInfo);
 
+        //render(reInfo);
+        if(reInfo.recode==ReCode.OK){
+            flash.message=reInfo.recode.label;
+        }
+        else{
+            flash.error=reInfo.recode.label;
+        }
+        if(params.backUrl){
+            redirect(url: params.backUrl);
+            return ;
+        }
+        redirect(action: "orderList");
+    }
 
     def exportOrderList() {
 

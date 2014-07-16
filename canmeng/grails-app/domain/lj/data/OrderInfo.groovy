@@ -2,6 +2,7 @@ package lj.data
 
 import lj.common.StrCheckUtil
 import lj.enumCustom.OrderStatus
+import lj.enumCustom.OrderType
 import lj.enumCustom.OrderValid
 
 //订单信息
@@ -9,7 +10,7 @@ class OrderInfo {
     //饭店ID
     long restaurantId
     //用户ID
-    long userId
+    long clientId
     //桌位
     long tableId
     //日期
@@ -52,7 +53,12 @@ class OrderInfo {
     Date createTime=new Date();
     //联系电话
     String phone;
-
+    //联系人
+    String customerName;
+    //订单类型
+    int orderType=0;
+    //顾客到店,预定类型订单，当顾客到店后设置为true,到店用餐类型订单初始为true，这时所点菜才显示在厨师的终端，可以开始做菜
+    boolean reachRestaurant=false;
     /*******************为了方便加的冗余数据*****************/
     //饭店Name
     String restaurantName;
@@ -63,7 +69,7 @@ class OrderInfo {
 
     static constraints = {
         restaurantId(nullable:false,min:1l);
-        userId(nullable:false,min:0l)
+        clientId(nullable:false,min:0l)
         tableId(nullable:false,min:0l)
         date(nullable: false)
         time(nullable: false)
@@ -91,6 +97,9 @@ class OrderInfo {
                 }
             }
         });
+        customerName(nullable: true,blank: true,maxSize: 128);
+        orderType(nullable:false,inList: OrderType.getCodeList());
+        reachRestaurant(nullable:false);
         restaurantName(nullable:true,blank: true,maxSize:256);
         userName(nullable:true,blank: true,maxSize: 32);
         tableName(nullable:true,blank: true,maxSize: 64);

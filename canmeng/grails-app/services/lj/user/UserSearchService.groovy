@@ -51,7 +51,7 @@ class UserSearchService {
 
     //获取用户地址信息
     List getAddresses() {
-        return AddressInfo.findAllByUserId(webUtilService.user.id)
+        return AddressInfo.findAllByClientId(webUtilService.getClientId());
     }
 
     //查找我的收藏
@@ -63,7 +63,7 @@ class UserSearchService {
         if ("food".equals(params.type)) {
             queryBlock = {queryParams ->
                 FoodCollectInfo.createCriteria().list(queryParams) {
-                    eq('userId', webUtilService.user.id)
+                    eq('clientId', webUtilService.getClientId());
                 }
             }
 
@@ -90,7 +90,7 @@ class UserSearchService {
         } else {
             queryBlock = { queryParams ->
                 RestaurantCollectInfo.createCriteria().list(queryParams) {
-                    eq('userId', webUtilService.user.id)
+                    eq('clientId', webUtilService.getClientId());
                 }
             }
 
@@ -112,10 +112,10 @@ class UserSearchService {
 
         def result= searchUtilService.search(params,queryBlock,dataFormat);
         if ("food".equals(params.type)) {
-            result.total=FoodCollectInfo.countByUserId(webUtilService.user.id);
+            result.total=FoodCollectInfo.countByClientId(webUtilService.getClientId());
         }
         else{
-            result.total=RestaurantCollectInfo.countByUserId(webUtilService.user.id);
+            result.total=RestaurantCollectInfo.countByClientId(webUtilService.getClientId());
         }
         return result;
     }

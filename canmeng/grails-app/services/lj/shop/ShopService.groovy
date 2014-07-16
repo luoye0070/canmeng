@@ -59,7 +59,8 @@ class ShopService {
         SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        UserInfo user=session.user;
+        //UserInfo user=session.user;
+        UserInfo user=webUtilService.getUser();
         long userId=lj.Number.toLong(session.userId);//用户ID
         if(user){
 

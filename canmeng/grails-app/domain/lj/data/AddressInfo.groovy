@@ -4,7 +4,7 @@ package lj.data
 class AddressInfo {
 
     //用户ID
-    long userId
+    long clientId
     //区号
     long areaId
     //省
@@ -25,8 +25,8 @@ class AddressInfo {
     String linkManName
 
     static constraints = {
-        userId()
-        areaId()
+        clientId(nullable:false,min: 0l);
+        areaId(nullable:false,min: 0l);
         province nullable:true,maxSize:32
         city nullable:true,maxSize:32
         area nullable:true,maxSize:32

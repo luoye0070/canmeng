@@ -3,11 +3,13 @@ package lj.user
 import lj.IPUtil
 import lj.common.DesUtilGy
 import lj.common.Result
+import lj.data.ClientInfo
 import lj.data.FoodCollectInfo
 import lj.data.FoodInfo
 import lj.data.RestaurantCollectInfo
 import lj.data.RestaurantInfo
 import lj.data.UserInfo
+import lj.enumCustom.ClientType
 import lj.enumCustom.ReCode
 import lj.shop.StaffManageService
 import lj.util.WebUtilService
@@ -60,6 +62,134 @@ class UserService {
     def logout(){
         webUtilService.clearSession();
         return [recode: ReCode.OK];
+    }
+
+    //通过注册账户进行登录
+    def loginByUser(def params,def request){
+        def reInfo = login(params,request);
+        if (reInfo.recode == ReCode.OK) {//登录成功
+            UserInfo userInfo = reInfo.userInfo;
+            ClientInfo clientInfo=ClientInfo.findByUserNameAndClientType(userInfo.userName,ClientType.WEB_SITE.code);
+            if(!clientInfo){
+                clientInfo = new ClientInfo();
+                clientInfo.userName = userInfo.userName;
+                //clientInfo.passWord=userInfo.passWord;
+                clientInfo.userId = userInfo.id;
+                clientInfo.clientType=ClientType.WEB_SITE.code;
+                clientInfo.save(true);
+            }
+            webUtilService.setClient(clientInfo.id);
+        }else{
+            return reInfo;
+        }
+    }
+
+    //通过手机号自动登录
+    def loginByPhone(def params) {
+        //用手机号和设备序号来登录
+        def phoneNum = params.phoneNum//用户名
+        if (!phoneNum) {//没有手机号
+            return [recode: ReCode.NOT_GET_PHONE_NUM];
+        }
+        def sn = params.sn//密码
+        if (sn == null) {
+            sn = ""
+        }
+        //根据电话和设备号去查询是否存在记录
+        ClientInfo clientInfo = ClientInfo.findByPhoneNumAndSnAndClientType(phoneNum, sn,ClientType.PHONE.code);
+        if (!clientInfo) {
+            clientInfo = new ClientInfo();
+            clientInfo.phoneNum = phoneNum;
+            clientInfo.sn = sn;
+            clientInfo.clientType=ClientType.PHONE.code;
+            if (!clientInfo.save(flush: true)) {
+                return [recode: ReCode.SAVE_FAILED, clientInfo: clientInfo, errors: clientInfo.errors.allErrors];
+            }
+        }
+        webUtilService.setClient(clientInfo.id);
+        return [recode: ReCode.OK];
+    }
+
+    //绑定手机客户端到注册账户
+    def bindPhoneToUser(def params,def request){
+        def reInfo = login(params,request);
+        if (reInfo.recode == ReCode.OK) {//登录成功
+            UserInfo userInfo = reInfo.userInfo;
+            def phoneNum = params.phoneNum;//用户名
+            if (phoneNum == null) {
+                phoneNum = ""
+            }
+            def sn = params.sn//密码
+            if (sn == null) {
+                sn = ""
+            }
+            //根据电话和设备号去查询是否有Client
+            ClientInfo clientInfo=ClientInfo.findByPhoneNumAndSn(phoneNum,sn);
+            if(!clientInfo){
+                clientInfo=webUtilService.getClient();
+            }
+            if(clientInfo){
+                clientInfo.userId=userInfo.id;
+                clientInfo.userName=userInfo.userName;
+                if (!clientInfo.save(flush: true)) {
+                    return [recode: ReCode.SAVE_FAILED, clientInfo: clientInfo, errors: clientInfo.errors.allErrors];
+                }
+                return [recode: ReCode.OK];
+            }else{
+                return [recode: ReCode.NO_CLIENT_OR_NOT_LOGIN];
+            }
+        } else {
+            return reInfo;
+        }
+
+    }
+
+    //取消绑定手机客户端和新疆美账户
+    def unBindPhoneAndXjmUser(params){
+        def phoneNum = params.phoneNum//用户名
+        if (phoneNum == null) {
+            phoneNum = ""
+        }
+        def sn = params.sn//密码
+        if (sn == null) {
+            sn = ""
+        }
+        //根据电话和设备号去查询
+        ClientInfo clientInfo=ClientInfo.findByPhoneNumAndSn(phoneNum,sn);
+        if(!clientInfo){
+            clientInfo=webUtilService.getClient();
+        }
+        if(clientInfo){
+            clientInfo.userId=0;
+            clientInfo.userName=null;
+            if (!clientInfo.save(flush: true)) {
+                return [recode: ReCode.SAVE_FAILED, clientInfo: clientInfo, errors: clientInfo.errors.allErrors];
+            }
+            return [recode: ReCode.OK];
+        }else{
+            return [recode: ReCode.NO_CLIENT_OR_NOT_LOGIN];
+        }
+    }
+
+    //根据用户信息或手机信息查询相关用户id
+    def getIds(def clientInfo) {
+        def ids = [0l];
+        if(clientInfo){
+            if (clientInfo.userId) {
+                //根据用户ID查询
+                def uiList = ClientInfo.findAllByUserId(clientInfo.userId);
+                if (uiList) {
+                    uiList.each {
+                        ids.add(it.id);
+                    }
+                } else {
+                    ids.add(clientInfo.id);
+                }
+            } else {
+                ids.add(clientInfo.id);
+            }
+        }
+        return ids;
     }
 
     //查找我的收藏

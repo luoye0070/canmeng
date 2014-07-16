@@ -3,12 +3,14 @@ package lj.order.customer
 import lj.*
 import lj.common.Distance
 import lj.data.AddressInfo
+import lj.data.ClientInfo
 import lj.data.CustomerRelations
 import lj.data.OrderInfo
 import lj.data.StaffPositionInfo
 import lj.data.StaffInfo
 import lj.data.UserInfo
 import lj.enumCustom.CustomerRelationsType
+import lj.enumCustom.OrderType
 import lj.enumCustom.PositionType
 import lj.enumCustom.VerifyStatus
 import lj.mina.server.MinaServer
@@ -31,6 +33,7 @@ class CustomerOrderService {
     WebUtilService webUtilService;
     CustomerDishService customerDishService;
     MessageService messageService;
+    def userService;
     def serviceMethod() {
 
     }
@@ -66,12 +69,13 @@ class CustomerOrderService {
         SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
-        UserInfo userInfo=session.user;
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();//客户ID
+        //UserInfo userInfo=session.user;
         if(byWaiter){//如果是服务员帮助创建订单，则取服务员ID作为用户ID
-            userId=Number.toLong(session.staffId);
+            clientId=Number.toLong(session.staffId);
         }
-        if(userId){
+        if(clientId){
             //获取参数
             long tableId=Number.toLong(params.tableId);//桌位ID
             long restaurantId=Number.toLong(params.restaurantId);//饭店ID
@@ -84,7 +88,7 @@ class CustomerOrderService {
             int personCount=Number.toInteger(params.personCount);//用餐人数
             //检查用户是否在黑名单之内
             if(!byWaiter){
-                CustomerRelations customerRelations=CustomerRelations.findByRestaurantIdAndCustomerUserIdAndType(restaurantId,userId,CustomerRelationsType.BLACKLIST_CUSTOMER.code);
+                CustomerRelations customerRelations=CustomerRelations.findByRestaurantIdAndCustomerClientIdAndType(restaurantId,clientId,CustomerRelationsType.BLACKLIST_CUSTOMER.code);
                 if(customerRelations){//用户在黑名单中
                     return [recode: ReCode.BLACKLIST_CUSTOMER];
                 }
@@ -98,6 +102,9 @@ class CustomerOrderService {
             //检查外卖地址是否在放到的配送范围内
             if(tableId==0){
                 AddressInfo addressInfo=AddressInfo.get(addressId);
+                if(addressInfo==null){//地址不能为空
+                    return [recode:ReCode.NO_VALID_ADDRESS];
+                }
                 //通过经纬度用勾股定理计算距离
                 double distance=Distance.GetDistance(addressInfo.latitude,addressInfo.longitude,restaurantInfo.latitude,restaurantInfo.longitude);
                 if(distance>restaurantInfo.deliverRange){
@@ -123,8 +130,10 @@ class CustomerOrderService {
 
             long numInRestaurant=0;//店内编号
             def maxNumInRestaurant=OrderInfo.executeQuery("select max(numInRestaurant) from OrderInfo where restaurantId="+restaurantId);
-            if(maxNumInRestaurant)
+            println("maxNumInRestaurant-->"+maxNumInRestaurant);
+            if(maxNumInRestaurant&&maxNumInRestaurant[0]){
                 numInRestaurant=maxNumInRestaurant[0]+1;
+            }
             String partakeCode="1111";//参与验证码
             StringBuffer temp=new StringBuffer("");
             for(int i = 0 ; i<4 ; i++){
@@ -136,7 +145,7 @@ class CustomerOrderService {
             long waiterId=0; // 服务员ID
             if(byWaiter)
             {
-                waiterId=userId;
+                waiterId=clientId;
             }
             else{
                 //查出饭店总订单数量
@@ -174,19 +183,21 @@ class CustomerOrderService {
                     }
                     if(waiterId==0){//服务员不在线则分配给主管
                         def waiterHeaderIds=StaffPositionInfo.findAllByPositionTypeAndRestaurantId(PositionType.WAITER_HEADER.code,restaurantId).collect{it.staffId};
-                        //分配服务员Id
-                        ArrayList<StaffInfo> waiterHeaderList=StaffInfo.createCriteria().list(){
-                            eq("restaurantId",restaurantId)
-                            inList("id",waiterHeaderIds);
-                            //eq("isOnline",true);
-                        }
-                        if(waiterHeaderList!=null&&waiterHeaderList.size()>0){
-                            int waiterCount=waiterHeaderList.size();//查出服务员数量
-                            int idx= orderCount%waiterCount;
-                            if(MinaServer.isOnline(waiterList.get(idx).id,0)){
-                                waiterId=waiterList.get(idx).id;
+                        if(waiterHeaderIds){
+                            //分配服务员Id
+                            ArrayList<StaffInfo> waiterHeaderList=StaffInfo.createCriteria().list(){
+                                eq("restaurantId",restaurantId)
+                                inList("id",waiterHeaderIds);
+                                //eq("isOnline",true);
                             }
-                            //waiterId=waiterHeaderList.get(idx).id;
+                            if(waiterHeaderList!=null&&waiterHeaderList.size()>0){
+                                int waiterCount=waiterHeaderList.size();//查出服务员数量
+                                int idx= orderCount%waiterCount;
+                                if(MinaServer.isOnline(waiterList.get(idx).id,0)){
+                                    waiterId=waiterList.get(idx).id;
+                                }
+                                //waiterId=waiterHeaderList.get(idx).id;
+                            }
                         }
                     }
                     if(waiterId==0){//没有在线工作人员，则分配给店主
@@ -284,12 +295,12 @@ class CustomerOrderService {
 
             /********************创建订单*****************************/
             if(byWaiter){
-                userId=0;
+                clientId=0;
             }
             OrderInfo orderInfo=new OrderInfo();
             //设置域类的值
             orderInfo.restaurantId=restaurantId;//饭店ID
-            orderInfo.userId=userId;//用户ID
+            orderInfo.clientId=clientId;//用户ID
             orderInfo.tableId=tableId;//桌号
             orderInfo.date=date;//日期
             orderInfo.time=time;//时间
@@ -305,14 +316,26 @@ class CustomerOrderService {
             }
             orderInfo.remark=remark;//备注信息，客户联系电话等
             orderInfo.restaurantName=restaurantInfo?.name;//饭店名
-            if(!byWaiter)
-                orderInfo.userName=userInfo?.userName;//用户名
+            if(!byWaiter){
+                ClientInfo clientInfo=webUtilService.getClient();
+                orderInfo.userName=clientInfo?.userName;//用户名
+            }
             orderInfo.tableName=tableInfo?.name;//桌位名
             if(personCount)
                 orderInfo.personCount=personCount;//用餐人数
             //设置状态初始值
             if(tableId==0){//外卖
                 orderInfo.status=OrderStatus.ORDERED_STATUS.code;//点菜完成
+                orderInfo.orderType=OrderType.TAKE_OUT.code;
+            }
+            else{
+                if(reserveType==0){//到店吃饭
+                    orderInfo.orderType=OrderType.NORMAL.code;
+                    orderInfo.reachRestaurant=true;//到店
+                }else{
+                    orderInfo.orderType=OrderType.RESERVE.code;
+                    orderInfo.reachRestaurant=false;//没到店
+                }
             }
             //保存订单
             if(orderInfo.save(flush: true)){ //保存成功
@@ -379,11 +402,12 @@ class CustomerOrderService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
-        if(userId){
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
+        if(clientId){
             //获取参数
             long orderId=Number.toLong(params.orderId);//订单号
-            OrderInfo orderInfo=OrderInfo.findByIdAndUserId(orderId,userId);
+            OrderInfo orderInfo=OrderInfo.findByIdAndClientId(orderId,clientId);
             if(orderInfo){
                 //检查订单是否可以取消
                 if(orderInfo.valid>OrderValid.EFFECTIVE_VALID.code||orderInfo.status>OrderStatus.ORDERED_STATUS.code){//订单不能取消
@@ -437,11 +461,12 @@ class CustomerOrderService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
-        if(userId){
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
+        if(clientId){
             //获取参数
             long orderId=Number.toLong(params.orderId);//订单号
-            OrderInfo orderInfo=OrderInfo.findByIdAndUserId(orderId,userId);
+            OrderInfo orderInfo=OrderInfo.findByIdAndClientId(orderId,clientId);
             if(orderInfo){
                 //检查订单是否可以删除
                 if(orderInfo.valid!=OrderValid.USER_CANCEL_VALID.code){//订单不能删除
@@ -483,12 +508,13 @@ class CustomerOrderService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
         if (byWaiter) {//如果是服务员帮助更新订单状态为点菜完成，则取服务员ID作为用户ID
-            userId = Number.toLong(session.staffId);
+            clientId = Number.toLong(session.staffId);
         }
 
-        if(userId){
+        if(clientId){
             //获取参数
             long orderId=Number.toLong(params.orderId);//订单号
             int statusCode=params.statusCode?:OrderStatus.ORDERED_STATUS.code;// 状态代码
@@ -542,11 +568,13 @@ class CustomerOrderService {
          SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
          //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
          //取出用户ID
-         long userId=Number.toLong(session.userId);//用户ID
+         //long userId=Number.toLong(session.userId);//用户ID
+         long clientId=webUtilService.getClientId();
          if(byWaiter){//如果是服务员帮助创建订单，则取服务员ID作为用户ID
-             userId=Number.toLong(session.staffId);
+             clientId=Number.toLong(session.staffId);
          }
-         if(userId){
+         println("clientId-->"+clientId);
+         if(clientId){
              //获取参数
              long orderId=Number.toLong(params.orderId);//订单ID
              long restaurantId=Number.toLong(params.restaurantId);//饭店ID
@@ -591,16 +619,16 @@ class CustomerOrderService {
 
              //如果工作人员查询的话必须有饭店ID
              if(byWaiter) {
-                 StaffInfo staffInfo=session.staffInfo;
+                 StaffInfo staffInfo=webUtilService.getStaff();
                  if(staffInfo)
                     restaurantId=staffInfo.restaurantId;
                  else
                     return [recode: ReCode.NOT_LOGIN] ;
              }
-
+             def cIds=userService.getIds(ClientInfo.get(clientId));
              def condition={
                 if(!byWaiter){ //非工作人员查询必须加上用户ID条件
-                    eq("userId",userId);//用户ID条件
+                    'in'("clientId",cIds);
                 }
                 if(orderId){
                     eq("id",orderId);//id条件
@@ -679,11 +707,12 @@ class CustomerOrderService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
         if (byWaiter) {//如果是服务员帮助更新订单状态为点菜完成，则取服务员ID作为用户ID
-            userId = Number.toLong(session.staffId);
+            clientId = Number.toLong(session.staffId);
         }
-        if(userId){
+        if(clientId){
             //获取参数
             long orderId=Number.toLong(params.orderId);//订单号
             OrderInfo orderInfo=null;
@@ -691,7 +720,7 @@ class CustomerOrderService {
                 orderInfo=OrderInfo.findById(orderId);
             }
             else{
-                orderInfo=OrderInfo.findByIdAndUserId(orderId,userId);
+                orderInfo=OrderInfo.findByIdAndClientId(orderId,clientId);
             }
             if(orderInfo){
                 //检查订单是否可以做完成点菜操作
@@ -720,12 +749,13 @@ class CustomerOrderService {
 
         //获取参数
         long orderId=Number.toLong(params.orderId);//订单号
-        long userId=Number.toLong(session.userId);//用户ID
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
         String partakeCode = params.partakeCode;//点菜参与码
         if(!partakeCode){ //没有点菜验证码则需要验证用户是否登录
             if (byWaiter) {//如果是服务员帮助，则取服务员ID作为用户ID
-                userId = Number.toLong(session.staffId);
-                if (userId == 0) { //没登录
+                clientId = Number.toLong(session.staffId);
+                if (clientId == 0) { //没登录
                     return [recode: ReCode.NOT_LOGIN];
                 }
             }
@@ -733,7 +763,7 @@ class CustomerOrderService {
         OrderInfo orderInfo=OrderInfo.findById(orderId);
         if(orderInfo){
             //点菜参与码是否正确
-            if (userId == orderInfo.userId || byWaiter) {//用户登录切是订单创建的用户或者是服务员帮忙点菜，则不需要参与验证码
+            if (clientId == orderInfo.clientId || byWaiter) {//用户登录切是订单创建的用户或者是服务员帮忙点菜，则不需要参与验证码
 
             } else {//检查点菜参与验证码是否正确
                 if (partakeCode != orderInfo.partakeCode) { //点菜参与码不正确

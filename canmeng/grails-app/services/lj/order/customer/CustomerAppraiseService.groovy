@@ -2,6 +2,7 @@ package lj.order.customer
 
 import lj.data.AppraiseInfo
 import lj.Number
+import lj.data.ClientInfo
 import lj.data.OrderInfo
 import lj.data.UserInfo
 import lj.enumCustom.OrderStatus
@@ -9,6 +10,7 @@ import lj.enumCustom.ReCode
 
 class CustomerAppraiseService {
     def webUtilService;
+    def userService;
     def serviceMethod() {
 
     }
@@ -16,11 +18,13 @@ class CustomerAppraiseService {
     //创建一个评价
     def createApprase(def params){
         def session = webUtilService.getSession();
-        UserInfo user=session.user;//用户ID
-        if(user){
+        //UserInfo user=session.user;//用户ID
+        long clientId=webUtilService.getClientId();
+        //if(user){
+        if(clientId){
             //检查订单是否已经评价
             long orderId=Number.toLong(params.orderId);
-            OrderInfo orderInfo=OrderInfo.findByUserIdAndId(user.id,orderId);
+            OrderInfo orderInfo=OrderInfo.findByClientIdAndId(clientId,orderId);
             if(orderInfo){
                 if(orderInfo.status== OrderStatus.APPRAISED_STATUS.code){
                     return [recode: ReCode.ORDER_APPRAISED];
@@ -30,9 +34,14 @@ class CustomerAppraiseService {
                 return [recode: ReCode.NO_ORDER];
             }
 
+            ClientInfo clientInfo=webUtilService.getClient();
             //创建评价
-            params.userId=user.id;
-            params.userName=user.userName;
+            params.clientId=clientId;
+            if(clientInfo.userName){
+                params.userName=clientInfo.userName;
+            }else{
+                params.userName="客户"+clientId;
+            }
             params.appraiseTime=new Date();
             params.restaurantId=orderInfo.restaurantId;
             AppraiseInfo appraiseInfo=new AppraiseInfo(params);
@@ -66,8 +75,11 @@ class CustomerAppraiseService {
         if(params.type!=null)
             type=Number.toInteger(params.type);//类型
         long restaurantId=Number.toLong(params.restaurantId);//饭店ID
-        long userId=Number.toLong(params.userId);//用户ID
+        //long userId=Number.toLong(params.userId);//用户ID
+        long clientId=Number.toLong(params.clientId);//客户ID；
         Boolean isAnonymity=params.isAnonymity;//是否匿名
+
+        def cIds=userService.getIds(ClientInfo.get(clientId));
 
         if (!params.max) {
             params.max = 10;
@@ -87,8 +99,8 @@ class CustomerAppraiseService {
             if(restaurantId){
                 eq("restaurantId",restaurantId);
             }
-            if(userId){
-                eq("userId",userId);
+            if(clientId){
+                'in'("clientId",cIds);
             }
             if(isAnonymity!=null){
                 eq("isAnonymity",isAnonymity);
@@ -113,11 +125,12 @@ class CustomerAppraiseService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=Number.toLong(webUtilService.getClientId());
         if (byWaiter) {//如果是服务员帮助更新订单状态为点菜完成，则取服务员ID作为用户ID
-            userId = Number.toLong(session.staffId);
+            clientId = Number.toLong(session.staffId);
         }
-        if(userId){
+        if(clientId){
             //获取参数
             long orderId=Number.toLong(params.orderId);//订单号
             AppraiseInfo appraiseInfo=null;
@@ -125,7 +138,7 @@ class CustomerAppraiseService {
                 appraiseInfo=AppraiseInfo.findByOrderId(orderId);
             }
             else{
-                appraiseInfo=AppraiseInfo.findByOrderIdAndUserId(orderId,userId);
+                appraiseInfo=AppraiseInfo.findByOrderIdAndClientId(orderId,clientId);
             }
             if(appraiseInfo){
                 return [recode: ReCode.OK,appraiseInfoInstance:appraiseInfo];

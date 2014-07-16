@@ -26,7 +26,7 @@
 					
 						<g:sortableColumn property="restaurantId" title="${message(code: 'orderInfo.restaurantId.label', default: 'Restaurant Id')}" />
 					
-						<g:sortableColumn property="userId" title="${message(code: 'orderInfo.userId.label', default: 'User Id')}" />
+						<g:sortableColumn property="clientId" title="${message(code: 'orderInfo.clientId.label', default: 'User Id')}" />
 					
 						<g:sortableColumn property="tableId" title="${message(code: 'orderInfo.tableId.label', default: 'Table Id')}" />
 					
@@ -44,7 +44,7 @@
 					
 						<td><g:link action="show" id="${orderInfoInstance.id}">${fieldValue(bean: orderInfoInstance, field: "restaurantId")}</g:link></td>
 					
-						<td>${fieldValue(bean: orderInfoInstance, field: "userId")}</td>
+						<td>${fieldValue(bean: orderInfoInstance, field: "clientId")}</td>
 					
 						<td>${fieldValue(bean: orderInfoInstance, field: "tableId")}</td>
 					

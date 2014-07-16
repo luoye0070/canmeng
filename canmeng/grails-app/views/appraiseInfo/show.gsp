@@ -104,11 +104,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${appraiseInfoInstance?.userId}">
+				<g:if test="${appraiseInfoInstance?.clientId}">
 				<li class="fieldcontain">
-					<span id="userId-label" class="property-label"><g:message code="appraiseInfo.userId.label" default="User Id" /></span>
+					<span id="clientId-label" class="property-label"><g:message code="appraiseInfo.clientId.label" default="User Id" /></span>
 					
-						<span class="property-value" aria-labelledby="userId-label"><g:fieldValue bean="${appraiseInfoInstance}" field="userId"/></span>
+						<span class="property-value" aria-labelledby="clientId-label"><g:fieldValue bean="${appraiseInfoInstance}" field="clientId"/></span>
 					
 				</li>
 				</g:if>

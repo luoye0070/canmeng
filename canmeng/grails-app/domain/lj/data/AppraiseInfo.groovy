@@ -24,7 +24,7 @@ class AppraiseInfo {
     //评价时间
     Date appraiseTime
     //评价人用户ID
-    Long userId
+    Long clientId
     //是否匿名评价
     Boolean isAnonymity=false
 
@@ -44,7 +44,7 @@ class AppraiseInfo {
         whole(nullable: false,min: 0)
         content(nullable:true,blank: true,maxSizes:256);
         appraiseTime(nullable: false) ;
-        userId(nullable:false,min: 0l);
+        clientId(nullable:false,min: 0l);
         isAnonymity(nullable: false);
         restaurantId(nullable: false,min: 0l);
         userName(nullable: false,blank:false,maxSize:32);

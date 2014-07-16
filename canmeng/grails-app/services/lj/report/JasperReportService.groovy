@@ -51,7 +51,7 @@ class JasperReportService {
 
         def session=webUtilService.getSession();
 
-        def restaurantId=webUtilService.session?.staffInfo?.restaurantId
+        def restaurantId=webUtilService.getStaff()?.restaurantId
         if(!restaurantId){
             return []
         }

@@ -2,6 +2,7 @@ package lj.data
 
 import lj.enumCustom.DishesStatus
 import lj.enumCustom.DishesValid
+import lj.enumCustom.OrderType
 
 //点菜
 class DishesInfo {
@@ -25,7 +26,9 @@ class DishesInfo {
     //厨师ID
     long cookId
     //单价
-    Double foodPrice=0d;
+    double foodPrice=0d;
+    //排序字段
+    long sortId=0l;
 
     /*******为了方便添加的冗余数据******/
     //饭店ID
@@ -40,7 +43,8 @@ class DishesInfo {
     String foodImg;
     //桌位
     String tableName;
-
+    //订单类型
+    int orderType=0;
     static constraints = {
         orderId(nullable:false,min: 1l)
         foodId(nullable:false,min: 1l)
@@ -52,12 +56,14 @@ class DishesInfo {
         num(nullable:false,min: 1);
         cookId(nullable:true,min: 0l)
         foodPrice(nullable: false,min: 0d);
+        sortId(nullable:false,min: 0l);
         restaurantId(nullable:false,min:1l);
         foodName(nullable:true,blank: true);
         date(nullable: false);
         time(nullable: false);
         foodImg(nullable:true,blank: true, maxSize:128);
         tableName(nullable:true,blank: true,maxSize: 64);
+        orderType(nullable:false,inList: OrderType.getCodeList());
     }
 
 
@@ -75,12 +81,14 @@ class DishesInfo {
                 ", num=" + num +
                 ", cookId=" + cookId +
                 ", foodPrice=" + foodPrice +
+                ", sortId=" + sortId +
                 ", restaurantId=" + restaurantId +
                 ", foodName='" + foodName + '\'' +
                 ", date=" + date +
                 ", time=" + time +
                 ", foodImg='" + foodImg + '\'' +
                 ", tableName='" + tableName + '\'' +
+                ", orderType=" + orderType +
                 ", version=" + version +
                 '}';
     }

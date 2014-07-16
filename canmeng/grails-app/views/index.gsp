@@ -88,6 +88,64 @@
 //            }
 //            msgtitle();
         });
+
+function showDialog(htmlStr,foodId){
+    var doDishUrl="${createLink(controller: "customerAjax",action: "addDishes")}"
+    var dialog = $(htmlStr);
+    $("body").append(htmlStr);
+    $("#ratyService").modal();
+    //dialog.modal();
+    //注册事件
+    $("input[name='orderId']").click(function(){//选择按钮
+        if($(this).attr('checked')){
+            $(this).parent().children("input[name='counts']").removeAttr("disabled");
+        }
+        else{
+            $(this).parent().children("input[name='counts']").attr("disabled",'disabled');
+            $(this).parent().parent().children("div[name='info']").remove();
+        }
+    });
+    $("#submitData").click(function(event){//数据提交按钮
+        $("div[name='dishData']").each(function(){
+            var checkBox=$(this).children("div[name='field']").children("input[name='orderId']");
+            var textInput=$(this).children("div[name='field']").children("input[name='counts']");
+            if(checkBox.attr("checked")){//提交数据
+                if(typeof($(this).children("div[name='info']"))!='undefined')
+                    $(this).children("div[name='info']").remove();
+                //$('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').appendTo($(this).children("div[name='info']"));
+                $("<div name='info' style='float: left;width: 400px;height: 50px;line-height: 50px;'>"+
+                        '<img style="width: 50px;height: 50px;float: left;" src="../images/progcess.gif"/>'+
+                        '<label style="width: 300px;height: 50px;">正在添加，请稍后...</label></div>').appendTo($(this));
+                var orderId= checkBox.val();
+                var counts=textInput.val();
+                var foodIds=foodId;
+                var remarks="";
+                $.ajax({
+                    context:this,
+                    url:doDishUrl,
+                    async:false,
+                    type:'post',
+                    data:{'orderId':orderId,'counts':counts,'foodIds':foodIds,'remarks':remarks},
+                    dataType: 'json',
+                    success:function(data){
+                        $(this).children("div[name='info']").html("");
+                        if(data.recode.code==0){
+                            $(this).children("div[name='info']").html("<label style='height: 50px;line-height:50px;color: green'>点菜"+data.recode.label+"</label>");
+                        }else{
+                            if(data.recode.code==5)
+                                $(this).children("div[name='info']").html("<label style='height: 50px;line-height:50px;color: red'>点菜不成功："+data.failedList[0].msg+"</label>");
+                            else
+                                $(this).children("div[name='info']").html("<label style='height: 50px;line-height:50px;color: red'>点菜不成功："+data.recode.label+"</label>");
+                        }
+                    },
+                    error:function(data){
+                        $(this).children("div[name='info']").html("<label style='height: 50px;line-height:50px;color: red'>"+"未知错误"+"</label>");
+                    }
+                });
+            }
+        });
+    });
+}
     </script>
 
     <style type="text/css">
@@ -258,7 +316,7 @@
                     <li  ${controllerName=="shop"?'class="current"':""}><g:link controller="shop" action="shopInfo">我的饭店</g:link></li>
                     <li  ${url=="c"?'class="current"':""}><a href="about.html">联系餐萌</a></li>
                     <li ${controllerName=="staff"?"class='current'":""}><g:link controller="staff" action="index">工作人员入口</g:link></li>
-                    <g:if test="${session && (session.user||session.staffInfo)}">
+                    <g:if test="${session && (session.clientId||session.staffInfo)}">
                         <li><g:link controller="user" action="logout">退出餐萌</g:link></li>
                     </g:if>
                     <g:else>

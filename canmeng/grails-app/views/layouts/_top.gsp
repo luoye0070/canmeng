@@ -177,8 +177,8 @@
      <div class="tm_real">
         <div class="tmr_left">
             <span>欢迎来到餐萌订餐网！</span>
-            <g:if test="${session.user}">
-                <a href="${createLink(controller: "user",action: "viewUserInfo")}">${session?.user?.userName}</a>
+            <g:if test="${session.clientId}">
+                <a href="${createLink(controller: "user",action: "viewUserInfo")}">${lj.data.ClientInfo.get(session.clientId)?.userName}</a>
             </g:if>
             <g:else>
                 <a href="${createLink(controller: "user",action: "login")}">请登录</a>

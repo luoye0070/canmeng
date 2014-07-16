@@ -29,7 +29,7 @@ class StaffOrderService {
      * ********/
     def createOrder(def params) {
         def session=webUtilService.getSession();
-        StaffInfo staffInfo=session.staffInfo;
+        StaffInfo staffInfo=webUtilService.getStaff();
         if(staffInfo){
         params.restaurantId=staffInfo.restaurantId;
             return customerOrderService.createOrder(params, true);
@@ -107,7 +107,7 @@ class StaffOrderService {
                         def msgParams=[:];
                         msgParams.orderId=orderInfo.id;
                         msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
-                        msgParams.receiveId=orderInfo.userId;
+                        msgParams.receiveId=orderInfo.clientId;
                         msgParams.content="订单状态改变，"+OrderStatus.getLable(orderInfo.status);
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
                         msgParams.restaurantId=orderInfo.restaurantId;
@@ -165,7 +165,7 @@ class StaffOrderService {
                         def msgParams=[:];
                         msgParams.orderId=orderInfo.id;
                         msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
-                        msgParams.receiveId=orderInfo.userId;
+                        msgParams.receiveId=orderInfo.clientId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经确认为有效订单";
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
                         msgParams.restaurantId=orderInfo.restaurantId;
@@ -173,6 +173,59 @@ class StaffOrderService {
                         if(reInfo.recode!=ReCode.OK){
                             println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
                         }
+
+                        return [recode: ReCode.OK];
+                    }
+                    else{
+                        return [recode: ReCode.SAVE_FAILED,errors: orderInfo.errors.allErrors];
+                    }
+                }
+                else {//当前有效性下不能更改有效性
+                    return [recode: ReCode.ORDER_CANNOT_UPDATE_VALID];
+                }
+            }
+            else{
+                return [recode: ReCode.NO_ORDER];
+            }
+
+        } else {
+            return [recode: ReCode.NOT_LOGIN];
+        }
+    }
+
+    def customerReach(def params){
+        def session = webUtilService.getSession();
+        //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
+        //工作人员ID
+        long staffId = Number.toLong(session.staffId);//工作人员ID
+
+        if (staffId) {
+            //获取参数
+            Long orderId = Number.toLong(params.orderId);//订单Id
+
+            //根据订单号查询出订单
+            OrderInfo orderInfo=OrderInfo.get(orderId);
+            if(orderInfo){
+                if(orderInfo.valid==OrderValid.ORIGINAL_VALID.code){//当前有效性是可以更新有效性的
+                    orderInfo.valid=OrderValid.EFFECTIVE_VALID.code;//更新订单有效性为有效
+                }
+                if(orderInfo.status < OrderStatus.SERVED_STATUS.code){
+                    orderInfo.reachRestaurant=true;
+                    if(orderInfo.save(flush: true)){
+
+                        //生成消息通知顾客
+//                        def msgParams=[:];
+//                        msgParams.orderId=orderInfo.id;
+//                        msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
+//                        msgParams.receiveId=orderInfo.clientId;
+//                        msgParams.content="你的订单'"+orderInfo.orderNum+"'已经确认为有效订单";
+//                        msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
+//                        msgParams.restaurantId=orderInfo.restaurantId;
+//                        def reInfo=messageService.createMsg(msgParams);
+//                        if(reInfo.recode!=ReCode.OK){
+//                            println("保存消息失败，但对于订单的产生没有致命影响，故忽略此错误，请系统管理员注意查证："+",reInfo="+reInfo);
+//                        }
 
                         return [recode: ReCode.OK];
                     }
@@ -237,7 +290,7 @@ class StaffOrderService {
                         def msgParams=[:];
                         msgParams.orderId=orderInfo.id;
                         msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
-                        msgParams.receiveId=orderInfo.userId;
+                        msgParams.receiveId=orderInfo.clientId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经被饭店取消，取消原因是："+orderInfo.cancelReason;
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
                         msgParams.restaurantId=orderInfo.restaurantId;
@@ -408,7 +461,7 @@ class StaffOrderService {
                         def msgParams=[:];
                         msgParams.orderId=orderInfo.id;
                         msgParams.type=MessageType.ORDER_HANDLE_TYPE.code;
-                        msgParams.receiveId=orderInfo.userId;
+                        msgParams.receiveId=orderInfo.clientId;
                         msgParams.content="你的订单'"+orderInfo.orderNum+"'已经算账完成，你可以对本次用餐进行评价";
                         msgParams.sendType=MsgSendType.STAFF_TO_CUSTOMER.code;
                         msgParams.restaurantId=orderInfo.restaurantId;

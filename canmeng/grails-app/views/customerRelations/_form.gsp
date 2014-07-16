@@ -11,13 +11,13 @@
 </div>
 -->
 <div class="control-group">
-    <label class="control-label" for="customerUserId"><g:message code="customerRelations.customerUserId.label"
-                                                                 default="Customer User Id"/>
+    <label class="control-label" for="customerClientId"><g:message code="customerRelations.customerClientId.label"
+                                                                 default="Customer Client Id"/>
         <span class="required-indicator">*</span>
     </label>
 
     <div class="controls">
-        <g:field name="customerUserId" type="number" value="${customerRelationsInstance?.customerUserId}" required=""/>
+        <g:field name="customerClientId" type="number" value="${customerRelationsInstance?.customerClientId}" required=""/>
     </div>
 </div>
 
@@ -38,7 +38,7 @@
 
 
 <div class="control-group">
-    <label class="control-label" for="customerUserName" <g:message code="customerRelations.customerUserName.label"
+    <label class="control-label" for="customerUserName"> <g:message code="customerRelations.customerUserName.label"
                                                                    default="Customer User Name"/>
 </label>
 <div class="controls">

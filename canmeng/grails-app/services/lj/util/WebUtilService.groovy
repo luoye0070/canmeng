@@ -1,11 +1,14 @@
 package lj.util
 
+import lj.data.ClientInfo
 import lj.data.StaffInfo
 import lj.data.UserInfo
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsHttpSession
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.codehaus.groovy.grails.web.util.WebUtils
 import org.springframework.web.context.request.RequestContextHolder
+
+import javax.servlet.http.Cookie
 
 //web工具服务
 class WebUtilService {
@@ -22,15 +25,38 @@ class WebUtilService {
         }
     }
 
-    //设置用户
-    void setUser(UserInfo userInfo){
-        session.user=userInfo
-        session.userId=userInfo.id;
+    //设置客户端
+    void setClient(long clientId){
+        session.clientId=clientId;
+    }
+    long getClientId(){
+        return lj.Number.toLong(session.clientId);
+    }
+    //获取客户端
+    ClientInfo getClient(){
+        long clientId=lj.Number.toLong(session.clientId);
+        ClientInfo clientInfo=ClientInfo.get(clientId);
+        return clientInfo
+    }
+    //判断客户端是否登录
+    boolean isClientLoggedIn(){
+        return (session.clientId!=null&&session.clientId!=0l)
     }
 
+
+    //设置用户
+    void setUser(UserInfo userInfo){
+        session.userId=userInfo.id;
+    }
     //获取用户
     UserInfo getUser(){
-        return session.user
+        long userId=lj.Number.toLong(session.userId);
+        UserInfo userInfo=UserInfo.get(userId);
+        return userInfo;
+    }
+    //判定用户是否登录
+    Boolean isLoggedIn(){
+        return (session.userId!=null)
     }
 
     void clearSession()
@@ -68,24 +94,22 @@ class WebUtilService {
         webUtils.getServletContext()
     }
 
-    //判定用户是否登录
-    Boolean isLoggedIn(){
-        return (session.user!=null)
-    }
+
 
     //设置工作人员
     def setStaff(StaffInfo staffInfo){
-        session.staffInfo=staffInfo
         session.staffId=staffInfo.id;
     }
 
     //获取工作人员
     def getStaff(){
-        return session.staffInfo;
+        long staffId=lj.Number.toLong(session.staffId);
+        StaffInfo staffInfo=StaffInfo.get(staffId);
+        return staffInfo;
     }
     //判定工作人员是否登录
     Boolean isStaffLoggedIn(){
-        return (session.staffInfo!=null)
+        return (session.staffId!=null)
     }
 
     /**
@@ -117,5 +141,32 @@ class WebUtilService {
         }
         //println "clientIp: "+clientIp
         return clientIp;
+    }
+
+    //写入cookie
+    def writeCookie(String name,String value,int day){
+        Cookie cookie=new Cookie(name,value.encodeAsURL());
+        cookie.setMaxAge(3600*24*day);
+        cookie.setPath("/");
+        //cookie.setDomain("");
+        def response=getResponse();
+        response.addCookie(cookie);
+    }
+    //读取cookie
+    def readCookie(String name){
+        String value=null;
+        def request=getRequest();
+        Cookie[] cookies=request.getCookies();
+        for (Cookie cookie:cookies){
+            if(cookie.name==name){
+                value=URLDecoder.decode(cookie.value,"UTF-8")
+                break;
+            }
+        }
+        return value;
+    }
+    //获取sessionID
+    def getSessionId(){
+        return session.id;
     }
 }

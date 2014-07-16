@@ -3,8 +3,10 @@ package lj.user
 import grails.converters.JSON
 import lj.IPUtil
 import lj.common.DesUtilGy
+import lj.data.ClientInfo
 import lj.data.RestaurantInfo
 import lj.data.UserInfo
+import lj.enumCustom.ClientType
 import lj.shop.StaffManageService
 import lj.util.ValidationService
 
@@ -147,6 +149,18 @@ class UserController {
                         ];
                         staffManageService.staffLogin(paramsT);
                     }
+
+                    //客户端登录
+                    ClientInfo clientInfo=ClientInfo.findByUserNameAndClientType(resultUser.userName,ClientType.WEB_SITE.code);
+                    if(!clientInfo){
+                        clientInfo = new ClientInfo();
+                        clientInfo.userName = resultUser.userName;
+                        //clientInfo.passWord=userInfo.passWord;
+                        clientInfo.userId = resultUser.id;
+                        clientInfo.clientType=ClientType.WEB_SITE.code;
+                        clientInfo.save(true);
+                    }
+                    webUtilService.setClient(clientInfo.id);
 
                     //设定session
                     webUtilService.user = resultUser
@@ -308,7 +322,7 @@ class UserController {
     }
 
     def ajaxGetAddresses(){
-        def res=[addresses:userSearchService.getAddresses(),defaultAddrId:webUtilService.user.defaultAddrId]
+        def res=[addresses:userSearchService.getAddresses(),defaultAddrId:webUtilService.getClient().defaultAddrId]
         render res as JSON
     }
 

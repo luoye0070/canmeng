@@ -10,12 +10,12 @@
 	<g:field name="restaurantId" type="number" value="${orderInfoInstance.restaurantId}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: orderInfoInstance, field: 'userId', 'error')} required">
-	<label for="userId">
-		<g:message code="orderInfo.userId.label" default="User Id" />
+<div class="fieldcontain ${hasErrors(bean: orderInfoInstance, field: 'clientId', 'error')} required">
+	<label for="clientId">
+		<g:message code="orderInfo.clientId.label" default="Client Id" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="userId" type="number" value="${orderInfoInstance.userId}" required=""/>
+	<g:field name="clientId" type="number" value="${orderInfoInstance.clientId}" required=""/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: orderInfoInstance, field: 'tableId', 'error')} required">

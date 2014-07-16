@@ -6,13 +6,13 @@ class RestaurantCollectInfo {
     //饭店ID
     long restaurantId
     //用户ID
-    long userId
+    long clientId
     //收藏时间
     Date collectTime=new Date();
 
     static constraints = {
         restaurantId(nullable:false,min: 1l);
-        userId(nullable:false,min:1l);
+        clientId(nullable:false,min:1l);
         collectTime(nullable:false);
     }
 }

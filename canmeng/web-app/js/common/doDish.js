@@ -40,6 +40,11 @@
         htmlStr += "    </div><!--Modal footer-->";
         htmlStr += "</div>";
         htmlStr+="";
+
+        if(parent.showDialog){
+            parent.showDialog(htmlStr,foodId);
+            return;
+        }
         var dialog = $(htmlStr);
         $("body").append(htmlStr);
         $("#ratyService").modal();

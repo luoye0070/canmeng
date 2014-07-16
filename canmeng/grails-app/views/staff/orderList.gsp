@@ -188,7 +188,7 @@
                     %{--<g:sortableColumn property="restaurantId"--}%
                                       %{--title="${message(code: 'orderInfo.restaurantId.label', default: 'Restaurant Id')}"/>--}%
 
-                    <g:sortableColumn property="userId" title="${message(code: 'orderInfo.userName.label', default: 'User Name')}"  params="${params}"/>
+                    <g:sortableColumn property="clientId" title="${message(code: 'orderInfo.userName.label', default: 'User Name')}"  params="${params}"/>
 
                     <g:sortableColumn property="tableId"
                                       title="${message(code: 'orderInfo.tableName.label', default: 'Table Name')}" params="${params}"/>
@@ -220,8 +220,8 @@
                             ${fieldValue(bean: orderInfoInstance, field: "userName")}
                         </g:if>
                         <g:else>
-                            <g:if test="${orderInfoInstance.userId}">
-                                用户&nbsp;${fieldValue(bean: orderInfoInstance, field: "userId")}
+                            <g:if test="${orderInfoInstance.clientId}">
+                                用户&nbsp;${fieldValue(bean: orderInfoInstance, field: "clientId")}
                             </g:if>
                             <g:else>
                                 服务员

@@ -161,7 +161,7 @@ class StaffDishService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //工作人员ID
-        StaffInfo staffInfo=session.staffInfo;//工作人员ID
+        StaffInfo staffInfo=webUtilService.getStaff();//工作人员ID
         if(staffInfo){
             params.restaurantId=staffInfo.restaurantId;//加上饭店id
             return customerDishService.dishList(params,true);

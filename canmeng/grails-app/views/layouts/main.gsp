@@ -53,7 +53,7 @@
                                     <li  ${url in ["shopInfo","editShop"]?'class="current"':""}><g:link controller="shop" action="shopInfo">我的饭店</g:link></li>
                                     <li  ${url=="c"?'class="current"':""}><a href="about.html">联系餐萌</a></li>
                                     <li ${controllerName=="staff"?"class='current'":""}><g:link controller="staff" action="index">工作人员入口</g:link></li>
-                                    <g:if test="${session && (session.user||session.staffInfo)}">
+                                    <g:if test="${session && (session.clientId||session.staffInfo)}">
                                         <li><g:link controller="user" action="logout">退出餐萌</g:link></li>
                                     </g:if>
 

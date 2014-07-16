@@ -16,8 +16,8 @@ class ImageShowController {
     def download() {
         //防盗链处理
         String Referer = request.getHeader("Referer");
-        String baseUrl = grailsApplication.config.apis.baseUrl;
-        String baseUrl1=grailsApplication.config.apis.baseUrl1;
+        String baseUrl = grailsApplication.config.grails.baseurls.baseUrl;
+        String baseUrl1=grailsApplication.config.grails.baseurls.baseUrl1;
         if (Referer != null && Referer.indexOf(baseUrl) < 0&& Referer.indexOf(baseUrl1) < 0) {//盗链
             println("图片盗链");
             return;
@@ -45,8 +45,10 @@ class ImageShowController {
     def downloadThumbnail() {
         //防盗链处理
         String Referer = request.getHeader("Referer");
-        String baseUrl = grailsApplication.config.apis.baseUrl;
-        String baseUrl1=grailsApplication.config.apis.baseUrl1;
+        String baseUrl = grailsApplication.config.grails.baseurls.baseUrl;
+        //String baseUrl = grailsApplication.getConfig().environments.productio;
+        String baseUrl1=grailsApplication.config.grails.baseurls.baseUrl1;
+        println("baseUrl-->"+baseUrl);
         if (Referer != null && Referer.indexOf(baseUrl) < 0&& Referer.indexOf(baseUrl1) < 0) {//盗链
             println("图片盗链");
             return;
@@ -78,8 +80,8 @@ class ImageShowController {
     def showQRCode() {
         //防盗链处理
         String Referer = request.getHeader("Referer");
-        String baseUrl = grailsApplication.config.apis.baseUrl;
-        String baseUrl1=grailsApplication.config.apis.baseUrl1;
+        String baseUrl = grailsApplication.config.grails.baseurls.baseUrl;
+        String baseUrl1=grailsApplication.config.grails.baseurls.baseUrl1;
         if (Referer != null && Referer.indexOf(baseUrl) < 0&& Referer.indexOf(baseUrl1) < 0) {//盗链
             println("图片盗链");
             return;

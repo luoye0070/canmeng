@@ -133,7 +133,7 @@ class ImageSpaceService {
         //response.setHeader("Content-disposition", "attachment; filename=" + params.url);
         //防盗链处理
         String Referer=request.getHeader("Referer");
-        String baseUrl=grailsApplication.config.apis.baseUrl;
+        String baseUrl=grailsApplication.config.grails.baseurls.baseUrl;
         if(Referer==null||Referer.indexOf(baseUrl)<0){//盗链
             println("图片盗链");
             return;
@@ -167,7 +167,7 @@ class ImageSpaceService {
         //response.setHeader("Content-disposition", "attachment; filename=" + params.url);
         //防盗链处理
         String Referer=request.getHeader("Referer");
-        String baseUrl=grailsApplication.config.apis.baseUrl;
+        String baseUrl=grailsApplication.config.grails.baseurls.baseUrl;
         if(Referer==null||Referer.indexOf(baseUrl)<0){//盗链
             println("图片盗链");
             return;

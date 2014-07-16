@@ -39,7 +39,8 @@ class CustomerDishService {
 
 
         //获取参数
-        long userId = Number.toLong(session.userId);//用户ID
+        //long userId = Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
         long orderId = Number.toLong(params.orderId);//订单ID
         def foodIds = params.foodIds;//菜品Id列表
         def counts=params.counts;// 数量列表
@@ -47,8 +48,8 @@ class CustomerDishService {
         String partakeCode = params.partakeCode;//点菜参与码
         if(!partakeCode){ //没有点菜验证码则需要验证用户是否登录
             if (byWaiter) {//如果是服务员帮助创建订单，则取服务员ID作为用户ID
-                userId = Number.toLong(session.staffId);
-                if (userId == 0) { //没登录
+                clientId = Number.toLong(session.staffId);
+                if (clientId == 0) { //没登录
                     return [recode: ReCode.NOT_LOGIN];
                 }
             }
@@ -73,7 +74,7 @@ class CustomerDishService {
                     return [recode: ReCode.CANNOT_DISH];//不能点菜
                 }
                 //点菜参与码是否正确
-                if (userId == orderInfo.userId || byWaiter) {//用户登录切是订单创建的用户或者是服务员帮忙点菜，则不需要参与验证码
+                if (clientId == orderInfo.clientId || byWaiter) {//用户登录切是订单创建的用户或者是服务员帮忙点菜，则不需要参与验证码
 
                 } else {//检查点菜参与验证码是否正确
                     if (partakeCode != orderInfo.partakeCode) { //点菜参与码不正确
@@ -190,8 +191,9 @@ class CustomerDishService {
         //SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId = Number.toLong(session.userId);//用户ID
-        if(userId==0){
+        //long userId = Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
+        if(clientId==0){
             //没登录
             return [recode: ReCode.NOT_LOGIN];
         }
@@ -241,8 +243,9 @@ class CustomerDishService {
     def delDish(def params){
         def session = webUtilService.getSession();
         //取出用户ID
-        long userId = Number.toLong(session.userId);//用户ID
-        if(userId==0){
+        //long userId = Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
+        if(clientId==0){
             //没登录
             return [recode: ReCode.NOT_LOGIN];
         }
@@ -287,11 +290,12 @@ class CustomerDishService {
         SimpleDateFormat sdfDate=new SimpleDateFormat("yyyy-MM-dd");
         //SimpleDateFormat sdfTime=new SimpleDateFormat("HH:mm:ss");
         //取出用户ID
-        long userId=Number.toLong(session.userId);//用户ID
+        //long userId=Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
         if(byWaiter){//如果是工作人员查询，则取服务员ID作为用户ID
-            userId=Number.toLong(session.staffId);
+            clientId=Number.toLong(session.staffId);
         }
-        if(userId==0){
+        if(clientId==0){
             //没登录
             return [recode: ReCode.NOT_LOGIN];
         }
@@ -331,7 +335,7 @@ class CustomerDishService {
         if(!byWaiter){
             OrderInfo orderInfo=OrderInfo.get(orderId);
             if(orderInfo){
-                if(orderInfo.userId!=userId){//不属于该用户的订单
+                if(orderInfo.clientId!=clientId){//不属于该用户的订单
                     return [recode: ReCode.ERROR_PARAMS] ;
                 }
             }
@@ -397,8 +401,9 @@ class CustomerDishService {
     def getDish(def params){
         def session = webUtilService.getSession();
         //取出用户ID
-        long userId = Number.toLong(session.userId);//用户ID
-        if(userId==0){
+        //long userId = Number.toLong(session.userId);//用户ID
+        long clientId=webUtilService.getClientId();
+        if(clientId==0){
             //没登录
             return [recode: ReCode.NOT_LOGIN];
         }

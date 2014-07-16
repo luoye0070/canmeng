@@ -1,7 +1,9 @@
 package lj.user
 
 import lj.common.DesUtilGy
+import lj.data.ClientInfo
 import lj.data.UserInfo
+import lj.enumCustom.ClientType
 import lj.enumCustom.ReCode
 import lj.util.WebUtilService
 import lj.common.Result
@@ -24,7 +26,20 @@ class UserHandleService {
         //验证
         if (userInfo.validate()) {
             userInfo.save(true)
-            webUtilService.user = userInfo
+            webUtilService.user = userInfo;
+
+            //客户端登录
+            ClientInfo clientInfo=ClientInfo.findByUserNameAndClientType(userInfo.userName,ClientType.WEB_SITE.code);
+            if(!clientInfo){
+                clientInfo = new ClientInfo();
+                clientInfo.userName = userInfo.userName;
+                //clientInfo.passWord=userInfo.passWord;
+                clientInfo.userId = userInfo.id;
+                clientInfo.clientType=ClientType.WEB_SITE.code;
+                clientInfo.save(true);
+            }
+            webUtilService.setClient(clientInfo.id);
+
             return [success: true, message: '注册成功']
         } else {
             return [success: false, message: "注册失败", errors: userInfo.errors.allErrors, user: userInfo]
@@ -313,19 +328,24 @@ class UserHandleService {
         Result res = new Result()
 
         AddressInfo address = new AddressInfo(params)
-        println(webUtilService.user.id)
-        address.userId = webUtilService.user.id
+        //println(webUtilService.user.id)
+        address.clientId = webUtilService.getClientId();
         if (!address.save(flush: true)) {
             res.success = false
             res.msg = address.errors.allErrors
             return res
         }
         if (params.defaultAddrId == '1') {
-            UserInfo user = UserInfo.get(webUtilService.user.id)
-            if (user) {
-                user.defaultAddrId = address.id
-                user.save(flush: true)
-                webUtilService.user = user
+//            UserInfo user = UserInfo.get(webUtilService.user.id)
+//            if (user) {
+//                user.defaultAddrId = address.id
+//                user.save(flush: true)
+//                webUtilService.user = user
+//            }
+            ClientInfo clientInfo=webUtilService.getClient();
+            if(clientInfo){
+                clientInfo.defaultAddrId=address.id;
+                clientInfo.save(flush: true);
             }
         }
         res.obj = address.id
@@ -350,11 +370,16 @@ class UserHandleService {
             return res
         }
         if (params.defaultAddrId == '1') {
-            UserInfo user = UserInfo.get(webUtilService.user.id)
-            if (user) {
-                user.defaultAddrId = address.id
-                user.save(flush: true)
-                webUtilService.user = user
+//            UserInfo user = UserInfo.get(webUtilService.user.id)
+//            if (user) {
+//                user.defaultAddrId = address.id
+//                user.save(flush: true)
+//                webUtilService.user = user
+//            }
+            ClientInfo clientInfo=webUtilService.getClient();
+            if(clientInfo){
+                clientInfo.defaultAddrId=address.id;
+                clientInfo.save(flush: true);
             }
         }
         res.msg = "更新地址成功!"
@@ -383,13 +408,13 @@ class UserHandleService {
     Result addFavorite(def params) {
         Result res = new Result()
         def session=webUtilService.getSession();
-        long userId = lj.Number.toLong(session.userId);//用户ID
-        println("userId--->"+userId);
-        if (userId) {
-            params.userId = userId;
+        long clientId = webUtilService.getClientId();//客户ID
+        println("clientId--->"+clientId);
+        if (clientId) {
+            params.clientId = clientId;
             if ("food".equals(params.type)) {
                 long foodId=lj.Number.toLong(params.foodId);
-                def foodC =FoodCollectInfo.findByFoodIdAndUserId(foodId,userId);
+                def foodC =FoodCollectInfo.findByFoodIdAndClientId(foodId,clientId);
                 if(foodC){
                     res.msg = "您已经收藏过该菜品了哦"
                     res.success = false
@@ -405,7 +430,7 @@ class UserHandleService {
                 }
             } else {
                 long restaurantId=lj.Number.toLong(params.restaurantId) ;
-                def restaurantC =RestaurantCollectInfo.findByRestaurantIdAndUserId(restaurantId,userId);
+                def restaurantC =RestaurantCollectInfo.findByRestaurantIdAndClientId(restaurantId,clientId);
                 if(restaurantC){
                     res.msg = "您已经收藏过该饭店了哦"
                     res.success = false
