@@ -83,6 +83,9 @@ class CartOfCustomerService {
             if(!cartInfo.save(flush: true)){//保存不成功
                 return [recode:ReCode.SAVE_FAILED,cartInfo:cartInfo,errors:cartInfo.errors.allErrors];
             }
+            return [recode: ReCode.OK,cartInfo:cartInfo];
+        }else{
+            return [recode: ReCode.OTHER_ERROR];
         }
     }
 
@@ -137,6 +140,42 @@ class CartOfCustomerService {
         }else {
             return [recode:ReCode.ERROR_PARAMS];
         }
+    }
 
+    //从购餐车中删除菜品
+    def delDish(def params){
+        long dishId=Number.toLong(params.dishId);
+        if(dishId){
+             DishesForCartInfo dishesForCartInfo=DishesForCartInfo.get(dishId);
+            if(dishesForCartInfo){
+                dishesForCartInfo.delete(flush: true);
+                return [recode: ReCode.OK];
+            }else{
+                return [recode: ReCode.NO_RECORD];
+            }
+        }else{
+            return [recode:ReCode.ERROR_PARAMS];
+        }
+    }
+
+    //更新餐车中菜品的数量
+    def updateDish(def params){
+        long dishId=Number.toLong(params.dishId);
+        int count=Number.toInteger(params.count);
+        if(dishId){
+            DishesForCartInfo dishesForCartInfo=DishesForCartInfo.get(dishId);
+            if(dishesForCartInfo){
+                dishesForCartInfo.num=count;
+                if(dishesForCartInfo.save(flush: true)){
+                    return [recode: ReCode.OK];
+                }else{
+                    return [recode:ReCode.SAVE_FAILED,dishesForCartInfo:dishesForCartInfo,errors:dishesForCartInfo.errors.allErrors];
+                }
+            }else{
+                return [recode: ReCode.NO_RECORD];
+            }
+        }else{
+            return [recode:ReCode.ERROR_PARAMS];
+        }
     }
 }
