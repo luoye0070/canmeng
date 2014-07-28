@@ -5,7 +5,12 @@
  * Time: 上午12:10
  * To change this template use File | Settings | File Templates.
  */
-function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
+function initCart(options){
+    var delDishFromCartUrl = options.delDishFromCartUrl + "?rand=" + Math.random();
+    var cartsAndDishesUrl = options.cartsAndDishesUrl + "?rand=" + Math.random();
+    var checkOutUrl= options.checkOutUrl  + "?rand=" + Math.random();
+    var imgUrl=options.imgUrl;
+    var updateDishOfCartUrl=options.updateDishOfCartUrl  + "?rand=" + Math.random();
    /*****初始化添加cart浮动块*****/
     var cartsObj=$("#carts");
     if(typeof(cartsObj)!="undefined"){
@@ -78,10 +83,10 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
                       '        </div>                                                           '+
                       '        <div class="dbottom">                                            '+
                       '            <div class="dbleft">￥'+dishesForCartInfo.foodPrice+'</div>                            '+
-                      '            <div class="dbright">                                        '+
-                      '                <input type="button" value="─"/>                         '+
-                      '                <input type="text" value="'+dishesForCartInfo.num+'"/>                           '+
-                      '                <input type="button" value="+">                          '+
+                      '            <div class="dbright" dishId="'+dishesForCartInfo.id+'">                                        '+
+                      '                <input type="button" updateType="decrease" value="─"/>                         '+
+                      '                <input type="text" updateType="change" value="'+dishesForCartInfo.num+'"/>                           '+
+                      '                <input type="button" updateType="add" value="+">                          '+
                       '            </div>                                                       '+
                       '        </div>                                                           '+
                       '    </div>                                                               '+
@@ -95,14 +100,9 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
           $("#cart_dish_count").html(dishCount);
           $("#cart_list_total").html("总计：￥"+accountTotal);
           //注册事件
-          $("#cart_list input[delDish]").delDishFromCart({
-              delDishFromCartUrl: delDishFromCartUrl,
-              //cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
-              //dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
-              cartsAndDishesUrl:cartsAndDishesUrl,
-              checkOutUrl:checkOutUrl,
-              imgUrl:imgUrl
-          });
+          $("#cart_list input[delDish]").delDishFromCart(options);
+          $("#cart_list input[updateType]").updateDishOfCart(options);
+
       }
       else {//显示错误信息
           //alert(data.recode.label);
@@ -115,18 +115,12 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
         return this.each(function () {
             $(this).click(function () { //注册点击事件
                 var addToCartUrl = options.addToCartUrl + "?rand=" + Math.random();
-                //var cartListUrl = options.cartListUrl + "?rand=" + Math.random();
-                //var dishesListUrl= options.dishesListUrl  + "?rand=" + Math.random();
-                var cartsAndDishesUrl = options.cartsAndDishesUrl + "?rand=" + Math.random();
-                var checkOutUrl= options.checkOutUrl  + "?rand=" + Math.random();
-                var imgUrl=options.imgUrl;
-                var delDishFromCartUrl = options.delDishFromCartUrl + "?rand=" + Math.random();
                 var foodId = $(this).attr("foodId");
                 $.getJSON(addToCartUrl, {foodId: foodId}, function (data) {
                     if (data.recode.code == 0) {//成功,添加到界面上购物车中
                         //alert(data.recode.label);
                         //updateCart(data.cartInfo,dishesListUrl);
-                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl);
+                        initCart(options);
                     }
                     else {//显示错误信息
                         alert(data.recode.label);
@@ -139,17 +133,12 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
         return this.each(function () {
             $(this).click(function () { //注册点击事件
                 var delDishFromCartUrl = options.delDishFromCartUrl + "?rand=" + Math.random();
-                //var cartListUrl = options.cartListUrl + "?rand=" + Math.random();
-                //var dishesListUrl= options.dishesListUrl  + "?rand=" + Math.random();
-                var cartsAndDishesUrl = options.cartsAndDishesUrl + "?rand=" + Math.random();
-                var checkOutUrl= options.checkOutUrl  + "?rand=" + Math.random();
-                var imgUrl=options.imgUrl;
                 var dishId = $(this).attr("dishId");
                 $.getJSON(delDishFromCartUrl, {dishId: dishId}, function (data) {
                     if (data.recode.code == 0) {//成功,添加到界面上购物车中
                         //alert(data.recode.label);
                         //updateCart(data.cartInfo,dishesListUrl);
-                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl);
+                        initCart(options);
                     }
                     else {//显示错误信息
                         alert(data.recode.label);
@@ -158,8 +147,46 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
             });
         });
     };
+    function updateDish(options){
+        var updateDishOfCartUrl=options.updateDishOfCartUrl  + "?rand=" + Math.random();
+        var dishId = options.dishId;
+        var count=options.count;
+        $.getJSON(updateDishOfCartUrl, {dishId: dishId,count:count}, function (data) {
+            if (data.recode.code == 0) {//成功,添加到界面上购物车中
+                //alert(data.recode.label);
+                //updateCart(data.cartInfo,dishesListUrl);
+                initCart(options);
+            }
+            else {//显示错误信息
+                alert(data.recode.label);
+            }
+        });
+    }
+    $.fn.updateDishOfCart = function (options) {
+        return this.each(function () {
+            if($(this).attr("updateType")=="change"){
+                $(this).blur(function () {
+                    options.dishId = $(this).parent().attr("dishId");
+                    options.count=$(this).val();
+                    updateDish(options);
+                });
+            }else{
+                $(this).click(function () {
+                    options.dishId = $(this).parent().attr("dishId");
+                    var count=parseInt($(this).parent().children("input[updateType=change]").val());
+                    if($(this).attr("updateType")=="decrease"){
+                        count-=1;
+                        if(count<0){
+                            count=0;
+                        }
+                    }else{
+                        count+=1;
+                    }
+                    $(this).parent().children("input[updateType=change]").val(count);
+                    options.count=count;
+                    updateDish(options);
+                });
+            }
+        });
+    };
 })(jQuery);
-
-function updateCart(cartInfo,dishesListUrl){
-
-}

@@ -50,4 +50,10 @@ class CartOfCustomerAjaxController {
         println("reInfo-->"+reInfo);
         render(reInfo as JSON);
     }
+    //更新餐车中菜品的数量
+    def updateDish(){
+        def reInfo=cartOfCustomerService.updateDish(params);
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
 }

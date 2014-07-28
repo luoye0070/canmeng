@@ -110,10 +110,14 @@
             );
 
             //初始化餐车
-            initCart("${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
-                    "${createLink(controller: "cartOfCustomer",action: "checkout")}",
-                    "${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
-                    "${createLink(controller: "cartOfCustomerAjax",action: "delDish")}");
+            initCart({
+                addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
+            });
             //注册加入购餐车事件
             $("a[addToCart]").addFoodToCart(
                     {
@@ -123,7 +127,8 @@
                         cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
                         checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
                         imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
-                        delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}"
+                        delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                        updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
                     }
             );
         });

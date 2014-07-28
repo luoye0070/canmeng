@@ -200,11 +200,18 @@ class CartOfCustomerService {
         if(dishId){
              DishesForCartInfo dishesForCartInfo=DishesForCartInfo.get(dishId);
             if(dishesForCartInfo){
+                //更新cart总价
+                CartInfo cartInfo=CartInfo.get(dishesForCartInfo.cartId);
+                if(cartInfo){
+                    cartInfo.totalAccount-=dishesForCartInfo.foodPrice*dishesForCartInfo.num;
+                    cartInfo.save(flush: true);
+                }
+                //删除点菜
                 dishesForCartInfo.delete(flush: true);
                 //检查餐车中是否还有菜品，没有则删除餐车
                 DishesForCartInfo dishesForCartInfoTest=DishesForCartInfo.findByCartId(dishesForCartInfo.cartId);
                 if(!dishesForCartInfoTest){
-                    CartInfo cartInfo=CartInfo.get(dishesForCartInfo.cartId);
+                    //CartInfo cartInfo=CartInfo.get(dishesForCartInfo.cartId);
                     if(cartInfo){
                         cartInfo.delete(flush: true);
                     }
@@ -222,9 +229,20 @@ class CartOfCustomerService {
     def updateDish(def params){
         long dishId=Number.toLong(params.dishId);
         int count=Number.toInteger(params.count);
+        if(count==0){
+            return delDish(params);
+        }
         if(dishId){
             DishesForCartInfo dishesForCartInfo=DishesForCartInfo.get(dishId);
             if(dishesForCartInfo){
+                //更新cart总价
+                //更新cart总价
+                CartInfo cartInfo=CartInfo.get(dishesForCartInfo.cartId);
+                if(cartInfo){
+                    cartInfo.totalAccount-=dishesForCartInfo.foodPrice*dishesForCartInfo.num;
+                    cartInfo.totalAccount+=dishesForCartInfo.foodPrice*count;
+                    cartInfo.save(flush: true);
+                }
                 dishesForCartInfo.num=count;
                 if(dishesForCartInfo.save(flush: true)){
                     return [recode: ReCode.OK];
