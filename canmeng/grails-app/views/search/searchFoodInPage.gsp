@@ -122,7 +122,8 @@
                         //dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
                         cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
                         checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
-                        imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}"
+                        imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                        delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}"
                     }
             );
         });

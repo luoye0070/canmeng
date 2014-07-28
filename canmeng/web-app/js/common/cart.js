@@ -120,12 +120,13 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
                 var cartsAndDishesUrl = options.cartsAndDishesUrl + "?rand=" + Math.random();
                 var checkOutUrl= options.checkOutUrl  + "?rand=" + Math.random();
                 var imgUrl=options.imgUrl;
+                var delDishFromCartUrl = options.delDishFromCartUrl + "?rand=" + Math.random();
                 var foodId = $(this).attr("foodId");
                 $.getJSON(addToCartUrl, {foodId: foodId}, function (data) {
                     if (data.recode.code == 0) {//成功,添加到界面上购物车中
                         //alert(data.recode.label);
                         //updateCart(data.cartInfo,dishesListUrl);
-                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl);
+                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl);
                     }
                     else {//显示错误信息
                         alert(data.recode.label);
@@ -148,7 +149,7 @@ function initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl){
                     if (data.recode.code == 0) {//成功,添加到界面上购物车中
                         //alert(data.recode.label);
                         //updateCart(data.cartInfo,dishesListUrl);
-                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl);
+                        initCart(cartsAndDishesUrl,checkOutUrl,imgUrl,delDishFromCartUrl);
                     }
                     else {//显示错误信息
                         alert(data.recode.label);
