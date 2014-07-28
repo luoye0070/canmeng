@@ -12,7 +12,7 @@ class DishesForCartInfo {
     //备注
     String remark;
     //份数
-    int num=1;
+    int num=0;
     //单价
     double foodPrice=0d;
 
@@ -25,7 +25,7 @@ class DishesForCartInfo {
         cartId(nullable:false,min: 1l)
         foodId(nullable:false,min: 1l)
         remark(nullable:true,blank: true,maxSize: 256);
-        num(nullable:false,min: 1);
+        num(nullable:false,min: 0);
         foodPrice(nullable: false,min: 0d);
         foodName(nullable:true,blank: true);
         foodImg(nullable:true,blank: true, maxSize:128);

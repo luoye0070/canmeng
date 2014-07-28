@@ -8,6 +8,8 @@
     <g:javascript src="shop/shopRegister.js"/>
     <g:javascript src="shop/shopSome.js"/>
     <script type="text/javascript" src="${resource(dir:"js/common",file:"doDish.js")}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/common",file:"cart.js")}"></script>
+    <link href="${resource(dir: "css",file: "cart.css")}" rel="stylesheet"/>
     <style type="text/css">
 
     .mc_main {
@@ -104,6 +106,23 @@
                     {
                         orderListUrl:"${createLink(controller: "customerAjax",action: "getOrdersByRestaurant")}",
                         doDishUrl:"${createLink(controller: "customerAjax",action: "addDishes")}"
+                    }
+            );
+
+            //初始化餐车
+            initCart("${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                    "${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                    "${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                    "${createLink(controller: "cartOfCustomerAjax",action: "delDish")}");
+            //注册加入购餐车事件
+            $("a[addToCart]").addFoodToCart(
+                    {
+                        addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                        //cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
+                        //dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
+                        cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                        checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                        imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}"
                     }
             );
         });
@@ -208,12 +227,12 @@
                             </div>
 
                             <div class="ml_row_txt">
-                                %{--<g:if test="${foodInfoInstance?.canTakeOut}">--}%
-                                    %{--<a style="float: left;" href="#"--}%
-                                       %{--restaurantId="${foodInfoInstance?.restaurantId}"--}%
-                                       %{--foodId="${foodInfoInstance?.id}">--}%
-                                        %{--加入外卖餐车</a>--}%
-                                %{--</g:if>--}%
+                                <g:if test="${foodInfoInstance?.canTakeOut}">
+                                    <a style="float: left;" href="#"
+                                       addToCart="true"
+                                       foodId="${foodInfoInstance?.id}">
+                                        加入外卖餐车</a>
+                                </g:if>
                                 <a style="float: left;" href="#"
                                    addToOrder="true"
                                    restaurantId="${foodInfoInstance?.restaurantId}"

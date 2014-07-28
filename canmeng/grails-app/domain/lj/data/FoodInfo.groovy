@@ -27,7 +27,8 @@ class FoodInfo {
     int sellCount=0;
     //累计销量
     int totalSellCount=0;
-
+    //已经做好的
+    boolean isReady=false;
     static constraints = {
         restaurantId(nullable:false,min: 1l)
         name (nullable: false,blank:false,maxSize:32 )
@@ -40,6 +41,7 @@ class FoodInfo {
         countLimit (nullable: false,min:0)
         isSetMeal(nullable: false)
         sellCount(nullable: false,min:0)
-        totalSellCount(nullable: false,min:0)
+        totalSellCount(nullable: false,min:0);
+        isReady(nullable:false);
     }
 }

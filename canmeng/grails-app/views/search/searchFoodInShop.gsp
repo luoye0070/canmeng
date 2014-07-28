@@ -7,6 +7,7 @@
     <g:javascript src="shop/shopRegister.js"/>
     <g:javascript src="shop/shopSome.js"/>
     <script type="text/javascript" src="${resource(dir:"js/common",file:"doDish.js")}"></script>
+    <script type="text/javascript" src="${resource(dir:"js/common",file:"cart.js")}"></script>
     <style type="text/css">
     body{
         background-color: #ffffff;
@@ -105,6 +106,15 @@
                     {
                         orderListUrl:"${createLink(controller: "customerAjax",action: "getOrdersByRestaurant")}",
                         doDishUrl:"${createLink(controller: "customerAjax",action: "addDishes")}"
+                    }
+            );
+
+            //注册加入购餐车事件
+            $("a[addToCart]").addFoodToCart(
+                    {
+                        addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                        cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
+                        dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
                     }
             );
         });
@@ -209,12 +219,12 @@
                             </div>
 
                             <div class="ml_row_txt">
-                                %{--<g:if test="${foodInfoInstance?.canTakeOut}">--}%
-                                    %{--<a style="float: left;" href="#"--}%
-                                       %{--restaurantId="${foodInfoInstance?.restaurantId}"--}%
-                                       %{--foodId="${foodInfoInstance?.id}">--}%
-                                        %{--加入外卖餐车</a>--}%
-                                %{--</g:if>--}%
+                                <g:if test="${foodInfoInstance?.canTakeOut}">
+                                    <a style="float: left;" href="#"
+                                       addToCart="true"
+                                       foodId="${foodInfoInstance?.id}">
+                                        加入外卖餐车</a>
+                                </g:if>
                                 <a style="float: left;" href="#"
                                    addToOrder="true"
                                    restaurantId="${foodInfoInstance?.restaurantId}"
