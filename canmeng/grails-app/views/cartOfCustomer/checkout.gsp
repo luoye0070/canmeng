@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="lj.enumCustom.ReserveType" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="main_template"/>
@@ -20,7 +20,7 @@
 <body>
 <div class="mc_main">
     <div class="mcm_top">
-        详情
+        订单生成
     </div>
 
     <div class="mcm_content">
@@ -44,7 +44,7 @@
                     <div class="prompt" style="display: none" id="cart_nothing">
                         <div class="nogoods"><b></b>餐车中还没有商品，赶紧选购吧！</div>
                     </div>
-                    <div class="outerList" id="cart_list">
+                    <div class="outerList" id="cart_list" style="display: block">
                         <ul>
                             <li>
                                 <div class="top">
@@ -195,6 +195,97 @@
                     </div>
 
                 </div>
+            </div>
+
+            <div class="option">
+                <div class="control-group">
+                    <label class="control-label">用餐日期</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge focused" type="text" name="date"
+                               value="${params.date ?: lj.FormatUtil.dateFormat(new Date())}"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">用餐类型</label>
+
+                    <div class="controls">
+                        <select name="reserveType" class="mcmcsf_input">
+                            <g:each in="${lj.enumCustom.ReserveType.reserveTypes}">
+                                <option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
+                            </g:each>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">希望送到时间</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge focused" type="text" name="time" id="time"
+                               value="${params.time ?: lj.FormatUtil.timeFormat(new Date())}"/>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">联系人</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge focused" type="text" name="customerName" value="${params.customerName ?: ""}"/>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">联系电话</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge focused" type="text" name="phone" value="${params.phone ?: ""}"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="address">
+                <table class="table table-striped table-bordered table-condensed" style="width: 710px;">
+                    <thead>
+                    <tr>
+                        <th>选择</th>
+                        <th>联系人</th>
+                        <th>所在地区</th>
+                        <th>街道地址</th>
+                        <th>电话/手机</th>
+                        <th><a href="#">地址管理</a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="1" name="addressId" checked="checked"/>
+                        </td>
+                        <td>刘兆国</td>
+                        <td>陕西省 西安市 雁塔区</td>
+                        <td>高新一路12号</td>
+                        <td>18699178734</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="1" name="addressId"/>
+                        </td>
+                        <td>刘兆国</td>
+                        <td>陕西省 西安市 雁塔区</td>
+                        <td>高新一路12号</td>
+                        <td>18699178734</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="operation">
+                <input type="submit"
+                       value="${message(code: 'default.button.submit.label', default: 'submit')}"
+                       class="btn btn-primary"/>
             </div>
 
         </div>

@@ -176,6 +176,14 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label">联系人</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge focused" type="text" name="customerName" value="${params.customerName ?: ""}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label">联系电话</label>
 
                         <div class="controls">

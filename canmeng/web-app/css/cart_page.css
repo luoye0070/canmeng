@@ -22,15 +22,14 @@
     width: 960px;
     height: auto;
     margin: 20px;
+    float: left;
 }
 
 .mcmc_detail {
-    width: 900px;
+    width: 960px;
     height: auto;
-    margin-left: 30px;
-    margin-right: 30px;
     float: left;
-    border-bottom: 2px solid #DDDDDD;
+    /*border-bottom: 2px solid #DDDDDD;*/
     margin-bottom: 20px;
 }
 .cart{
@@ -38,11 +37,13 @@
     top:0px;
     right:130px;*/
     /*left: 870px;*/
-    width:350px;
+    width:880px;
+    margin: 0px 40px;
     height:auto;
     /*background:#066;*/
     display:block;
     z-index:100;
+    float: left;
 }
 .cart ul,.cart li{
     list-style: none;
@@ -115,14 +116,15 @@
 }
 
 .cart .content{
-    width:348px;
+    /*width:348px;
     height:auto;
-    border: 1px solid #cccccc;
+    border: 1px solid #cccccc; */
     /*background:#F0F;*/
     float:left;
 }
 .cart .content .prompt {
     width: 316px;
+    MARGIN: 0px 45px;
     border: 1px solid #DDD;
     padding: 15px 15px;
     background: white;
@@ -148,6 +150,12 @@
 .cart .content .outerList ul,.cart .content .outerList li{
     float: left;
 }
+.content .outerList li{
+    width:348px;
+    MARGIN: 0px 45px;
+    height:auto;
+    border: 1px solid #cccccc;
+}
 .cart .content .outerList .top{
     background: #FF9866;
     height: 50px;
@@ -171,11 +179,12 @@
     line-height: 20px;
 }
 .cart .content .outerList .innerList{
-
+    FLOAT: LEFT;
 }
 .cart .content .outerList .innerList li{
     border-bottom: 1px solid #F5F5F5;
     float: left;
+    margin: 0px;
 }
 .cart .content .outerList .innerList .img{
     width: 70px;
@@ -264,8 +273,9 @@
 .cart .content .outerList .totalInfo{
     background: #F5F5F5;
     height: 20px;
-    width:338px;
+    width:880px;
     padding:5px;
+    margin-top: 10px;
     line-height:20px;
     float: left;
     text-align: right;
