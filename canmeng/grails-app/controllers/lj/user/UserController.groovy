@@ -318,7 +318,11 @@ class UserController {
         def res=areaParamService.getProvinceList()
         List addresses=
         println res as JSON
-        [provinces:res.provinceList]
+        if(params.showInDialog){
+            render(view: "userAddresses_dialog",model: [provinces:res.provinceList]);
+            return ;
+        }
+        render(view: "userAddresses",model: [provinces:res.provinceList]);
     }
 
     def ajaxGetAddresses(){

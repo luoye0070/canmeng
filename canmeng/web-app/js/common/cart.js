@@ -11,24 +11,28 @@ function initCart(options){
     var checkOutUrl= options.checkOutUrl  + "?rand=" + Math.random();
     var imgUrl=options.imgUrl;
     var updateDishOfCartUrl=options.updateDishOfCartUrl  + "?rand=" + Math.random();
+    var headDisplay="block";
+    if(options.headDisplay!=null&&typeof(options.headDisplay)=="string"){
+        headDisplay=options.headDisplay;
+    }
    /*****初始化添加cart浮动块*****/
     var cartsObj=$("#carts");
     if(typeof(cartsObj)!="undefined"){
         cartsObj.remove();
     }
     var cartsHtml='<div class="cart" id="carts">                                                               '+
-                '    <div class="head">                                                                     '+
+                '    <div class="head" style="display: '+headDisplay+'">                                                                     '+
                 '        <div class="jsmenu">                                                               '+
                 '            <div class="shopping-amount">                                                  '+
                 '                <div class="sa-left"></div>                                                '+
                 '                <div class="sa-right" id="cart_dish_count">0</div>                                             '+
                 '            </div>                                                                         '+
                 '            <div class="jsmenu-real">                                                      '+
-                '                <div class="jsr-text"><a href="'+checkOutUrl+'">去餐车结算</a></div><div class="b"></div>'+
+                '                <div class="jsr-text"><a href="'+checkOutUrl+'">去餐车结算</a></div><div class="b" id="expandAndPackup"></div>'+
                 '            </div>                                                                         '+
                 '        </div>                                                                             '+
                 '    </div>                                                                                 '+
-                '    <div class="content">                                                                  '+
+                '    <div class="content" id="cart_conent">                                                                  '+
                 '        <div class="prompt" id="cart_nothing">                                             '+
                 '            <div class="nogoods"><b></b>餐车中还没有商品，赶紧选购吧！</div>               '+
                 '        </div>                                                                             '+
@@ -41,7 +45,18 @@ function initCart(options){
                 '    </div>                                                                                 '+
                 '</div>                                                                                     ';
     cartsObj=$(cartsHtml);
-    cartsObj.appendTo("body");
+    var parentTag="body";
+    if(options.parentTag!=null&&typeof(options.parentTag)=="string"){
+        parentTag=options.parentTag;
+    }
+    cartsObj.appendTo(parentTag);
+    //注册事件
+    $("#expandAndPackup").click(function(){
+        if($("#cart_conent").css("display")=="none")
+            $("#cart_conent").show();
+        else
+            $("#cart_conent").hide();
+    });
   /********添加初始数据*************/
   $.getJSON(cartsAndDishesUrl,function (data) {
       if (data.recode.code == 0) {//成功,添加到界面上购物车中
@@ -120,7 +135,11 @@ function initCart(options){
                     if (data.recode.code == 0) {//成功,添加到界面上购物车中
                         //alert(data.recode.label);
                         //updateCart(data.cartInfo,dishesListUrl);
-                        initCart(options);
+                        if(parent.initCart){
+                            parent.initCart(options);
+                        }else{
+                            initCart(options);
+                        }
                     }
                     else {//显示错误信息
                         alert(data.recode.label);

@@ -256,4 +256,15 @@ class CartOfCustomerService {
             return [recode:ReCode.ERROR_PARAMS];
         }
     }
+
+    //从餐车产生订单
+    def makeOrderFromCarts(def params){
+        long clientId=webUtilService.getClientId();//客户id
+        if(clientId){
+
+            return [recode: ReCode.OK];
+        }else{
+            return [recode:ReCode.NOT_LOGIN];
+        }
+    }
 }

@@ -22,6 +22,7 @@
     width: 960px;
     height: auto;
     margin: 20px;
+    margin-top: 0px;
     float: left;
 }
 
@@ -153,6 +154,7 @@
 .content .outerList li{
     width:348px;
     MARGIN: 0px 45px;
+    margin-bottom: 10px;
     height:auto;
     border: 1px solid #cccccc;
 }
@@ -276,7 +278,32 @@
     width:880px;
     padding:5px;
     margin-top: 10px;
+    margin-bottom: 10px;
     line-height:20px;
     float: left;
     text-align: right;
+}
+.address,.option,.operation{
+    width:880px;
+    margin: 0px 40px;
+    height:auto;
+    /*background:#066;*/
+    display:block;
+    float: left;
+}
+.operation{
+    text-align: right;
+}
+.operation input{
+    width: 100px;
+}
+.address table{
+    width: 880px;
+}
+.control-group{
+    width:348px;
+    MARGIN: 0px 45px;
+    margin-bottom: 10px;
+    height:auto;
+    float: left;
 }

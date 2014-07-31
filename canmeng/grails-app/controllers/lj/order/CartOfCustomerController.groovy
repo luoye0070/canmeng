@@ -1,5 +1,6 @@
 package lj.order
 
+import lj.enumCustom.ReCode
 import lj.order.customer.CartOfCustomerService
 
 class CartOfCustomerController {
@@ -8,12 +9,22 @@ class CartOfCustomerController {
     def webUtilService;
     //结算餐车
     def checkout(){
-        //查询餐车列表
-        def reInfo=cartOfCustomerService.getCartsAndDishes();
-        println("reInfo-->"+reInfo);
+        flash.message=null;
+        flash.error=null;
+        if(request.method=="POST"){
+            //从餐车产生订单
+            def reInfo=cartOfCustomerService.makeOrderFromCarts(params);
+            if(reInfo.recode== ReCode.OK){
+                redirect(controller: "customer",action: "orderList");
+                return;
+            }else{
+                flash.error=reInfo.recode.label;
+            }
+        }
         //查询地址信息
-        //def res=[addresses:userSearchService.getAddresses(),defaultAddrId:webUtilService.getClient().defaultAddrId];
-
-        render(view: "checkout",model: reInfo);
+        def res=[addresses:userSearchService.getAddresses(),defaultAddrId:webUtilService.getClient()?.defaultAddrId];
+        println("res-->"+res);
+        render(view: "checkout",model: res);
     }
+
 }

@@ -6,6 +6,8 @@
 
     %{--<g:javascript src="jquery-1.8.2.min.js"></g:javascript>--}%
     <g:javascript src="shop/shopSome.js"/>
+    <script type="text/javascript" src="${resource(dir:"js/common",file:"cart.js")}"></script>
+    <link href="${resource(dir: "css",file: "cart.css")}" rel="stylesheet"/>
     <script type="text/javascript">
         $(function () {
             $("#foodList").load(function () {
@@ -25,6 +27,16 @@
             });
             $("#appraiseListTab").click(function(event){
                 $("#appraiseList").attr("src","${createLink(controller:"infoShow",action:"appraiseList", params: [restaurantId: restaurantInfo.id, sort: "id", order: "desc", inShop: "true"])}");
+            });
+
+            //初始化餐车
+            initCart({
+                addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
             });
         });
     </script>
@@ -225,11 +237,11 @@
                     </div>
                     <div class="tab-content">
                     <div class="tab-pane active" id="1">
-                        %{--<iframe id="foodList" width='100%'  height=300 style="border: 0px" frameborder="no" border="0" marginwidth="0"--}%
-                                %{--marginheight="0"--}%
-                                %{--src="${createLink(controller: "search", action: "searchFood", params: [restaurantId: restaurantInfo.id, sort: "id", order: "desc", inShop: "true"])}">--}%
-                        %{--</iframe>--}%
-                        ${createLink(controller: "search", action: "searchFood", params: [restaurantId: restaurantInfo.id, sort: "id", order: "desc", inShop: "true"],absolute: true).toString().toURL().getText()}
+                        <iframe id="foodList" width='100%'  height=300 style="border: 0px" frameborder="no" border="0" marginwidth="0"
+                                marginheight="0"
+                                src="${createLink(controller: "search", action: "searchFood", params: [restaurantId: restaurantInfo.id, sort: "id", order: "desc", inShop: "true"])}">
+                        </iframe>
+                        %{--${createLink(controller: "search", action: "searchFood", params: [restaurantId: restaurantInfo.id, sort: "id", order: "desc", inShop: "true"],absolute: true).toString().toURL().getText()}--}%
                     </div>
                     <div class="tab-pane" id="2">
                         <iframe id="appraiseList" width='100%'  height=300 style="border: 0px" frameborder="no" border="0"

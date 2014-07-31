@@ -4,6 +4,8 @@
 		<meta name="layout" content="main1"/>
 	</head>
 	<body style=" overflow: hidden">
+    <script type="text/javascript" src="${resource(dir:"js/common",file:"cart.js")}"></script>
+    <link href="${resource(dir: "css",file: "cart.css")}" rel="stylesheet"/>
     <script type="text/javascript">
 //        function reinitIframe(){
 //            var iframe = document.getElementById("foodList");
@@ -87,6 +89,16 @@
 //                document.title   =   oldtitle;
 //            }
 //            msgtitle();
+
+                //初始化餐车
+            initCart({
+                addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
+            });
         });
 
 function showDialog(htmlStr,foodId){
@@ -345,6 +357,7 @@ function showDialog(htmlStr,foodId){
             <div class="mc_page_active" id="foodListDiv">
                 <iframe id="foodList" width='100%'style="border: 0px" frameborder="no" border="0" marginwidth="0"
                         marginheight="0" src="${createLink(controller:"search",action:"searchFood",params: [cityId:cityIdAndName?.cityId?:1])}"></iframe>
+                %{--${createLink(controller: "search", action: "searchFood", params: [cityId:cityIdAndName?.cityId?:1],absolute: true).toString().toURL().getText()}--}%
             </div>
             <div class="mc_page" id="resListDiv">
                 <iframe id="resList" width='100%'  style="border: 0px" frameborder="no" border="0" marginwidth="0"

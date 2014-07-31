@@ -8,6 +8,7 @@
     <g:javascript src="shop/shopSome.js"/>
     <script type="text/javascript" src="${resource(dir:"js/common",file:"doDish.js")}"></script>
     <script type="text/javascript" src="${resource(dir:"js/common",file:"cart.js")}"></script>
+    <link href="${resource(dir: "css",file: "cart.css")}" rel="stylesheet"/>
     <style type="text/css">
     body{
         background-color: #ffffff;
@@ -113,8 +114,13 @@
             $("a[addToCart]").addFoodToCart(
                     {
                         addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
-                        cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
-                        dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
+                        //cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
+                        //dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
+                        cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                        checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                        imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                        delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                        updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
                     }
             );
         });

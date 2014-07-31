@@ -14,7 +14,44 @@
     <style type="text/css">
 
     </style>
-    <link href="${resource(dir: "css",file: "cart_page.css")}" rel="stylesheet"/>
+    <link rel="stylesheet" href="${resource(dir: "js/timePicker", file: "timePicker.css")}" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="${resource(dir: "js/timePicker", file: "jquery.timePicker.min.js")}"></script>
+    <link rel="stylesheet" href="${resource(dir: "js/Datepicker", file: "datepicker.css")}" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="${resource(dir: "js/Datepicker", file: "bootstrap-datepicker.js")}"></script>
+
+    <script type="text/javascript" src="${resource(dir: "js/common", file: "cart.js")}"></script>
+    <link href="${resource(dir: "css", file: "cart_page.css")}" rel="stylesheet"/>
+    <script type="text/javascript">
+        $(function () {
+            //初始化餐车
+            initCart({
+                addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
+                cartsAndDishesUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
+                checkOutUrl: "${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                imgUrl: "${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                delDishFromCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
+                updateDishOfCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}",
+                parentTag: "#checkout_carts",
+                headDisplay: "none"
+            });
+
+            //日期选择器
+            $("#date").datepicker({format: "yyyy-mm-dd"});
+            //时间选择器
+            $("#time").timePicker({step: 15});
+            $("#time").change(function () {
+                var timeV = $("#time").val();
+                if (timeV.length > 0) {
+                    $("#time").val(timeV + ":00");
+                }
+            });
+        });
+        function showAddressManageDialog() {
+            $("#ratyService").modal();
+        }
+    </script>
 </head>
 
 <body>
@@ -37,260 +74,121 @@
         </g:if>
 
         <div class="mcmc_detail">
+            <div id="checkout_carts">
 
-            <div class="cart" id="cart">
+            </div>
 
-                <div class="content">
-                    <div class="prompt" style="display: none" id="cart_nothing">
-                        <div class="nogoods"><b></b>餐车中还没有商品，赶紧选购吧！</div>
+            <form action="${createLink(controller: "cartOfCustomer",action: "checkout")}" method="post">
+                <div class="address">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                        <tr>
+                            <th>选择</th>
+                            <th>联系人</th>
+                            <th>所在地区</th>
+                            <th>街道地址</th>
+                            <th>电话/手机</th>
+                            <th><a href="#" onclick="showAddressManageDialog()">地址管理</a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <g:each in="${addresses}" status="i" var="address">
+                            <tr>
+                                <td>
+                                    <input type="radio" value="${address.id}"
+                                           name="addressId" ${(address.id == defaultAddrId) ? "checked='checked'" : ""}/>
+                                </td>
+                                <td>${address.linkManName}</td>
+                                <td>${address.province} ${address.city} ${address.area}</td>
+                                <td>${address.street}</td>
+                                <td>${address.phone}</td>
+                                <td></td>
+                            </tr>
+                        </g:each>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="option">
+                    <div class="control-group">
+                        <label class="control-label">用餐日期</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge focused" type="text" name="date" id="date"
+                                   value="${params.date ?: lj.FormatUtil.dateFormat(new Date())}"/>
+                        </div>
                     </div>
-                    <div class="outerList" id="cart_list" style="display: block">
-                        <ul>
-                            <li>
-                                <div class="top">
-                                    <div class="title">
-                                        落叶的测试饭店
-                                    </div>
-                                    <div class="subtotal">
-                                        小计：￥124.98
-                                    </div>
-                                </div>
-                                <div class="innerList">
-                                    <ul>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="top">
-                                    <div class="title">
-                                        落叶的测试饭店
-                                    </div>
-                                    <div class="subtotal">
-                                        小计：￥124.98
-                                    </div>
-                                </div>
-                                <div class="innerList">
-                                    <ul>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="img">
-                                                <img src="${createLink(controller: "imageShow", action: "downloadThumbnail", params: [imgUrl: foodInfo?.image,width: 70,height: 70])}"/>
-                                            </div>
-                                            <div class="detail">
-                                                <div class="dtop">
-                                                    <div class="dtlable">鱼香肉丝</div>
-                                                    <div class="dtclosebt"><input type="button" value="X"/></div>
-                                                </div>
-                                                <div class="dbottom">
-                                                    <div class="dbleft">￥12.09</div>
-                                                    <div class="dbright">
-                                                        <input type="button" value="─"/>
-                                                        <input type="text" value="2"/>
-                                                        <input type="button" value="+">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="totalInfo" id="cart_list_total">
-                            总计：￥123.98
+
+                    <div class="control-group">
+                        <label class="control-label">用餐类型</label>
+
+                        <div class="controls">
+                            <select name="reserveType" class="mcmcsf_input">
+                                <g:each in="${lj.enumCustom.ReserveType.reserveTypes}">
+                                    <option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
+                                </g:each>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">希望送到时间</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge focused" type="text" name="time" id="time"
+                                   value="${params.time ?: lj.FormatUtil.timeFormat(new Date())}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">联系人</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge focused" type="text" name="customerName"
+                                   value="${params.customerName ?: ""}"/>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">联系电话</label>
+
+                        <div class="controls">
+                            <input class="input-xlarge focused" type="text" name="phone" value="${params.phone ?: ""}"/>
                         </div>
                     </div>
 
                 </div>
-            </div>
 
-            <div class="option">
-                <div class="control-group">
-                    <label class="control-label">用餐日期</label>
-
-                    <div class="controls">
-                        <input class="input-xlarge focused" type="text" name="date"
-                               value="${params.date ?: lj.FormatUtil.dateFormat(new Date())}"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">用餐类型</label>
-
-                    <div class="controls">
-                        <select name="reserveType" class="mcmcsf_input">
-                            <g:each in="${lj.enumCustom.ReserveType.reserveTypes}">
-                                <option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
-                            </g:each>
-                        </select>
-                    </div>
+                <div class="operation">
+                    <input type="submit"
+                           value="${message(code: 'default.button.submit.label', default: 'submit')}"
+                           class="btn btn-primary"/>
                 </div>
 
-                <div class="control-group">
-                    <label class="control-label">希望送到时间</label>
-
-                    <div class="controls">
-                        <input class="input-xlarge focused" type="text" name="time" id="time"
-                               value="${params.time ?: lj.FormatUtil.timeFormat(new Date())}"/>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">联系人</label>
-
-                    <div class="controls">
-                        <input class="input-xlarge focused" type="text" name="customerName" value="${params.customerName ?: ""}"/>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">联系电话</label>
-
-                    <div class="controls">
-                        <input class="input-xlarge focused" type="text" name="phone" value="${params.phone ?: ""}"/>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="address">
-                <table class="table table-striped table-bordered table-condensed" style="width: 710px;">
-                    <thead>
-                    <tr>
-                        <th>选择</th>
-                        <th>联系人</th>
-                        <th>所在地区</th>
-                        <th>街道地址</th>
-                        <th>电话/手机</th>
-                        <th><a href="#">地址管理</a></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="addressId" checked="checked"/>
-                        </td>
-                        <td>刘兆国</td>
-                        <td>陕西省 西安市 雁塔区</td>
-                        <td>高新一路12号</td>
-                        <td>18699178734</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="addressId"/>
-                        </td>
-                        <td>刘兆国</td>
-                        <td>陕西省 西安市 雁塔区</td>
-                        <td>高新一路12号</td>
-                        <td>18699178734</td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="operation">
-                <input type="submit"
-                       value="${message(code: 'default.button.submit.label', default: 'submit')}"
-                       class="btn btn-primary"/>
-            </div>
-
+            </form>
         </div>
 
     </div>
 </div>
+
+
+<!--rating modal's content-->
+<div id="ratyService" class="modal hide fade" style="width: 850px;height: auto">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" onclick="location.reload()">&times;</button>
+
+        <h3>管理地址</h3>
+    </div><!--Modal header-->
+    <div class="modal-body" style="height: auto">
+        <iframe id="imageSelect"
+                src="${createLink(controller: "user", action: "userAddresses", params: [showInDialog: true])}"
+                width="800px" height="500px"></iframe>
+    </div><!--Modal body-->
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" onclick="location.reload()">Close</a>
+        %{--<a href="#" class="btn btn-primary">Save changes</a>--}%
+    </div><!--Modal footer-->
+</div> <!--Modal-->
 </body>
 </html>
