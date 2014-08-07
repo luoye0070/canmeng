@@ -33,18 +33,18 @@
         margin-bottom: 10px;
     }
     .mcmcs_field {
-        width: 320px;
+        width: 280px;
         float: left;
     }
     .mcmcsf_input {
         width: 120px;
     }
     .mcmcs_field_middle {
-        width: 160px;
+        width: 140px;
         float: left;
     }
     .mcmcsf_input_middle {
-        width: 80px;
+        width: 60px;
     }
     .mcmcs_field_small {
         width: 80px;
@@ -108,9 +108,21 @@
                 </div>
             </div>
 
-            <div class="mcmcs_field_middle" style="width: 180px">
+            <div class="mcmcs_field_middle" style="width: 140px">
                 <label>
-                    预定类型：
+                    订单类型：
+                </label>
+                <select name="orderType" class="mcmcsf_input_middle">
+                    <option value="-1" ${params.orderType == "-1" ? "selected='selected'" : ""}>全部</option>
+                    <g:each in="${lj.enumCustom.OrderType.orderTypes}">
+                        <option value="${it.code}" ${(lj.Number.toInteger(params.orderType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
+                    </g:each>
+                </select>
+            </div>
+
+            <div class="mcmcs_field_middle" style="width: 140px">
+                <label>
+                    用餐类型：
                 </label>
                 <select name="reserveType" class="mcmcsf_input_middle">
                     <option value="-1" ${params.reserveType == "-1" ? "selected='selected'" : ""}>全部</option>
@@ -204,7 +216,9 @@
                     ${fieldValue(bean: orderInfoInstance, field: "tableName")}
                 </g:if>
                 <g:else>
+                    <g:if test="${orderInfoInstance.tableId!=0}">
                     桌位&nbsp;${fieldValue(bean: orderInfoInstance, field: "tableId")}
+                    </g:if>
                 </g:else>
                 </td>
 

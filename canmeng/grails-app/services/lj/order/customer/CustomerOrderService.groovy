@@ -105,11 +105,13 @@ class CustomerOrderService {
                 if(addressInfo==null){//地址不能为空
                     return [recode:ReCode.NO_VALID_ADDRESS];
                 }
-                //通过经纬度用勾股定理计算距离
-                double distance=Distance.GetDistance(addressInfo.latitude,addressInfo.longitude,restaurantInfo.latitude,restaurantInfo.longitude);
-                if(distance>restaurantInfo.deliverRange){
-                    //超出范围
-                    return [recode: ReCode.OUT_RANGE];
+                if(addressInfo.latitude&&addressInfo.longitude&&restaurantInfo.latitude&&restaurantInfo.longitude){
+                    //通过经纬度用勾股定理计算距离
+                    double distance=Distance.GetDistance(addressInfo.latitude,addressInfo.longitude,restaurantInfo.latitude,restaurantInfo.longitude);
+                    if(distance>restaurantInfo.deliverRange){
+                        //超出范围
+                        return [recode: ReCode.OUT_RANGE];
+                    }
                 }
             }
 
@@ -314,6 +316,9 @@ class CustomerOrderService {
             if(params.phone){ //联系电话
                 orderInfo.phone=params.phone;
             }
+            if(params.customerName){
+                orderInfo.customerName=params.customerName;
+            }
             orderInfo.remark=remark;//备注信息，客户联系电话等
             orderInfo.restaurantName=restaurantInfo?.name;//饭店名
             if(!byWaiter){
@@ -358,10 +363,11 @@ class CustomerOrderService {
             else{
                 return [recode:ReCode.SAVE_FAILED,orderInfo:orderInfo,errors:orderInfo.errors.allErrors];
             }
-
+            println("params.foodIds-->"+params.foodIds);
             if(params.foodIds){//如果有传点菜列表，则点菜
                 params.orderId=orderInfo.id;//传入订单ID
-                customerDishService.addDishes(params,byWaiter);
+                def reInfo=customerDishService.addDishes(params,byWaiter);
+                println("customerDishService.addDishes.reInfo-->"+reInfo);
             }
 
             if(!byWaiter){
@@ -609,6 +615,9 @@ class CustomerOrderService {
              if (params.validLe!=null)
                  validLe=Number.toInteger(params.validLe);//有效性
 
+             int orderType=-1;
+             if (params.orderType!=null)
+                 orderType=Number.toInteger(params.orderType);//订单类型
 
              if (!params.max) {
                  params.max = 10
@@ -669,6 +678,9 @@ class CustomerOrderService {
                 if(orderNum){
                     eq("orderNum",orderNum);//订单流水号条件
                 }
+                 if(orderType>=0){
+                     eq("orderType",orderType);//订单类型条件
+                 }
              }
 
              if(!params.sort){//如果没有排序，则按ID倒排序

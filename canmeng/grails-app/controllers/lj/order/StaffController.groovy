@@ -521,6 +521,53 @@ class StaffController {
         redirect(action: "orderList");
     }
 
+    //完成上菜,对于每个点菜的完成上菜
+    def completePackage(){
+        params.statusCode=DishesStatus.SERVED_STATUS.code;//更新点菜的状态为上菜完成
+        def orderId=params.orderId;
+        //params.remove("orderId");
+        def reInfo=staffDishService.dishStatusUpdate(params);
+        println("reInfo-->"+reInfo);
+        if(reInfo.recode==ReCode.OK){
+            params.statusCode=OrderStatus.SERVED_STATUS.code;//更新订单的状态为上菜完成/打包完成
+            reInfo=staffOrderService.orderStatusUpdate(params);
+            println("reInfo-->"+reInfo);
+            if(reInfo.recode==ReCode.OK){
+                flash.message=reInfo.recode.label;
+            }
+            else{
+                flash.error=reInfo.recode.label;
+            }
+        }
+        else{
+            flash.error=reInfo.recode.label;
+        }
+        if(params.backUrl){
+            redirect(url: params.backUrl);
+            return ;
+        }
+        redirect(action: "orderShow",params: [orderId:orderId]);
+    }
+
+    //完成上菜,对于每个点菜的完成上菜
+    def beginShip(){
+        params.statusCode=OrderStatus.SHIPPING_STATUS.code;//更新订单的状态为运送中
+        def reInfo=staffOrderService.orderStatusUpdate(params);
+        println("reInfo-->"+reInfo);
+        if(reInfo.recode==ReCode.OK){
+            flash.message=reInfo.recode.label;
+        }
+        else{
+            flash.error=reInfo.recode.label;
+        }
+        if(params.backUrl){
+            redirect(url: params.backUrl);
+            return ;
+        }
+        redirect(action: "orderShow",params: [orderId:orderId]);
+    }
+
+
     def exportOrderList() {
 
         params.locale=request.locale

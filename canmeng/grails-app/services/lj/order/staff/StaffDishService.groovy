@@ -8,6 +8,7 @@ import lj.enumCustom.DishesStatus
 import lj.enumCustom.DishesValid
 import lj.enumCustom.MessageType
 import lj.enumCustom.MsgSendType
+import lj.enumCustom.OrderType
 import lj.enumCustom.OrderValid
 import lj.enumCustom.ReCode
 import lj.order.common.MessageService
@@ -130,7 +131,8 @@ class StaffDishService {
             }
             if(dishList){
                 dishList.each {
-                    if(it.valid<=DishesValid.EFFECTIVE_VALID.code&&it.status<=DishesStatus.VERIFYING_STATUS.code)
+                    if((it.valid<=DishesValid.EFFECTIVE_VALID.code&&it.status<=DishesStatus.VERIFYING_STATUS.code)
+                    ||(it.orderType==OrderType.TAKE_OUT.code&&it.valid<=DishesValid.EFFECTIVE_VALID.code&&it.status<DishesStatus.SERVED_STATUS.code))//外卖可以在打包前取消
                     {//有效性小于1且状态小于1可以取消
                         //根据订单状态确定3或4
                         OrderInfo orderInfo=OrderInfo.get(it.orderId);

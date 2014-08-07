@@ -27,4 +27,7 @@ public enum OrderType {
                 TAKE_OUT.code
         ];
     }
+
+    public static OrderType[] orderTypes=[NORMAL,RESERVE,TAKE_OUT];
+
 }

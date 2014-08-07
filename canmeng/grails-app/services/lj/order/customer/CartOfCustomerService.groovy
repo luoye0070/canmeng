@@ -11,6 +11,7 @@ import lj.enumCustom.VerifyStatus
 import lj.util.WebUtilService;
 class CartOfCustomerService {
       WebUtilService webUtilService;
+    CustomerOrderService customerOrderService;
     static transactional = true;
     //添加一个菜品到购物车
     def addFoodToCart(def params){
@@ -259,10 +260,60 @@ class CartOfCustomerService {
 
     //从餐车产生订单
     def makeOrderFromCarts(def params){
+        def g = new org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib();
         long clientId=webUtilService.getClientId();//客户id
+        def errList=[];
         if(clientId){
-
-            return [recode: ReCode.OK];
+            def cartList=CartInfo.findAllByClientId(clientId);
+            if(cartList){
+                cartList.each {
+                    def dishesForCartInfos=DishesForCartInfo.findAllByCartId(it.id);
+                    if(dishesForCartInfos){
+                        def paramsT=[:];
+                        paramsT.restaurantId=it.restaurantId;
+                        paramsT.date=params.date; //日期,yyyy-MM-dd
+                        paramsT.time=params.time; //时间,HH:mm:ss
+                        paramsT.addressId =params.addressId;
+                        paramsT.phone=params.phone;
+                        paramsT.customerName=params.customerName;
+                        paramsT.reserveType=params.reserveType;
+                        def foodIds=new ArrayList<String>();
+                        def counts=new ArrayList<String>();
+                        def remarks=new ArrayList<String>();
+                        dishesForCartInfos.each {
+                            foodIds.add(it.foodId+"");
+                            counts.add(it.num+"");
+                            remarks.add(it.remark+"");
+                        }
+                        println("foodIds->"+foodIds);
+                        paramsT.foodIds=(String[])foodIds.toArray();
+                        paramsT.counts=(String[])counts.toArray();
+                        paramsT.remarks=(String[])remarks.toArray();
+                        def reInfo=customerOrderService.createOrder(paramsT,false);
+                        if(reInfo.recode==ReCode.OK){
+                            //删除数据
+                            String sqlStr="delete from DishesForCartInfo where cartId="+it.id;
+                            DishesForCartInfo.executeUpdate(sqlStr);
+                            it.delete(flush: true);
+                        }else{
+                            if(reInfo.recode==ReCode.SAVE_FAILED){
+                                errList.add(I118Error.getMessage(g,reInfo.errors,0));
+                            }else{
+                                errList.add(reInfo.recode.label);
+                            }
+                        }
+                    }else{//删除空购餐车
+                        it.delete(flush: true);
+                    }
+                }
+                if(errList.isEmpty()){
+                    return [recode: ReCode.OK];
+                }else{
+                    return [recode: ReCode.HAVE_ERRORS,errList:errList];
+                }
+            }else{
+                return [recode: ReCode.NO_CARTS];
+            }
         }else{
             return [recode:ReCode.NOT_LOGIN];
         }

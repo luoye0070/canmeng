@@ -142,6 +142,7 @@ class CustomerDishService {
                     dishesInfo.time=orderInfo.time;
                     dishesInfo.foodImg=foodInfo.image;
                     dishesInfo.tableName=orderInfo.tableName;
+                    dishesInfo.orderType=orderInfo.orderType;
                     if (!dishesInfo.save(flush: true)) {//保存数据失败输出日志
                         println("保存点菜记录失败:" + dishesInfo);
                         failedList.add([foodId: it.foodId, msg: "保存点菜记录失败",errors:dishesInfo.errors.allErrors]);

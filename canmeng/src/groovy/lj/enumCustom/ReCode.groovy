@@ -14,6 +14,7 @@ public class ReCode {
     public final static def ORDER_APPRAISED=[code:4,label:"订单已经评价过"];
     public final static def DISH_HAVEERROR=[code:5,label:"点菜存在不成功"];
     public final static def CUSTOMER_RELATIONS_EXIST=[code:6,label:"客户关系已经存在"];
+    public final static def HAVE_ERRORS=[code:7,label:"有错误存在"];
     public final static def OK=[code:0,label:"成功"];
     public final static def NOT_LOGIN=[code:-1,label:"您没有登录"];
     public final static def OUT_RANGE=[code:-2,label:"你的位置超出了该饭店的外卖配送范围，不能为您创建订单"];
@@ -70,6 +71,7 @@ public class ReCode {
     public final static def FOOD_CAN_NOT_TAKE_OUT=[code:-54,label:"食品不能外卖"];
     public final static def FOOD_NOT_ENOUGH=[code:-55,label:"食品已经卖完"];
     public final static def NO_RECORD=[code:-56,label:"没有记录"];
+    public final static def NO_CARTS=[code:-57,label:"没有餐车记录"];
 //    public Integer code
 //    public String label
 //
