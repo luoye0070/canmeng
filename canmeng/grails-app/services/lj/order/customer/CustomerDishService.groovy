@@ -3,6 +3,7 @@ package lj.order.customer
 import lj.data.DishesInfo
 import lj.data.FoodInfo
 import lj.data.OrderInfo
+import lj.enumCustom.DishesStatus
 import lj.enumCustom.DishesValid
 import lj.enumCustom.MessageType
 import lj.enumCustom.MsgSendType
@@ -55,8 +56,8 @@ class CustomerDishService {
             }
         }
         //设置状态和初始值
-        int status = 0;
-        int valid = 0;
+        int status = DishesStatus.ORIGINAL_STATUS.code;;
+        int valid = DishesValid.ORIGINAL_VALID.code;
 
         if (orderId) {
             OrderInfo orderInfo = OrderInfo.get(orderId);
@@ -67,8 +68,8 @@ class CustomerDishService {
                 }
                 if (orderInfo.valid <= OrderValid.EFFECTIVE_VALID.code) { //初始态或者有效态
                     if (orderInfo.status >= OrderStatus.VERIFY_ORDERED_STATUS.code) {//订单的状态是点菜确认完成后,这时点的菜默认设置点菜的有效性和状态为1和1
-                        status = 1;
-                        valid = 1;
+                        status = DishesStatus.VERIFYING_STATUS.code;
+                        valid = DishesValid.EFFECTIVE_VALID.code;
                     }
                 } else {//订单无效不能点菜
                     return [recode: ReCode.CANNOT_DISH];//不能点菜
@@ -125,6 +126,9 @@ class CustomerDishService {
                     } else {//不存在
                         failedList.add([foodId: it.foodId, msg: "所点的菜不存在"]);
                         continue;
+                    }
+                    if(foodInfo.isReady){
+                        status=DishesStatus.COOKED_STATUS.code;
                     }
                     //创建点菜记录
                     DishesInfo dishesInfo = new DishesInfo();

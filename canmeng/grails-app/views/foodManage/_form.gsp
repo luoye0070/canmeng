@@ -52,6 +52,13 @@
     </div>
 </div>
 
+<div class="control-group">
+    <label class="control-label" for="isReady"><g:message code="foodInfo.isReady.label" default="isReady" />
+    </label>
+    <div class="controls">
+        <g:checkBox name="isReady" value="${foodInfoInstance?.isReady}" />
+    </div>
+</div>
 
 <div class="control-group">
     <label class="control-label" for="originalPrice"><g:message code="foodInfo.image.label" default="Image" />

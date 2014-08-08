@@ -74,9 +74,11 @@ class StaffDishService {
             }
             if(dishList){
                 dishList.each {
-                    if(it.valid==DishesValid.ORIGINAL_VALID.code&&it.status==DishesStatus.ORIGINAL_STATUS.code)
+                    if(it.valid==DishesValid.ORIGINAL_VALID.code)
                     {//有效性为初始状态下且状态也为初始态时更新有效性和状态分别为1有效和1确认完成
                         it.valid=DishesValid.EFFECTIVE_VALID.code;
+                    }
+                    if(it.status==DishesStatus.ORIGINAL_STATUS.code){
                         it.status=DishesStatus.VERIFYING_STATUS.code;
                     }
                 }
