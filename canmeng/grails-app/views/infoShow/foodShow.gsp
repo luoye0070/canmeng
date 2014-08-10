@@ -186,7 +186,7 @@
             initCart({
                 addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
                 cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
-                checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "cartCheckout")}",
                 imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
                 delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
                 updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"
@@ -198,7 +198,7 @@
                         //cartListUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCarts")}",
                         //dishesListUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getDishes")}"
                         cartsAndDishesUrl:"${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
-                        checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                        checkOutUrl:"${createLink(controller: "cartOfCustomer",action: "cartCheckout")}",
                         imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
                         delDishFromCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
                         updateDishOfCartUrl:"${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}"

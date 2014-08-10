@@ -8,7 +8,7 @@ class CartOfCustomerController {
     CartOfCustomerService cartOfCustomerService;
     def webUtilService;
     //结算餐车
-    def checkout(){
+    def cartCheckout(){
         flash.message=null;
         flash.error=null;
         if(request.method=="POST"){
@@ -24,7 +24,7 @@ class CartOfCustomerController {
         //查询地址信息
         def res=[addresses:userSearchService.getAddresses(),defaultAddrId:webUtilService.getClient()?.defaultAddrId];
         println("res-->"+res);
-        render(view: "checkout",model: res);
+        render(view: "cartCheckout",model: res);
     }
 
 }

@@ -12,7 +12,7 @@ class LoginFilters {
                     ||(controllerName.equals('shop') && (actionName in ['shopRegister']))
                     ||(controllerName.equals('customer') && (actionName in ["createOrder",'reserveTable',"orderList","orderShow","doDish","delOrder",
                             "completeDish","addDishes","cancelDish","dishList","delDish","appraiseOrder"]))
-                    ||(controllerName.equals('cartOfCustomer') && (actionName in ['checkout']))
+                    ||(controllerName.equals('cartOfCustomer') && (actionName in ['cartCheckout']))
                 ){
                     if(!webUtilService.isLoggedIn()){
                         webUtilService.session['urlBackParams']=params.clone();

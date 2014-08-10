@@ -29,7 +29,7 @@
             initCart({
                 addToCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "addFoodToCart")}",
                 cartsAndDishesUrl: "${createLink(controller: "cartOfCustomerAjax",action: "getCartsAndDishes")}",
-                checkOutUrl: "${createLink(controller: "cartOfCustomer",action: "checkout")}",
+                checkOutUrl: "${createLink(controller: "cartOfCustomer",action: "cartCheckout")}",
                 imgUrl: "${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
                 delDishFromCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "delDish")}",
                 updateDishOfCartUrl: "${createLink(controller: "cartOfCustomerAjax",action: "updateDish")}",
@@ -78,7 +78,7 @@
 
             </div>
 
-            <form action="${createLink(controller: "cartOfCustomer",action: "checkout")}" method="post">
+            <form action="${createLink(controller: "cartOfCustomer",action: "cartCheckout")}" method="post">
                 <div class="address">
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
