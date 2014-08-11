@@ -591,4 +591,20 @@ class StaffController {
             render(text: reportDef.contentStream, contentType: reportDef.fileFormat.mimeTyp, encoding: 'UTF-8');
         }
     }
+
+    //创建外卖订单
+    def makeTakeOutOrder(){
+        //查询菜谱
+        StaffInfo staffInfo=webUtilService.getStaff();
+        if(staffInfo){
+            if(request.method=="POST"){//提交数据创建订单
+
+            }
+            def paramsT=[restaurantId:staffInfo.restaurantId,canTakeOut:true]
+            def reInfo=searchService.searchFood(paramsT);
+            render(view: "makeTakeOutOrder",model: reInfo);
+        }else{
+             render("staff not login");
+        }
+    }
 }

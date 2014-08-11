@@ -23,6 +23,8 @@ class CartInfo {
     double postage;
     //实际总金额
     double realAccount;
+    //工作人员
+    long waiterId=0;
     /*******************为了方便加的冗余数据*****************/
     //饭店Name
     String restaurantName;
@@ -39,6 +41,7 @@ class CartInfo {
         totalAccount(nullable:true,min: 0d);
         postage(nullable:true,min: 0d);
         realAccount(nullable:true,min: 0d);
+        waiterId(nullable:true,min: 0l);
         restaurantName(nullable:true,blank: true,maxSize:256);
     }
 
