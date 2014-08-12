@@ -11,6 +11,7 @@ import lj.order.customer.CustomerAppraiseService
 import lj.order.staff.StaffDishService
 import lj.order.staff.StaffOrderService
 import lj.shop.SearchService
+import lj.sysparameter.AreaParamService
 import lj.util.WebUtilService
 
 import java.text.SimpleDateFormat
@@ -22,6 +23,7 @@ class StaffController {
     CustomerAppraiseService customerAppraiseService;
     WebUtilService webUtilService;
     def jasperReportService
+    AreaParamService areaParamService;
 
     def index() {//根据不同的职位跳转到不同界面
         redirect(action: "orderList");
@@ -602,6 +604,15 @@ class StaffController {
             }
             def paramsT=[restaurantId:staffInfo.restaurantId,canTakeOut:true]
             def reInfo=searchService.searchFood(paramsT);
+            def provinceList=[];
+            provinceList.add([id:0,province:"请选择"]);
+            def provinceListTemp=areaParamService.getProvinceList().provinceList;
+            if(provinceListTemp){
+                provinceListTemp.each {
+                    provinceList.add([id:it.id,province:it.province]);
+                }
+            }
+            reInfo<<[provinces:provinceList];
             render(view: "makeTakeOutOrder",model: reInfo);
         }else{
              render("staff not login");

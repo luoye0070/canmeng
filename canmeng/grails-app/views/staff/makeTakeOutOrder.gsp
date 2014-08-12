@@ -3,6 +3,7 @@
 <head>
     <meta name="layout" content="main_template">
     <title>外卖界面</title>
+    <g:javascript src="common/address.js"/>
     <style type="text/css">
     .mc_main {
         width: 1000px;
@@ -118,6 +119,43 @@
         float: left;
     }
     </style>
+    <script type="text/javascript">
+        function setSelectText(element, text) {
+
+            var count = $("#" + element + " option").length;
+
+            for (var i = 0; i < count; i++) {
+                if ($("#" + element).get(0).options[i].text == text) {
+                    $("#" + element).get(0).options[i].selected = true;
+                    $("#" + element).change();
+                    break;
+                }
+            }
+        }
+
+        $(function(){
+            $("#linkManName,#phone").blur(function(){
+                var linkManName=$("#linkManName").val();
+                var phone=$("#phone").val();
+                $.getJSON("${createLink(controller: "staffAjax",action: "getAddress")}",{linkManName:linkManName,phone:phone},function(data){
+                    if(data.recode.code==0){
+                        //alert(data.addressInfo.id);
+                        var addressInfo=data.addressInfo;
+                        setSelectText("province", addressInfo.province);
+                        setTimeout(function(){
+                            setSelectText("city", addressInfo.city);
+                            setTimeout(function(){
+                                setSelectText("area", addressInfo.area);
+                            },500);
+                        },500);
+                        $("#linkManName").val(addressInfo.linkManName);
+                        $("#phone").val(addressInfo.phone);
+                        $("#street").val(addressInfo.street);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -218,17 +256,17 @@
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label class="control-label">用餐类型</label>
+                    %{--<div class="control-group">--}%
+                        %{--<label class="control-label">用餐类型</label>--}%
 
-                        <div class="controls">
-                            <select name="reserveType" class="mcmcsf_input">
-                                <g:each in="${lj.enumCustom.ReserveType.reserveTypes}">
-                                    <option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
-                                </g:each>
-                            </select>
-                        </div>
-                    </div>
+                        %{--<div class="controls">--}%
+                            %{--<select name="reserveType" class="mcmcsf_input">--}%
+                                %{--<g:each in="${lj.enumCustom.ReserveType.reserveTypes}">--}%
+                                    %{--<option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>--}%
+                                %{--</g:each>--}%
+                            %{--</select>--}%
+                        %{--</div>--}%
+                    %{--</div>--}%
 
                     <div class="control-group">
                         <label class="control-label">希望送到时间</label>

@@ -9,6 +9,7 @@ import lj.enumCustom.OrderStatus
 import lj.enumCustom.OrderValid
 import lj.enumCustom.ReCode
 import lj.order.customer.CustomerAppraiseService
+import lj.order.staff.StaffCommonService
 import lj.order.staff.StaffDishService
 import lj.order.staff.StaffOrderService
 import lj.shop.SearchService
@@ -20,6 +21,7 @@ class StaffAjaxController {
     StaffDishService staffDishService;
     SearchService searchService;
     CustomerAppraiseService customerAppraiseService;
+    StaffCommonService staffCommonService;
 
 //创建订单
     def createOrder(){
@@ -282,6 +284,13 @@ class StaffAjaxController {
         params.valid=1;
         params.date=new SimpleDateFormat("yyyy-MM-dd").format(new Date());//加上当天日期条件
         def reInfo=staffDishService.dishList(params);
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
+
+    //获取地址信息
+    def getAddress(){
+       def reInfo=staffCommonService.getAddress(params);
         println("reInfo-->"+reInfo);
         render(reInfo as JSON);
     }

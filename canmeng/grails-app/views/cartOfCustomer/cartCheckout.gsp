@@ -119,17 +119,17 @@
                         </div>
                     </div>
 
-                    <div class="control-group">
-                        <label class="control-label">用餐类型</label>
+                    %{--<div class="control-group">--}%
+                        %{--<label class="control-label">用餐类型</label>--}%
 
-                        <div class="controls">
-                            <select name="reserveType" class="mcmcsf_input">
-                                <g:each in="${lj.enumCustom.ReserveType.reserveTypes}">
-                                    <option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>
-                                </g:each>
-                            </select>
-                        </div>
-                    </div>
+                        %{--<div class="controls">--}%
+                            %{--<select name="reserveType" class="mcmcsf_input">--}%
+                                %{--<g:each in="${lj.enumCustom.ReserveType.reserveTypes}">--}%
+                                    %{--<option value="${it.code}" ${(lj.Number.toInteger(params.reserveType) == it.code) ? "selected='selected'" : ""}>${it.label}</option>--}%
+                                %{--</g:each>--}%
+                            %{--</select>--}%
+                        %{--</div>--}%
+                    %{--</div>--}%
 
                     <div class="control-group">
                         <label class="control-label">希望送到时间</label>

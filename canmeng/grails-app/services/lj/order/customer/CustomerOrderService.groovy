@@ -121,7 +121,7 @@ class CustomerOrderService {
             Date time=null;//时间
             try{time=sdfTime.parse(timeStr);}catch (Exception ex){}
             println("time-->"+timeStr+"----"+time);
-            if(reserveType!=0){ //检查日期时间参数是否存在
+            if(reserveType!=0||tableId==0){ //检查日期时间参数是否存在
                 if(date==null){
                     return [recode: ReCode.NEED_RESERVE_DATE];
                 }
