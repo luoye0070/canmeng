@@ -3,10 +3,12 @@ package lj.order
 import lj.I118Error
 import lj.common.StrCheckUtil
 import lj.data.OrderInfo
+import lj.data.ProvinceInfo
 import lj.data.StaffInfo
 import lj.enumCustom.DishesStatus
 import lj.enumCustom.OrderStatus
 import lj.enumCustom.ReCode
+import lj.order.common.CommonService
 import lj.order.customer.CustomerAppraiseService
 import lj.order.staff.StaffDishService
 import lj.order.staff.StaffOrderService
@@ -24,6 +26,8 @@ class StaffController {
     WebUtilService webUtilService;
     def jasperReportService
     AreaParamService areaParamService;
+    def staffCartService;
+    CommonService commonService;
 
     def index() {//根据不同的职位跳转到不同界面
         redirect(action: "orderList");
@@ -600,7 +604,18 @@ class StaffController {
         StaffInfo staffInfo=webUtilService.getStaff();
         if(staffInfo){
             if(request.method=="POST"){//提交数据创建订单
+                //转换地址
+                commonService.transformAddress(params);
 
+                def reInfo=staffCartService.makeOrderFromCart(params);
+                if(reInfo.recode==ReCode.OK){
+                    redirect(action: "orderShow",params: [orderId:reInfo.orderInfo?.id?:0]);
+                    return;
+                } else if (reInfo.recode==ReCode.SAVE_FAILED){
+                    flash.error=reInfo.errorstr;
+                }else{
+                    flash.error=reInfo.recode.label;
+                }
             }
             def paramsT=[restaurantId:staffInfo.restaurantId,canTakeOut:true]
             def reInfo=searchService.searchFood(paramsT);
@@ -612,7 +627,8 @@ class StaffController {
                     provinceList.add([id:it.id,province:it.province]);
                 }
             }
-            reInfo<<[provinces:provinceList];
+            reInfo<<[provinces:provinceList]<<[params:params];
+            println("reInfo-->"+reInfo);
             render(view: "makeTakeOutOrder",model: reInfo);
         }else{
              render("staff not login");

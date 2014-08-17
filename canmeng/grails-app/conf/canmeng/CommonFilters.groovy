@@ -15,7 +15,7 @@ class CommonFilters {
                     model<<[cityIdAndName:reInfo.cityIdAndName];
                 else
                     model=[cityIdAndName:reInfo.cityIdAndName];
-                session.getAttribute("clientId");
+                //session.getAttribute("clientId");
             }
             afterView = { Exception e ->
 

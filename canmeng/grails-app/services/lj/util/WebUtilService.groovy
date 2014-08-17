@@ -61,9 +61,7 @@ class WebUtilService {
 
     void clearSession()
     {
-
         session.invalidate();
-
     }
 
     //获取session
@@ -100,7 +98,11 @@ class WebUtilService {
     def setStaff(StaffInfo staffInfo){
         session.staffId=staffInfo.id;
     }
-
+    //获取工作人员ID
+    def getStaffId(){
+        long staffId=lj.Number.toLong(session.staffId);
+        return staffId;
+    }
     //获取工作人员
     def getStaff(){
         long staffId=lj.Number.toLong(session.staffId);

@@ -3,6 +3,51 @@
 <head>
     <meta name="layout" content="main_template">
     <title>外卖界面</title>
+    <link rel="stylesheet" href="${resource(dir: "js/timePicker", file: "timePicker.css")}" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="${resource(dir: "js/timePicker", file: "jquery.timePicker.min.js")}"></script>
+    <link rel="stylesheet" href="${resource(dir: "js/Datepicker", file: "datepicker.css")}" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="${resource(dir: "js/Datepicker", file: "bootstrap-datepicker.js")}"></script>
+
+    <script type="text/javascript" src="${resource(dir: "js/common", file: "cart.js")}"></script>
+    <link href="${resource(dir: "css", file: "cart_page.css")}" rel="stylesheet"/>
+    <script type="text/javascript">
+        $(function () {
+            //初始化餐车
+            initCart({
+                addToCartUrl: "${createLink(controller: "staffAjax",action: "addFoodToCart")}",
+                cartsAndDishesUrl: "${createLink(controller: "staffAjax",action: "getCartsAndDishes")}",
+                imgUrl: "${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                delDishFromCartUrl: "${createLink(controller: "staffAjax",action: "delDishFromCart")}",
+                updateDishOfCartUrl: "${createLink(controller: "staffAjax",action: "updateDishOfCart")}",
+                parentTag: "#checkout_carts",
+                headDisplay: "none"
+            });
+            //注册加入购餐车事件
+            $("a[addToCart]").addFoodToCart(
+                    {
+                        addToCartUrl: "${createLink(controller: "staffAjax",action: "addFoodToCart")}",
+                        cartsAndDishesUrl:"${createLink(controller: "staffAjax",action: "getCartsAndDishes")}",
+                        imgUrl:"${createLink(controller: "imageShow", action: "downloadThumbnail", params: [width: 70,height: 70])}",
+                        delDishFromCartUrl:"${createLink(controller: "staffAjax",action: "delDishFromCart")}",
+                        updateDishOfCartUrl:"${createLink(controller: "staffAjax",action: "updateDishOfCart")}",
+                        parentTag: "#checkout_carts",
+                        headDisplay: "none"
+                    }
+            );
+            //日期选择器
+            $("#date").datepicker({format: "yyyy-mm-dd"});
+            //时间选择器
+            $("#time").timePicker({step: 15});
+            $("#time").change(function () {
+                var timeV = $("#time").val();
+                if (timeV.length > 0) {
+                    $("#time").val(timeV + ":00");
+                }
+            });
+        });
+    </script>
     <g:javascript src="common/address.js"/>
     <style type="text/css">
     .mc_main {
@@ -134,6 +179,15 @@
         }
 
         $(function(){
+            if("${params.province?:""}"!=""){
+                setSelectText("province", "${params.province?:""}");
+                setTimeout(function(){
+                    setSelectText("city", "${params.city?:""}");
+                    setTimeout(function(){
+                        setSelectText("area", "${params.area?:""}");
+                    },500);
+                },500);
+            }
             $("#linkManName,#phone").blur(function(){
                 var linkManName=$("#linkManName").val();
                 var phone=$("#phone").val();
@@ -210,7 +264,7 @@
 
                                 <div class="ml_row_txt">
                                     <g:if test="${foodInfoInstance?.canTakeOut}">
-                                    <a style="float: left;" href="#"
+                                    <a style="float: left;" href="#" addToCart="true"
                                     restaurantId="${foodInfoInstance?.restaurantId}"
                                     foodId="${foodInfoInstance?.id}">
                                     加入外卖餐车</a>
@@ -239,7 +293,9 @@
         </div>
 
         <!--购餐车-->
+        <div id="checkout_carts">
 
+        </div>
         <!--订单信息-->
         <div class="mcmc_ssl">
             <form style="float: left;" class="well form-inline"
@@ -303,7 +359,8 @@
                         <label class="control-label" for="linkManName">联系人</label>
 
                         <div class="controls">
-                            <input type="text" class="input-xlarge" id="linkManName" name="linkManName">
+                            <input type="text" class="input-xlarge" id="linkManName" name="linkManName"
+                                   value="${params.linkManName ?: ""}"/>
                         </div>
                     </div>
 
@@ -311,7 +368,8 @@
                         <label class="control-label" for="phone">电话号码</label>
 
                         <div class="controls">
-                            <input type="text" class="input-xlarge" id="phone" name="phone"/>
+                            <input type="text" class="input-xlarge" id="phone" name="phone"
+                                   value="${params.phone ?: ""}"/>
                         </div>
                     </div>
                     <input type="hidden" id="cityUrl"
@@ -346,7 +404,9 @@
 
                         <div class="controls">
                             <textarea class="input-xlarge" id="street" name="street" rows="1"
-                                      placeholder="为了您的方便，请填写详细地址"></textarea>
+                                      placeholder="为了您的方便，请填写详细地址">
+                                ${params.street ?: ""}
+                                      </textarea>
                         </div>
                     </div>
                 </div>

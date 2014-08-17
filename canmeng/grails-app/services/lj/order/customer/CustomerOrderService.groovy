@@ -332,6 +332,10 @@ class CustomerOrderService {
             if(tableId==0){//外卖
                 orderInfo.status=OrderStatus.ORDERED_STATUS.code;//点菜完成
                 orderInfo.orderType=OrderType.TAKE_OUT.code;
+                if(byWaiter){
+                    orderInfo.status=OrderStatus.VERIFY_ORDERED_STATUS.code;//确认点菜完成
+                    orderInfo.valid=OrderValid.EFFECTIVE_VALID.code; //确认有效
+                }
             }
             else{
                 if(reserveType==0){//到店吃饭

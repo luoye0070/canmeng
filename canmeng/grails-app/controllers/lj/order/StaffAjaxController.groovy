@@ -9,6 +9,7 @@ import lj.enumCustom.OrderStatus
 import lj.enumCustom.OrderValid
 import lj.enumCustom.ReCode
 import lj.order.customer.CustomerAppraiseService
+import lj.order.staff.StaffCartService
 import lj.order.staff.StaffCommonService
 import lj.order.staff.StaffDishService
 import lj.order.staff.StaffOrderService
@@ -22,6 +23,7 @@ class StaffAjaxController {
     SearchService searchService;
     CustomerAppraiseService customerAppraiseService;
     StaffCommonService staffCommonService;
+    StaffCartService staffCartService;
 
 //创建订单
     def createOrder(){
@@ -291,6 +293,43 @@ class StaffAjaxController {
     //获取地址信息
     def getAddress(){
        def reInfo=staffCommonService.getAddress(params);
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
+
+    //***********************餐车相关*****************************
+    //添加食品到购餐车中
+    def addFoodToCart(){
+        def reInfo=[recode:ReCode.OTHER_ERROR];
+        try {
+            reInfo=staffCartService.addFoodToCart(params);
+        }catch (Exception ex){
+            reInfo=[recode:ReCode.OTHER_ERROR];
+            reInfo.recode.label=ex.message;
+        }
+        if(reInfo.recode!=ReCode.OK){
+            if(reInfo.recode==ReCode.SAVE_FAILED){
+                reInfo.recode.label=I118Error.getMessage(g,reInfo.errors,0);
+            }
+        }
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
+    //获取已经创建的购餐车对象列表和其中的点菜
+    def getCartsAndDishes(){
+        def reInfo=staffCartService.getCartsAndDishes();
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
+    //从购餐车中删除菜品
+    def delDishFromCart(){
+        def reInfo=staffCartService.delDish(params);
+        println("reInfo-->"+reInfo);
+        render(reInfo as JSON);
+    }
+    //更新餐车中菜品的数量
+    def updateDishOfCart(){
+        def reInfo=staffCartService.updateDish(params);
         println("reInfo-->"+reInfo);
         render(reInfo as JSON);
     }
