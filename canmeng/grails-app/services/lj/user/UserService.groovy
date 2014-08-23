@@ -79,9 +79,9 @@ class UserService {
                 clientInfo.save(true);
             }
             webUtilService.setClient(clientInfo.id);
-        }else{
+        }//else{
             return reInfo;
-        }
+        //}
     }
 
     //通过手机号自动登录
