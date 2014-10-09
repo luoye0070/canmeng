@@ -32,7 +32,7 @@ function initCart(options){
                 '            </div>                                                                         '+
                 '        </div>                                                                             '+
                 '    </div>                                                                                 '+
-                '    <div class="content" id="cart_conent">                                                                  '+
+                '    <div class="content" id="cart_conent" style="display:none">                                                                  '+
                 '        <div class="prompt" id="cart_nothing">                                             '+
                 '            <div class="nogoods"><b></b>餐车中还没有商品，赶紧选购吧！</div>               '+
                 '        </div>                                                                             '+

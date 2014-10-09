@@ -85,7 +85,7 @@
         font-size: 14px;
         float: left;
         cursor: pointer;
-        /*background: #df8505;*/
+        /*background: #F5F5F5;*/
     }
     .tcrst_item_selected{
         width: 80px;
@@ -96,7 +96,11 @@
         font-size: 14px;
         color: #ffffff;
         float: left;
-        background: #CCCCCC;
+        background: #D00B01;
+        border-color: #CF0000 #CF0000 rgba(0, 0, 0, 0);
+        border-image: none;
+        border-style: solid;
+        border-width: 3px;
     }
 
     .tcrs_content{
@@ -211,15 +215,15 @@
                      <input type="hidden" name="showPlace" value="page"/>
                      <!--菜谱名称条件-->
                      <div class="tcrsc_field">
-                         <input id="keyWord" name="keyWord" type="text" class="tcrscf_input" style="height: 30px;"
+                         <input id="keyWord" name="keyWord" type="text" class="tcrscf_input" style="height:25px;border: 2px solid #D00B01"
                                 placeholder="请输入菜名" value="${params?.keyWord}"/>
-                         <input id="name" name="name" type="text" class="tcrscf_input" style="display: none;height: 30px;"
+                         <input id="name" name="name" type="text" class="tcrscf_input" style="display: none;height:25px;border: 2px solid #D00B01"
                             placeholder="请输入餐厅名" value="${params?.name}"/>
                      </div>
 
                      <div class="tcrsc_field_small">
                          <input type="submit" value="${message(code: 'default.button.search.label', default: 'Create')}"
-                                class="btn btn-primary" style="width: 80px;height: 40px;"/>
+                                class="btn btn-danger" style="width: 50px;height: 36px;"/>
                      </div>
                  </form>
              </div>

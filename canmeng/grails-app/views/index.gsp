@@ -50,8 +50,8 @@
 
             //设置点击事件
             $("#foodListTab").click(function(event){
-                $("#foodListTab").attr("class","mht_selected");
-                $("#resListTab").attr("class","mht_unselected");
+                $("#foodListTab").attr("class","active");
+                $("#resListTab").attr("class","");
                 $("#foodListDiv").attr("class","mc_page_active");
                 $("#resListDiv").attr("class","mc_page");
                 //$("#foodListDiv").height(foodListHeight);
@@ -59,8 +59,8 @@
                 $("#foodList").attr("src","${createLink(controller:"search",action:"searchFood",params: [cityId:cityIdAndName?.cityId?:1])}");
             });
             $("#resListTab").click(function(event){
-                $("#resListTab").attr("class","mht_selected");
-                $("#foodListTab").attr("class","mht_unselected");
+                $("#resListTab").attr("class","active");
+                $("#foodListTab").attr("class","");
                 $("#resListDiv").attr("class","mc_page_active");
                 $("#foodListDiv").attr("class","mc_page");
                // $("#resListDiv").height(resListHeight);
@@ -172,7 +172,7 @@ function showDialog(htmlStr,foodId){
             margin: 0px;
         }
         body{
-            background: #bfbfbf;
+            background: #F5F5F5;
         }
         .main{
             width: 1100px;
@@ -182,20 +182,21 @@ function showDialog(htmlStr,foodId){
         }
         .m_head{
             width: 1100px;
-            height: 250px;
-            margin: 0px auto;
-            background:url('${resource(dir:"images",file:"main_head.png")}');
+            height: 100px;
+            margin: 0px;
+
         }
         .mh_menu{
             width: 1100px;
-            height: 50px;
+            height: 40px;
             float: left;
-            line-height: 50px;
-            background: #000000;
+            line-height: 40px;
+            background: #99CC66;
             background-repeat: repeat;
-            FILTER: Alpha(opacity=60);/*IE下半透明*/
-            -moz-opacity: 0.6;/*FF下半透明*/
-            opacity: 0.6; /* 支撑CSS3的阅读器（FF 1.5也支持）透明度20%*/
+            margin-bottom:3px;
+            /*FILTER: Alpha(opacity=60);*//*IE下半透明*/
+            /*-moz-opacity: 0.6;*//*FF下半透明*/
+            /*opacity: 0.6; *//* 支撑CSS3的阅读器（FF 1.5也支持）透明度20%*/
         }
         .mhm_city{
             width: 200px;
@@ -212,6 +213,8 @@ function showDialog(htmlStr,foodId){
             font-weight: 800;
         }
         .mhm_city a{
+            color:#000000;
+            font-weight: bold;
             float: left;
         }
         .mh_menu ul,.mh_menu li{
@@ -226,18 +229,18 @@ function showDialog(htmlStr,foodId){
             font-weight: 800;
             font-size: 14px;
         }
+
+        .mh_menu li a {
+            color:#000000;
+        }
         .mh_menu .current a{
-            color: #c5c5c5;
+            color: #ffffff;
         }
         .mh_menu li a:hover{
-            color: #c5c5c5;
+            color: #D00B01;
             text-decoration: none;
         }
-        .mh_center{
-            width: 1100px;
-            height: 150px;
-            float: left;
-        }
+
         .mh_tab{
             width: 1100px;
             height: 50px;
@@ -259,7 +262,7 @@ function showDialog(htmlStr,foodId){
             margin: 0px;
             margin-top: 1px;
             float: left;
-            background:url('${resource(dir:"images",file:"main_tab_selected.png")}');
+            background:url('${resource(dir:"images",file:"bg_sub.png")}');
             background-repeat: no-repeat;
             cursor: pointer;
             line-height: 50px;
@@ -309,6 +312,32 @@ function showDialog(htmlStr,foodId){
             width: 38px; /* Width of image */
             background: url("${resource(dir:'js/JessicaWhite/img',file:'top.png')}") no-repeat;
         }
+
+        .nav-tabs {
+            border-bottom: 3px solid #CF0000;
+            font-size:14px;
+            font-weight: bold;
+            margin-top:4px;
+        }
+        #nav-bar > li > a{
+            padding: 10px 5px;
+            margin:0;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background-color: #CF0000;
+            border-color: #CF0000 #CF0000 rgba(0, 0, 0, 0);
+            border-image: none;
+            border-style: solid;
+            border-width: 3px;
+            color: #ffffff;
+            cursor: default;
+        }
+
     </style>
     <g:render template="/layouts/top"></g:render>
     <div class="main">
@@ -336,22 +365,12 @@ function showDialog(htmlStr,foodId){
                     </g:else>
                 </ul>
             </div>
-            <div class="mh_center">
-                %{--<a href="${resource(dir: "uploadFile",file: "CmCustomer.apk")}">顾客手机端下载</a>--}%
-                %{--<img src="${createLink(controller: "imageShow", action: "showQRCode",--}%
-                        %{--params: [width: 150, str: resource(dir: "uploadFile",file: "CmCustomer.apk",absolute: true)])}"--}%
-                     %{--alt=""/>--}%
-                %{--<a href="${resource(dir: "uploadFile",file: "CmStaff.apk")}">饭店手机端下载</a>--}%
-                %{--<img src="${createLink(controller: "imageShow", action: "showQRCode",--}%
-                        %{--params: [width: 150, str: resource(dir: "uploadFile",file: "CmStaff.apk",absolute: true)])}"--}%
-                     %{--alt=""/>--}%
-            </div>
-            <div class="mh_tab">
-                <ul>
-                    <li id="foodListTab" class="mht_selected">美食</li>
-                    <li id="resListTab" class="mht_unselected">餐厅</li>
-                </ul>
-            </div>
+
+            <ul class="nav nav-tabs" id="nav-bar">
+                <li id="foodListTab" class="active"><a href="#">&nbsp;&nbsp;美&nbsp;&nbsp;食&nbsp;&nbsp;</a></li>
+                <li id="resListTab"><a href="#">&nbsp;&nbsp;餐&nbsp;&nbsp;厅&nbsp;&nbsp;</a></li>
+            </ul>
+
         </div>
         <div class="m_content">
             <div class="mc_page_active" id="foodListDiv">
@@ -367,19 +386,7 @@ function showDialog(htmlStr,foodId){
 
         <!--footer-->
         <div id="footer">
-            <div class="footer_bottom">
-                <div class="wrap">
-                    <div class="container">
-                        <div class="row">
-                            <div class="span5">
-                                <div class="foot_logo"><g:img dir="js/JessicaWhite/img" file="foot_logo.png" /></div>
-                                <div class="copyright">&copy; 2020 餐萌版权所有</div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div  style="height:80px;text-align: center;font-size: 14px;margin-top: 10px;margin-bottom: 10px;padding-top:44px;padding-bottom:10px" class="copyright">&copy; 2020 餐萌版权所有</div>
         </div>
         <!--//footer-->
     </div>
